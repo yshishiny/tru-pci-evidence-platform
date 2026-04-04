@@ -83,12 +83,46 @@ function initDb() {
       FOREIGN KEY (user_id) REFERENCES users(id)
     );
 
+    CREATE TABLE IF NOT EXISTS drive_sync (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      evidence_id INTEGER,
+      local_path TEXT,
+      drive_file_id TEXT,
+      drive_link TEXT,
+      last_synced DATETIME,
+      file_hash TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (evidence_id) REFERENCES evidence_points(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS dropbox_sync (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      evidence_id INTEGER,
+      local_path TEXT,
+      dropbox_path TEXT,
+      dropbox_link TEXT,
+      last_synced DATETIME,
+      file_hash TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (evidence_id) REFERENCES evidence_points(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS cloud_config (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      provider TEXT NOT NULL CHECK(provider IN ('google_drive', 'dropbox')),
+      config_json TEXT,
+      is_active INTEGER DEFAULT 0,
+      updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
     CREATE INDEX IF NOT EXISTS idx_evidence_requirement ON evidence_points(requirement_id);
     CREATE INDEX IF NOT EXISTS idx_evidence_status ON evidence_points(status);
     CREATE INDEX IF NOT EXISTS idx_evidence_owner ON evidence_points(assigned_owner);
     CREATE INDEX IF NOT EXISTS idx_comments_evidence ON comments(evidence_point_id);
     CREATE INDEX IF NOT EXISTS idx_file_versions_evidence ON file_versions(evidence_point_id);
     CREATE INDEX IF NOT EXISTS idx_audit_user ON audit_log(user_id);
+    CREATE INDEX IF NOT EXISTS idx_drive_sync_evidence ON drive_sync(evidence_id);
+    CREATE INDEX IF NOT EXISTS idx_dropbox_sync_evidence ON dropbox_sync(evidence_id);
   `);
 
   return db;

@@ -214,4 +214,58 @@ router.get('/audit-log', requireAuth, requireRole('admin'), (req, res) => {
   }
 });
 
+// POST /seed-evidence - bulk seed evidence points from JSON
+router.post('/seed-evidence', requireAuth, requireRole('admin'), (req, res) => {
+  try {
+    const db = getDb();
+    const { evidence_points } = req.body;
+
+    if (!evidence_points || !Array.isArray(evidence_points)) {
+      return res.status(400).json({ error: 'evidence_points array required' });
+    }
+
+    const insertStmt = db.prepare(`
+      INSERT OR IGNORE INTO evidence_points (
+        requirement_id, sub_requirement, folder_path, folder_name,
+        evidence_type, status, has_original_doc, updated_at
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+    `);
+
+    let inserted = 0, skipped = 0;
+
+    const tx = db.transaction(() => {
+      for (const ep of evidence_points) {
+        const status = ep.has_files ? 'uploaded' : 'empty';
+        try {
+          const result = insertStmt.run(
+            ep.requirement_id,
+            ep.sub_requirement || '',
+            ep.folder_path,
+            ep.folder_name,
+            ep.evidence_type || 'document',
+            status,
+            ep.has_files ? 1 : 0
+          );
+          if (result.changes > 0) inserted++;
+          else skipped++;
+        } catch (e) {
+          skipped++;
+        }
+      }
+    });
+
+    tx();
+
+    db.prepare(`
+      INSERT INTO audit_log (user_id, username, action, target, details)
+      VALUES (?, ?, 'seed_evidence', 'evidence', ?)
+    `).run(req.user.id, req.user.username, `Seeded ${inserted} evidence points, ${skipped} skipped`);
+
+    res.json({ success: true, inserted, skipped, total: evidence_points.length });
+  } catch (err) {
+    console.error('Seed evidence error:', err);
+    res.status(500).json({ error: 'Failed to seed evidence points' });
+  }
+});
+
 module.exports = router;

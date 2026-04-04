@@ -112,6 +112,7 @@ window.AdminView = {
         tabsDiv.innerHTML = `
             <div class="admin-tab active" data-tab="users">Users</div>
             <div class="admin-tab" data-tab="scan">Folder Scan</div>
+            <div class="admin-tab" data-tab="cloud">Cloud Sync</div>
             <div class="admin-tab" data-tab="audit">Audit Log</div>
         `;
         container.appendChild(tabsDiv);
@@ -128,6 +129,12 @@ window.AdminView = {
         scanContent.id = 'scan-content';
         scanContent.appendChild(this.renderScanTab());
         container.appendChild(scanContent);
+
+        const cloudContent = document.createElement('div');
+        cloudContent.className = 'admin-content';
+        cloudContent.id = 'cloud-content';
+        cloudContent.appendChild(this.renderCloudSyncTab());
+        container.appendChild(cloudContent);
 
         const auditContent = document.createElement('div');
         auditContent.className = 'admin-content';
@@ -459,6 +466,238 @@ window.AdminView = {
             scanBtn.disabled = false;
             scanBtn.textContent = 'Start Scan';
         }
+    },
+
+    /**
+     * Render cloud sync tab
+     */
+    renderCloudSyncTab() {
+        const container = document.createElement('div');
+        container.id = 'cloud-sync-panel';
+
+        const html = `
+            <h3 style="margin-bottom: 1.5rem;">Cloud Synchronization</h3>
+
+            <div class="cloud-sync-tabs">
+                <button class="cloud-sync-tab active" data-provider="google_drive">
+                    <span class="icon">G</span> Google Drive
+                </button>
+                <button class="cloud-sync-tab" data-provider="dropbox">
+                    <span class="icon">D</span> Dropbox
+                </button>
+            </div>
+
+            <!-- Google Drive Section -->
+            <div id="gd-content" class="cloud-sync-content" style="display: block;">
+                <div class="cloud-sync-section">
+                    <h4>Google Drive Configuration</h4>
+
+                    <div id="gd-status" class="cloud-sync-status">
+                        <p>Loading status...</p>
+                    </div>
+
+                    <form id="gd-config-form" class="cloud-sync-form">
+                        <div class="form-group">
+                            <label for="gd-folder-id">Google Drive Parent Folder ID</label>
+                            <input type="text" id="gd-folder-id" placeholder="e.g., 1ABC123xyz..." required>
+                            <small>Get the folder ID from the URL when you open the folder in Google Drive</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gd-credentials-path">Service Account Key File Path</label>
+                            <input type="text" id="gd-credentials-path" placeholder="e.g., /path/to/service-account-key.json" required>
+                            <small>Path to your Google Cloud service account JSON key file</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="gd-activate">
+                                Activate Google Drive sync
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Configuration</button>
+                    </form>
+
+                    <div class="cloud-sync-actions">
+                        <button id="gd-sync-btn" class="btn btn-success">Sync Google Drive</button>
+                        <small>Syncs all evidence files to Google Drive</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dropbox Section -->
+            <div id="db-content" class="cloud-sync-content" style="display: none;">
+                <div class="cloud-sync-section">
+                    <h4>Dropbox Configuration</h4>
+
+                    <div id="db-status" class="cloud-sync-status">
+                        <p>Loading status...</p>
+                    </div>
+
+                    <form id="db-config-form" class="cloud-sync-form">
+                        <div class="form-group">
+                            <label for="db-access-token">Dropbox Access Token</label>
+                            <input type="password" id="db-access-token" placeholder="sl.XXXXXXX..." required>
+                            <small>Your Dropbox app access token (keep this secret)</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="db-parent-path">Parent Folder Path</label>
+                            <input type="text" id="db-parent-path" placeholder="e.g., /PCI_Evidence" required>
+                            <small>Path in Dropbox where evidence folders will be created</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="db-activate">
+                                Activate Dropbox sync
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Save Configuration</button>
+                    </form>
+
+                    <div class="cloud-sync-actions">
+                        <button id="db-sync-btn" class="btn btn-success">Sync Dropbox</button>
+                        <small>Syncs all evidence files to Dropbox</small>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                .cloud-sync-tabs {
+                    display: flex;
+                    gap: 0;
+                    border-bottom: 1px solid var(--color-border, #e0e0e0);
+                    margin-bottom: 2rem;
+                }
+
+                .cloud-sync-tab {
+                    padding: 1rem 1.5rem;
+                    border: none;
+                    background: transparent;
+                    cursor: pointer;
+                    border-bottom: 2px solid transparent;
+                    font-size: 0.95rem;
+                    font-weight: 500;
+                    color: var(--color-text-secondary, #666);
+                    transition: all 0.2s;
+                }
+
+                .cloud-sync-tab.active {
+                    color: var(--color-primary, #2563eb);
+                    border-bottom-color: var(--color-primary, #2563eb);
+                }
+
+                .cloud-sync-tab:hover {
+                    color: var(--color-text, #333);
+                }
+
+                .cloud-sync-section {
+                    background: var(--color-bg-secondary, #f9f9f9);
+                    border-radius: 8px;
+                    padding: 2rem;
+                }
+
+                .cloud-sync-section h4 {
+                    margin-top: 0;
+                    margin-bottom: 1.5rem;
+                    color: var(--color-text, #333);
+                }
+
+                .cloud-sync-status {
+                    background: white;
+                    border: 1px solid var(--color-border, #e0e0e0);
+                    border-radius: 6px;
+                    padding: 1rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .status-info p {
+                    margin: 0.5rem 0;
+                    font-size: 0.9rem;
+                }
+
+                .cloud-sync-form {
+                    background: white;
+                    border: 1px solid var(--color-border, #e0e0e0);
+                    border-radius: 6px;
+                    padding: 1.5rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .form-group {
+                    margin-bottom: 1.25rem;
+                }
+
+                .form-group:last-of-type {
+                    margin-bottom: 1.5rem;
+                }
+
+                .form-group label {
+                    display: block;
+                    font-weight: 500;
+                    margin-bottom: 0.5rem;
+                    color: var(--color-text, #333);
+                }
+
+                .form-group label input[type="checkbox"] {
+                    margin-right: 0.5rem;
+                }
+
+                .form-group input[type="text"],
+                .form-group input[type="password"] {
+                    width: 100%;
+                    padding: 0.75rem;
+                    border: 1px solid var(--color-border, #e0e0e0);
+                    border-radius: 4px;
+                    font-size: 0.9rem;
+                    font-family: inherit;
+                    box-sizing: border-box;
+                }
+
+                .form-group input:focus {
+                    outline: none;
+                    border-color: var(--color-primary, #2563eb);
+                    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+                }
+
+                .form-group small {
+                    display: block;
+                    margin-top: 0.25rem;
+                    color: var(--color-text-secondary, #666);
+                    font-size: 0.8rem;
+                }
+
+                .cloud-sync-actions {
+                    text-align: center;
+                    padding: 1.5rem;
+                    background: white;
+                    border: 1px solid var(--color-border, #e0e0e0);
+                    border-radius: 6px;
+                }
+
+                .cloud-sync-actions button {
+                    width: 100%;
+                }
+
+                .cloud-sync-actions small {
+                    display: block;
+                    margin-top: 0.75rem;
+                    color: var(--color-text-secondary, #666);
+                }
+            </style>
+        `;
+
+        container.innerHTML = html;
+
+        // Initialize cloud sync module after adding content
+        setTimeout(() => {
+            window.CloudSyncModule.init();
+        }, 0);
+
+        return container;
     },
 
     /**
