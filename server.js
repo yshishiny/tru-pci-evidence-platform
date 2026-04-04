@@ -13,6 +13,9 @@ const evidenceRoutes = require('./src/routes/evidence');
 const commentsRoutes = require('./src/routes/comments');
 const adminRoutes = require('./src/routes/admin');
 const cloudSyncRoutes = require('./src/routes/cloud-sync');
+const reportsRoutes = require('./src/routes/reports');
+const reviewRoutes = require('./src/routes/review');
+const alertsRoutes = require('./src/routes/alerts');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -34,6 +37,9 @@ app.use('/api/evidence', evidenceRoutes);
 app.use('/api/comments', commentsRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/cloud-sync', cloudSyncRoutes);
+app.use('/api/reports', reportsRoutes);
+app.use('/api/review', reviewRoutes);
+app.use('/api/alerts', alertsRoutes);
 
 // SPA fallback
 app.get('*', (req, res) => {

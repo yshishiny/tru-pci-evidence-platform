@@ -96,6 +96,42 @@ window.App = {
                 window.AdminView.render();
                 break;
 
+            case 'reports':
+                window.ReportsView.render();
+                break;
+
+            case 'review':
+                // Check if user is admin
+                try {
+                    const user = await window.API.getCurrentUser();
+                    if (user.role !== 'admin') {
+                        this.navigate('dashboard');
+                        window.App.toast('Access denied', 'error');
+                        return;
+                    }
+                } catch (error) {
+                    this.navigate('login');
+                    return;
+                }
+                window.ReviewView.render();
+                break;
+
+            case 'alerts':
+                // Check if user is admin
+                try {
+                    const user = await window.API.getCurrentUser();
+                    if (user.role !== 'admin') {
+                        this.navigate('dashboard');
+                        window.App.toast('Access denied', 'error');
+                        return;
+                    }
+                } catch (error) {
+                    this.navigate('login');
+                    return;
+                }
+                window.AlertsView.render();
+                break;
+
             default:
                 this.navigate('dashboard');
         }

@@ -109,10 +109,30 @@ function initDb() {
 
     CREATE TABLE IF NOT EXISTS cloud_config (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      provider TEXT NOT NULL CHECK(provider IN ('google_drive', 'dropbox')),
+      provider TEXT NOT NULL CHECK(provider IN ('google_drive', 'dropbox', 'smtp')),
       config_json TEXT,
       is_active INTEGER DEFAULT 0,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS daily_reports (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      report_date DATE NOT NULL UNIQUE,
+      html_content TEXT NOT NULL,
+      stats_json TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      created_by TEXT
+    );
+
+    CREATE TABLE IF NOT EXISTS alert_history (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      recipient_email TEXT NOT NULL,
+      recipient_name TEXT,
+      subject TEXT NOT NULL,
+      body TEXT,
+      evidence_ids TEXT,
+      sent_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      status TEXT DEFAULT 'sent' CHECK(status IN ('sent', 'failed', 'pending'))
     );
 
     CREATE INDEX IF NOT EXISTS idx_evidence_requirement ON evidence_points(requirement_id);
@@ -123,6 +143,9 @@ function initDb() {
     CREATE INDEX IF NOT EXISTS idx_audit_user ON audit_log(user_id);
     CREATE INDEX IF NOT EXISTS idx_drive_sync_evidence ON drive_sync(evidence_id);
     CREATE INDEX IF NOT EXISTS idx_dropbox_sync_evidence ON dropbox_sync(evidence_id);
+    CREATE INDEX IF NOT EXISTS idx_daily_reports_date ON daily_reports(report_date);
+    CREATE INDEX IF NOT EXISTS idx_alert_history_recipient ON alert_history(recipient_email);
+    CREATE INDEX IF NOT EXISTS idx_alert_history_sent_at ON alert_history(sent_at);
   `);
 
   return db;
