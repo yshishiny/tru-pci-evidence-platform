@@ -9,32 +9,56 @@ let driveAuthType = null; // 'service_account' or 'oauth2'
  * Initialize Google Drive client
  * Supports both service account and OAuth2 authentication
  */
-async function initDriveClient(credentialsPath, authType = 'service_account') {
+async function initDriveClient(credentialsInput, authType = 'service_account') {
   try {
     const { google } = require('googleapis');
 
     if (authType === 'service_account') {
-      // Service account authentication
-      if (!fs.existsSync(credentialsPath)) {
-        throw new Error(`Service account key file not found: ${credentialsPath}`);
+      // credentialsInput can be a file path OR a JSON object/string
+      let credentials;
+      if (typeof credentialsInput === 'object' && credentialsInput.client_email) {
+        // Direct JSON credentials object
+        credentials = credentialsInput;
+      } else if (typeof credentialsInput === 'string') {
+        // Try parsing as JSON first, then as file path
+        try {
+          credentials = JSON.parse(credentialsInput);
+        } catch (e) {
+          // It's a file path
+          if (!fs.existsSync(credentialsInput)) {
+            throw new Error(`Service account key file not found: ${credentialsInput}`);
+          }
+          credentials = JSON.parse(fs.readFileSync(credentialsInput, 'utf8'));
+        }
+      } else {
+        throw new Error('Invalid credentials: provide JSON object, JSON string, or file path');
       }
 
-      const credentials = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
+      const auth = new google.auth.GoogleAuth({
+        credentials: credentials,
+        scopes: ['https://www.googleapis.com/auth/drive']
+      });
+
       driveClient = google.drive({
         version: 'v3',
-        auth: new google.auth.GoogleAuth({
-          keyFile: credentialsPath,
-          scopes: ['https://www.googleapis.com/auth/drive']
-        })
+        auth: auth
       });
       driveAuthType = 'service_account';
     } else if (authType === 'oauth2') {
-      // OAuth2 authentication (requires refresh token)
-      if (!fs.existsSync(credentialsPath)) {
-        throw new Error(`OAuth2 config file not found: ${credentialsPath}`);
+      let config;
+      if (typeof credentialsInput === 'object') {
+        config = credentialsInput;
+      } else if (typeof credentialsInput === 'string') {
+        try {
+          config = JSON.parse(credentialsInput);
+        } catch (e) {
+          if (!fs.existsSync(credentialsInput)) {
+            throw new Error(`OAuth2 config file not found: ${credentialsInput}`);
+          }
+          config = JSON.parse(fs.readFileSync(credentialsInput, 'utf8'));
+        }
       }
 
-      const config = JSON.parse(fs.readFileSync(credentialsPath, 'utf8'));
       const oauth2Client = new google.auth.OAuth2(
         config.client_id,
         config.client_secret,

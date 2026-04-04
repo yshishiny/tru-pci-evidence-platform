@@ -504,8 +504,8 @@ window.AdminView = {
                         </div>
 
                         <div class="form-group">
-                            <label for="gd-credentials-path">Service Account Key File Path</label>
-                            <input type="text" id="gd-credentials-path" placeholder="e.g., /path/to/service-account-key.json" required>
+                            <label for="gd-credentials-json">Service Account JSON Key (paste entire contents)</label>
+                            <textarea id="gd-credentials-json" rows="6" placeholder='Paste the entire contents of your downloaded service-account-key.json file here' required style="font-family: monospace; font-size: 12px; width: 100%; background: #1a1a2e; color: #e0e0e0; border: 1px solid #333; border-radius: 6px; padding: 10px;"></textarea>
                             <small>Path to your Google Cloud service account JSON key file</small>
                         </div>
 

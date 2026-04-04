@@ -65,9 +65,10 @@ router.post('/trigger', requireAuth, requireRole('admin'), async (req, res) => {
 
     let stats;
     if (provider === 'google_drive') {
-      // Initialize Drive client
+      // Initialize Drive client - use credentials_json if available, otherwise credentials_path
+      const credentials = configJson.credentials_json || configJson.credentials_path;
       await cloudSync.initDriveClient(
-        configJson.credentials_path,
+        credentials,
         configJson.auth_type || 'service_account'
       );
 
@@ -148,17 +149,24 @@ router.post('/config', requireAuth, requireRole('admin'), (req, res) => {
 
     // Validate config based on provider
     if (provider === 'google_drive') {
-      if (!config_data.parent_folder_id || !config_data.credentials_path) {
+      if (!config_data.parent_folder_id) {
         return res.status(400).json({
-          error: 'Google Drive config requires parent_folder_id and credentials_path'
+          error: 'Google Drive config requires parent_folder_id'
         });
       }
-
-      // Validate credentials file exists
-      if (!fs.existsSync(config_data.credentials_path)) {
+      // Accept either credentials_json (pasted JSON) or credentials_path (file path)
+      if (!config_data.credentials_json && !config_data.credentials_path) {
         return res.status(400).json({
-          error: 'Credentials file not found at ' + config_data.credentials_path
+          error: 'Google Drive config requires credentials_json (paste service account JSON) or credentials_path (file path)'
         });
+      }
+      // If credentials_json is a string, validate it parses
+      if (config_data.credentials_json && typeof config_data.credentials_json === 'string') {
+        try {
+          JSON.parse(config_data.credentials_json);
+        } catch (e) {
+          return res.status(400).json({ error: 'credentials_json is not valid JSON' });
+        }
       }
     } else if (provider === 'dropbox') {
       if (!config_data.access_token || !config_data.parent_path) {

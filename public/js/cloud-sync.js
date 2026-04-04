@@ -118,11 +118,19 @@ window.CloudSyncModule = {
     e.preventDefault();
 
     const folderId = document.getElementById('gd-folder-id').value?.trim();
-    const credentialsPath = document.getElementById('gd-credentials-path').value?.trim();
+    const credentialsJson = document.getElementById('gd-credentials-json').value?.trim();
     const activate = document.getElementById('gd-activate').checked;
 
-    if (!folderId || !credentialsPath) {
-      window.App.toast('Please fill in all Google Drive configuration fields', 'error');
+    if (!folderId || !credentialsJson) {
+      window.App.toast('Please fill in the Folder ID and paste the Service Account JSON key', 'error');
+      return;
+    }
+
+    // Validate the JSON
+    try {
+      JSON.parse(credentialsJson);
+    } catch (e) {
+      window.App.toast('The Service Account JSON is not valid. Please paste the entire contents of the downloaded .json key file.', 'error');
       return;
     }
 
@@ -137,7 +145,7 @@ window.CloudSyncModule = {
           provider: 'google_drive',
           config_data: {
             parent_folder_id: folderId,
-            credentials_path: credentialsPath,
+            credentials_json: credentialsJson,
             auth_type: 'service_account'
           },
           activate
