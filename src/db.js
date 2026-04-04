@@ -1,19 +1,217 @@
-const Database = require('better-sqlite3');
+/**
+ * Database module — sql.js (pure JavaScript SQLite, no native build required)
+ * Provides a better-sqlite3-compatible API wrapper around sql.js
+ */
+
+const initSqlJs = require('sql.js');
 const path = require('path');
 const fs = require('fs');
 
 let db = null;
+let dbPath = null;
 
-function initDb() {
+/**
+ * Wrapper that mimics better-sqlite3's synchronous API on top of sql.js
+ */
+class DbWrapper {
+  constructor(sqlDb, filePath) {
+    this._db = sqlDb;
+    this._path = filePath;
+    this._saveTimer = null;
+  }
+
+  /**
+   * Save database to disk (debounced)
+   */
+  _save() {
+    if (this._saveTimer) clearTimeout(this._saveTimer);
+    this._saveTimer = setTimeout(() => {
+      try {
+        const data = this._db.export();
+        fs.writeFileSync(this._path, Buffer.from(data));
+      } catch (e) {
+        console.error('DB save error:', e.message);
+      }
+    }, 500);
+  }
+
+  /**
+   * Force immediate save
+   */
+  saveNow() {
+    if (this._saveTimer) clearTimeout(this._saveTimer);
+    try {
+      const data = this._db.export();
+      fs.writeFileSync(this._path, Buffer.from(data));
+    } catch (e) {
+      console.error('DB save error:', e.message);
+    }
+  }
+
+  /**
+   * Execute raw SQL (DDL, multiple statements)
+   */
+  exec(sql) {
+    this._db.run(sql);
+    this._save();
+  }
+
+  /**
+   * Set pragma (simplified — only WAL mode matters and sql.js doesn't support it)
+   */
+  pragma(str) {
+    // sql.js runs in-memory with file persistence, pragmas like WAL are no-ops
+    return;
+  }
+
+  /**
+   * Prepare a statement — returns an object with .get(), .all(), .run()
+   */
+  prepare(sql) {
+    const self = this;
+    return {
+      /**
+       * Get a single row
+       */
+      get(...params) {
+        try {
+          const stmt = self._db.prepare(sql);
+          if (params.length > 0) stmt.bind(params);
+          if (stmt.step()) {
+            const row = stmt.getAsObject();
+            stmt.free();
+            return row;
+          }
+          stmt.free();
+          return undefined;
+        } catch (e) {
+          // If it's a parameter binding issue, try named params
+          if (params.length === 1 && typeof params[0] === 'object' && !Array.isArray(params[0])) {
+            try {
+              const stmt = self._db.prepare(sql);
+              stmt.bind(params[0]);
+              if (stmt.step()) {
+                const row = stmt.getAsObject();
+                stmt.free();
+                return row;
+              }
+              stmt.free();
+              return undefined;
+            } catch (e2) {
+              throw e2;
+            }
+          }
+          throw e;
+        }
+      },
+
+      /**
+       * Get all rows
+       */
+      all(...params) {
+        try {
+          const stmt = self._db.prepare(sql);
+          if (params.length > 0) {
+            if (params.length === 1 && typeof params[0] === 'object' && !Array.isArray(params[0])) {
+              stmt.bind(params[0]);
+            } else {
+              stmt.bind(params);
+            }
+          }
+          const rows = [];
+          while (stmt.step()) {
+            rows.push(stmt.getAsObject());
+          }
+          stmt.free();
+          return rows;
+        } catch (e) {
+          throw e;
+        }
+      },
+
+      /**
+       * Run a statement (INSERT/UPDATE/DELETE) — returns { changes, lastInsertRowid }
+       */
+      run(...params) {
+        try {
+          const stmt = self._db.prepare(sql);
+          if (params.length > 0) {
+            if (params.length === 1 && typeof params[0] === 'object' && !Array.isArray(params[0])) {
+              stmt.bind(params[0]);
+            } else {
+              stmt.bind(params);
+            }
+          }
+          stmt.step();
+          stmt.free();
+
+          const changes = self._db.getRowsModified();
+          // Get last insert rowid
+          let lastInsertRowid = 0;
+          try {
+            const ridStmt = self._db.prepare('SELECT last_insert_rowid() as id');
+            if (ridStmt.step()) {
+              lastInsertRowid = ridStmt.getAsObject().id;
+            }
+            ridStmt.free();
+          } catch (e) {}
+
+          self._save();
+          return { changes, lastInsertRowid };
+        } catch (e) {
+          throw e;
+        }
+      }
+    };
+  }
+
+  /**
+   * Create a transaction function
+   */
+  transaction(fn) {
+    const self = this;
+    return function(...args) {
+      self._db.run('BEGIN TRANSACTION');
+      try {
+        const result = fn(...args);
+        self._db.run('COMMIT');
+        self._save();
+        return result;
+      } catch (e) {
+        self._db.run('ROLLBACK');
+        throw e;
+      }
+    };
+  }
+
+  /**
+   * Close the database
+   */
+  close() {
+    this.saveNow();
+    this._db.close();
+  }
+}
+
+async function initDbAsync() {
   const dataDir = process.env.DATA_DIR || './data';
 
-  // Ensure data directory exists
   if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
   }
 
-  const dbPath = path.join(dataDir, 'app.db');
-  db = new Database(dbPath);
+  dbPath = path.join(dataDir, 'app.db');
+
+  const SQL = await initSqlJs();
+
+  // Load existing database or create new one
+  if (fs.existsSync(dbPath)) {
+    const fileBuffer = fs.readFileSync(dbPath);
+    db = new DbWrapper(new SQL.Database(fileBuffer), dbPath);
+  } else {
+    db = new DbWrapper(new SQL.Database(), dbPath);
+  }
+
   db.pragma('journal_mode = WAL');
 
   // Create tables
@@ -124,6 +322,26 @@ function initDb() {
       created_by TEXT
     );
 
+    CREATE TABLE IF NOT EXISTS reviews (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      evidence_point_id INTEGER NOT NULL,
+      status TEXT DEFAULT 'pending' CHECK(status IN ('pending', 'approved', 'flagged', 'rejected')),
+      reviewer_name TEXT,
+      reviewed_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      comments TEXT,
+      FOREIGN KEY (evidence_point_id) REFERENCES evidence_points(id)
+    );
+
+    CREATE TABLE IF NOT EXISTS evidence_files (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      evidence_point_id INTEGER NOT NULL,
+      file_name TEXT NOT NULL,
+      file_size INTEGER DEFAULT 0,
+      file_type TEXT,
+      uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (evidence_point_id) REFERENCES evidence_points(id)
+    );
+
     CREATE TABLE IF NOT EXISTS alert_history (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       recipient_email TEXT NOT NULL,
@@ -146,19 +364,29 @@ function initDb() {
     CREATE INDEX IF NOT EXISTS idx_daily_reports_date ON daily_reports(report_date);
     CREATE INDEX IF NOT EXISTS idx_alert_history_recipient ON alert_history(recipient_email);
     CREATE INDEX IF NOT EXISTS idx_alert_history_sent_at ON alert_history(sent_at);
+    CREATE INDEX IF NOT EXISTS idx_reviews_ep ON reviews(evidence_point_id);
+    CREATE INDEX IF NOT EXISTS idx_evidence_files_ep ON evidence_files(evidence_point_id);
   `);
 
   return db;
 }
 
+function initDb() {
+  // This is now a sync wrapper that returns a promise indicator
+  // The actual init happens via initDbAsync() called from server.js
+  if (db) return db;
+  throw new Error('Database not initialized. Call initDbAsync() first.');
+}
+
 function getDb() {
   if (!db) {
-    initDb();
+    throw new Error('Database not initialized. Call initDbAsync() first.');
   }
   return db;
 }
 
 module.exports = {
   getDb,
-  initDb
+  initDb,
+  initDbAsync
 };

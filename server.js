@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
-const { initDb, getDb } = require('./src/db');
+const { initDbAsync, getDb } = require('./src/db');
 const { scanFolders, syncToDb } = require('./src/scanner');
 const { hashPassword } = require('./src/auth');
 
@@ -16,9 +16,10 @@ const cloudSyncRoutes = require('./src/routes/cloud-sync');
 const reportsRoutes = require('./src/routes/reports');
 const reviewRoutes = require('./src/routes/review');
 const alertsRoutes = require('./src/routes/alerts');
+const commandCenterRoutes = require('./src/routes/command-center');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4500;
 
 // Middleware
 app.use(cors());
@@ -40,9 +41,12 @@ app.use('/api/cloud-sync', cloudSyncRoutes);
 app.use('/api/reports', reportsRoutes);
 app.use('/api/review', reviewRoutes);
 app.use('/api/alerts', alertsRoutes);
+// Command Center - public, no auth required, shareable URL
+app.use('/command-center', commandCenterRoutes);
 
-// SPA fallback
+// SPA fallback (skip command-center and API routes)
 app.get('*', (req, res) => {
+  if (req.path.startsWith('/command-center') || req.path.startsWith('/api/')) return;
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
@@ -50,7 +54,7 @@ app.get('*', (req, res) => {
 async function startServer() {
   try {
     console.log('Initializing database...');
-    initDb();
+    await initDbAsync();
     const db = getDb();
 
     // Seed default users if no users exist
@@ -77,10 +81,12 @@ async function startServer() {
       console.log(`Seeded ${seedUsers.length} default users.`);
     }
 
-    // Run folder scan if evidence directory exists
+    // Skip automatic folder scan - DB is seeded from the original 172 EP tracker
     const evidenceDir = process.env.EVIDENCE_DIR || './data/evidence';
-    if (fs.existsSync(evidenceDir)) {
-      console.log('Running initial folder scan...');
+    const epCount = db.prepare('SELECT COUNT(*) as count FROM evidence_points').get().count;
+    console.log(`Evidence directory: ${evidenceDir} | ${epCount} evidence points in database`);
+    if (epCount === 0 && fs.existsSync(evidenceDir)) {
+      console.log('Empty database detected - running initial folder scan...');
       const scanResults = scanFolders(evidenceDir);
       const stats = syncToDb(db, scanResults);
       console.log(`Scan complete: ${stats.inserted} inserted, ${stats.updated} updated`);
