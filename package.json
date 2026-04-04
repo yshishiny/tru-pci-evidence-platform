@@ -9,7 +9,7 @@
     "scan": "node scripts/initial-scan.js"
   },
   "dependencies": {
-    "better-sqlite3": "^11.7.0",
+    "sql.js": "^1.10.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "express": "^4.21.0",
