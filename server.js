@@ -44,6 +44,45 @@ app.use('/api/alerts', alertsRoutes);
 // Command Center - public, no auth required, shareable URL
 app.use('/command-center', commandCenterRoutes);
 
+// Public rescan endpoint - rebuilds DB from seed-172.json
+app.post('/api/rescan', (req, res) => {
+  try {
+    const db = getDb();
+    const seedPath = path.join(__dirname, 'data', 'seed-172.json');
+    if (!fs.existsSync(seedPath)) {
+      return res.status(404).json({ error: 'seed-172.json not found' });
+    }
+    const seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+    const tx = db.transaction(() => {
+      db.prepare('DELETE FROM evidence_points').run();
+      const insertStmt = db.prepare(`
+        INSERT INTO evidence_points (
+          requirement_id, sub_requirement, folder_path, folder_name,
+          evidence_type, status, has_original_doc, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      `);
+      for (const ep of seedData) {
+        insertStmt.run(
+          ep.r || ep.requirement_id,
+          ep.s || ep.sub_requirement || '',
+          ep.p || ep.folder_path,
+          ep.n || ep.folder_name,
+          ep.t || ep.evidence_type || 'document',
+          ep.st || ep.status || 'empty',
+          ep.d !== undefined ? ep.d : (ep.has_original_doc !== undefined ? ep.has_original_doc : 0)
+        );
+      }
+    });
+    tx();
+    const newCount = db.prepare('SELECT COUNT(*) as count FROM evidence_points').get().count;
+    const uploaded = db.prepare("SELECT COUNT(*) as count FROM evidence_points WHERE status = 'uploaded'").get().count;
+    res.json({ success: true, total: newCount, uploaded, empty: newCount - uploaded, message: `Reseeded ${newCount} evidence points from seed-172.json` });
+  } catch (err) {
+    console.error('Rescan error:', err);
+    res.status(500).json({ error: 'Rescan failed: ' + err.message });
+  }
+});
+
 // SPA fallback (skip command-center and API routes)
 app.get('*', (req, res) => {
   if (req.path.startsWith('/command-center') || req.path.startsWith('/api/')) return;
