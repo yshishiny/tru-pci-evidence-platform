@@ -81,12 +81,46 @@ async function startServer() {
       console.log(`Seeded ${seedUsers.length} default users.`);
     }
 
-    // Skip automatic folder scan - DB is seeded from the original 172 EP tracker
+    // Evidence seeding logic - use seed-172.json as source of truth (exactly 172 EPs)
     const evidenceDir = process.env.EVIDENCE_DIR || './data/evidence';
     const epCount = db.prepare('SELECT COUNT(*) as count FROM evidence_points').get().count;
+    const seedPath = path.join(__dirname, 'data', 'seed-172.json');
     console.log(`Evidence directory: ${evidenceDir} | ${epCount} evidence points in database`);
-    if (epCount === 0 && fs.existsSync(evidenceDir)) {
-      console.log('Empty database detected - running initial folder scan...');
+
+    // Auto-fix: if DB has wrong EP count AND seed file exists, rebuild from seed
+    if (fs.existsSync(seedPath)) {
+      const seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+      const expectedCount = seedData.length; // Should be 172
+      if (epCount !== expectedCount) {
+        console.log(`EP count mismatch: DB has ${epCount}, expected ${expectedCount}. Rebuilding from seed...`);
+        const tx = db.transaction(() => {
+          db.prepare('DELETE FROM evidence_points').run();
+          const insertStmt = db.prepare(`
+            INSERT INTO evidence_points (
+              requirement_id, sub_requirement, folder_path, folder_name,
+              evidence_type, status, has_original_doc, updated_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+          `);
+          for (const ep of seedData) {
+            insertStmt.run(
+              ep.r || ep.requirement_id,
+              ep.s || ep.sub_requirement || '',
+              ep.p || ep.folder_path,
+              ep.n || ep.folder_name,
+              ep.t || ep.evidence_type || 'document',
+              ep.st || ep.status || 'empty',
+              ep.d !== undefined ? ep.d : (ep.has_original_doc !== undefined ? ep.has_original_doc : 0)
+            );
+          }
+        });
+        tx();
+        const newCount = db.prepare('SELECT COUNT(*) as count FROM evidence_points').get().count;
+        console.log(`Rebuild complete: ${newCount} evidence points seeded from seed-172.json`);
+      } else {
+        console.log(`EP count matches expected ${expectedCount}. No rebuild needed.`);
+      }
+    } else if (epCount === 0 && fs.existsSync(evidenceDir)) {
+      console.log('Empty database, no seed file - running initial folder scan...');
       const scanResults = scanFolders(evidenceDir);
       const stats = syncToDb(db, scanResults);
       console.log(`Scan complete: ${stats.inserted} inserted, ${stats.updated} updated`);
