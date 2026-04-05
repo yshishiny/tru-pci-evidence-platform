@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TRU PCI DSS v4.0.1 — Evidence Reviewer</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:13px;overflow-x:hidden}
+.hdr{background:linear-gradient(135deg,#1F3864,#2E75B6);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.ht h1{font-size:16px;font-weight:700}.ht p{font-size:10px;opacity:.75;margin-top:2px}
+.sb{display:flex;gap:8px;align-items:center}
+.sbox{background:rgba(255,255,255,.15);border-radius:8px;padding:5px 12px;text-align:center}
+.sbox .n{font-size:18px;font-weight:700}.sbox .l{font-size:9px;opacity:.8;text-transform:uppercase}
+.op{font-size:24px;font-weight:700;color:#4FC3F7}
+.nav-link{color:#fff;opacity:.8;font-size:11px;text-decoration:none;padding:4px 10px;border:1px solid rgba(255,255,255,.3);border-radius:6px;font-weight:600}
+.nav-link:hover{opacity:1;background:rgba(255,255,255,.1)}
+.ctrl{background:#fff;padding:8px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:200;border-bottom:2px solid #e0e4ea;box-shadow:0 2px 6px rgba(0,0,0,.08)}
+.ctrl label{font-size:10px;font-weight:700;color:#666;text-transform:uppercase}
+.fb{padding:3px 10px;border:1px solid #dde1ea;border-radius:12px;background:#f8f9fb;cursor:pointer;font-size:11px;font-weight:600;color:#555;white-space:nowrap}
+.fb.active{background:#1F3864;color:#fff;border-color:#1F3864}
+.fb.fc.active{background:#28a745;border-color:#28a745}
+.fb.fn.active{background:#dc3545;border-color:#dc3545}
+.sb2{padding:4px 10px;border:1px solid #dde1ea;border-radius:12px;font-size:12px;outline:none;min-width:200px}
+.ea{padding:3px 9px;border:1px solid #dde1ea;border-radius:5px;background:#f0f6ff;cursor:pointer;font-size:11px;font-weight:600;color:#2E75B6}
+.layout{display:flex;height:calc(100vh - 100px)}
+.list-pane{flex:1;overflow-y:auto;padding:14px 18px;min-width:0}
+.preview-pane{width:520px;min-width:350px;background:#fff;border-left:2px solid #d8e8f8;display:flex;flex-direction:column;position:relative}
+.preview-pane.hidden{display:none}
+.ph{background:#EBF3FF;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d8e8f8;flex-shrink:0}
+.ph h3{font-size:12px;font-weight:700;color:#1F3864;word-break:break-all;max-width:380px}
+.pc{flex:1;overflow:auto;padding:0}
+.pc iframe{width:100%;height:100%;border:none}
+.pc img{max-width:100%;max-height:100%;display:block;margin:auto;padding:12px}
+.pc .no-preview{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#888;text-align:center;gap:12px;padding:30px}
+.pc .no-preview .big{font-size:48px}
+.close-btn{background:rgba(220,53,69,.8);color:#fff;border:none;border-radius:4px;padding:2px 9px;cursor:pointer;font-size:13px;font-weight:700}
+.resize-handle{width:5px;background:#d8e8f8;cursor:col-resize;flex-shrink:0}
+.resize-handle:hover{background:#2E75B6}
+.rb{background:#fff;border-radius:10px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);overflow:hidden}
+.rh{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;gap:10px;user-select:none}
+.rh:hover{background:#f0f6ff}
+.rl{display:flex;align-items:center;gap:8px}
+.rn{background:#1F3864;color:#fff;border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700}
+.rname{font-size:13px;font-weight:700;color:#1F3864}
+.rr{display:flex;align-items:center;gap:7px;flex-shrink:0;flex-wrap:wrap}
+.rpct{font-size:13px;font-weight:700;color:#2E75B6;min-width:34px;text-align:right}
+.rbar{width:80px;height:6px;background:#e0e4ea;border-radius:3px;overflow:hidden}
+.ti{font-size:11px;color:#999}
+.rbody{display:none;border-top:1px solid #e8eaed}
+.rbody.open{display:block}
+.owner-tag{font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;margin-left:6px}
+.et{width:100%;border-collapse:collapse}
+.et thead th{background:#EBF3FF;padding:6px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#2E75B6;font-weight:700;border-bottom:1px solid #d8e8f8}
+.et tbody tr{border-bottom:1px solid #f4f5f7}
+.et tbody tr:hover{background:#fafbff}
+.et tbody tr.hidden{display:none}
+.tc{padding:7px 10px;font-size:13px;font-weight:700;color:#2E75B6;white-space:nowrap;vertical-align:top}
+.td{padding:7px 10px;font-size:11px;color:#444;vertical-align:top;line-height:1.5}
+.ts{padding:7px 10px;vertical-align:top}
+.tf{padding:7px 10px;vertical-align:top}
+.to{padding:7px 10px;vertical-align:top;font-size:10px}
+.fl{display:flex;flex-direction:column;gap:4px}
+.fi{display:flex;align-items:center;gap:6px;padding:3px 7px;border-radius:5px;cursor:pointer;border:1px solid #e0e8f4;background:#f8faff;transition:.15s}
+.fi:hover{background:#ddeeff;border-color:#2E75B6}
+.fi:active{background:#c8e0ff}
+.fn{font-size:11px;color:#1F3864;font-weight:600;flex:1;word-break:break-all}
+.fk{font-size:10px;color:#aaa;white-space:nowrap}
+.fl.empty{font-size:11px;color:#c0392b;font-style:italic;padding:4px 0}
+.badge{display:inline-block;padding:2px 8px;border-radius:9px;font-size:10px;font-weight:700;white-space:nowrap;margin:1px}
+.b-complete{background:#d4edda;color:#155724}
+.b-partial{background:#fff3cd;color:#856404}
+.b-pending{background:#f8d7da;color:#721c24}
+.comment-area{padding:10px 16px;border-top:1px solid #d8e8f8;background:#f8faff;flex-shrink:0}
+.comment-area h4{font-size:10px;color:#666;text-transform:uppercase;margin-bottom:6px}
+.comment-list{max-height:120px;overflow-y:auto;margin-bottom:6px}
+.comment-item{font-size:11px;color:#444;padding:3px 0;border-bottom:1px solid #eee}
+.comment-item .ca{font-weight:700;color:#1F3864;margin-right:4px}
+.comment-item .ct{font-size:9px;color:#aaa;margin-left:4px}
+.comment-form{display:flex;gap:4px}
+.comment-input{flex:1;padding:4px 8px;border:1px solid #dde1ea;border-radius:6px;font-size:11px;outline:none}
+.comment-input:focus{border-color:#2E75B6}
+.comment-submit{padding:4px 10px;border:none;background:#1F3864;color:#fff;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer}
+.comment-submit:hover{background:#2E75B6}
+.review-actions{padding:8px 16px;border-top:1px solid #d8e8f8;background:#fff;flex-shrink:0;display:flex;gap:6px;align-items:center}
+.rev-btn{padding:5px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:.15s}
+.rev-btn.approve{background:#d4edda;color:#155724;border-color:#c3e6cb}
+.rev-btn.approve:hover,.rev-btn.approve.active{background:#28a745;color:#fff}
+.rev-btn.flag{background:#fff3cd;color:#856404;border-color:#ffeeba}
+.rev-btn.flag:hover,.rev-btn.flag.active{background:#e6a817;color:#fff}
+.rev-btn.reject{background:#f8d7da;color:#721c24;border-color:#f5c6cb}
+.rev-btn.reject:hover,.rev-btn.reject.active{background:#dc3545;color:#fff}
+.rev-status{margin-left:auto;font-size:10px;font-weight:700;text-transform:uppercase}
+@media print{.ctrl,.preview-pane,.resize-handle,.comment-area,.review-actions{display:none}.rbody{display:block!important}.rb{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}body{background:#fff}.list-pane{height:auto;overflow:visible}}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="ht">
+    <h1>&#x1F6E1;&#xFE0F; TRU PCI DSS v4.0.1 — Evidence Reviewer</h1>
+    <p>iExperts &middot; TRU Compliance &middot; Live Data &middot; Click any evidence file to preview</p>
+  </div>
+  <div class="sb">
+    <a class="nav-link" href="/command-center">&#x2190; Dashboard</a>
+    <div id="headerStats" style="display:flex;gap:8px"></div>
+  </div>
+</div>
+
+<div class="ctrl">
+  <label>Filter:</label>
+  <span id="filterBtns"></span>
+  <input class="sb2" type="text" placeholder="&#x1F50D; Search EP # or description..." oninput="ss(this.value)">
+  <button class="ea" onclick="ea()">Expand All</button>
+  <button class="ea" onclick="ca()">Collapse All</button>
+  <button class="ea" onclick="window.print()" style="background:#1F3864;color:#fff;border-color:#1F3864">&#x1F5A8;&#xFE0F; Print</button>
+  <button class="ea" onclick="exportCSV()" style="background:#28a745;color:#fff;border-color:#28a745">&#x1F4E5; Export CSV</button>
+</div>
+
+<div class="layout">
+  <div class="list-pane" id="listPane"></div>
+  <div id="resizeHandle" class="resize-handle"></div>
+  <div class="preview-pane hidden" id="previewPane">
+    <div class="ph">
+      <h3 id="previewTitle">File Preview</h3>
+      <button class="close-btn" onclick="closePreview()">&#x2715;</button>
+    </div>
+    <div class="pc" id="previewContent"></div>
+    <div class="review-actions" id="reviewActions" style="display:none">
+      <button class="rev-btn approve" onclick="setReview('approved')">&#x2705; Approve</button>
+      <button class="rev-btn flag" onclick="setReview('flagged')">&#x26A0;&#xFE0F; Flag</button>
+      <button class="rev-btn reject" onclick="setReview('rejected')">&#x274C; Reject</button>
+      <span class="rev-status" id="revStatus"></span>
+    </div>
+    <div class="comment-area" id="commentArea" style="display:none">
+      <h4>Comments</h4>
+      <div class="comment-list" id="commentList"></div>
+      <div class="comment-form">
+        <input class="comment-input" id="commentInput" placeholder="Add a comment..." onkeydown="if(event.key==='Enter')addComment()">
+        <button class="comment-submit" onclick="addComment()">Send</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+var DATA = __DATA_PLACEHOLDER__;
+var currentFilter='all', currentEpId=null, reviewStates={}, comments={};
+try{reviewStates=JSON.parse(localStorage.getItem('tru_reviews')||'{}');}catch(e){}
+try{comments=JSON.parse(localStorage.getItem('tru_comments')||'{}');}catch(e){}
+function saveRS(){try{localStorage.setItem('tru_reviews',JSON.stringify(reviewStates));}catch(e){}}
+function saveComments(){try{localStorage.setItem('tru_comments',JSON.stringify(comments));}catch(e){}}
+
+var OWNERS=DATA.owners||{};
+function getOwner(rid){for(var n in OWNERS){if(OWNERS[n].reqs&&OWNERS[n].reqs.indexOf(rid)>-1)return{name:n.split(' ')[0],color:OWNERS[n].color,role:OWNERS[n].role};}return{name:'?',color:'#666',role:'Unassigned'};}
+
+function buildHeader(){
+  var s=DATA.summary||{};
+  document.getElementById('headerStats').innerHTML=
+    '<div class="sbox"><div class="n">'+s.filledEPs+'</div><div class="l">Filled</div></div>'+
+    '<div class="sbox"><div class="n" style="color:#ffc">'+s.emptyEPs+'</div><div class="l">Empty</div></div>'+
+    '<div class="sbox"><div class="n">'+s.totalEPs+'</div><div class="l">Total</div></div>'+
+    '<div class="sbox"><div class="op">'+s.percentage+'%</div><div class="l">Coverage</div></div>';
+}
+
+function buildFilters(){
+  var s=DATA.summary||{};
+  document.getElementById('filterBtns').innerHTML=
+    '<button class="fb active" onclick="sf(\'all\',this)">All ('+s.totalEPs+')</button> '+
+    '<button class="fb fc" onclick="sf(\'complete\',this)">&#x2705; Filled ('+s.filledEPs+')</button> '+
+    '<button class="fb fn" onclick="sf(\'pending\',this)">&#x1F534; Empty ('+s.emptyEPs+')</button>';
+}
+
+function buildRequirements(){
+  var reqs=DATA.requirements||[], eps=DATA.evidencePoints||[], pane=document.getElementById('listPane');
+  pane.innerHTML='';
+  reqs.forEach(function(req){
+    var rEps=eps.filter(function(ep){return ep.requirement===req.id;});
+    var ow=getOwner(req.id);
+    var bc=req.percentage===100?'#28a745':req.percentage>=50?'#e6a817':'#dc3545';
+    var div=document.createElement('div');div.className='rb';div.id='r'+req.id;
+    div.innerHTML='<div class="rh" onclick="tog('+req.id+')"><div class="rl"><span class="rn">REQ '+req.id+'</span><span class="rname">'+esc(req.name)+'</span><span class="owner-tag" style="background:'+ow.color+'">'+esc(ow.name)+'</span></div><div class="rr"><span class="badge b-complete">'+req.filled+' &#x2705;</span><span class="badge b-pending">'+req.empty+' &#x1F534;</span><span class="rpct">'+req.percentage+'%</span><div class="rbar"><div style="width:'+req.percentage+'%;height:100%;background:'+bc+';border-radius:3px"></div></div><span class="ti" id="ti'+req.id+'">&#x25BC;</span></div></div>';
+    var body=document.createElement('div');body.className='rbody';body.id='rb'+req.id;
+    var t='<table class="et"><thead><tr><th style="width:50px">EP#</th><th>Description</th><th style="width:80px">Owner</th><th style="width:80px">Status</th><th>Evidence Files (click to preview)</th></tr></thead><tbody>';
+    rEps.forEach(function(ep){
+      var st=ep.hasFiles?'complete':'pending';
+      if(reviewStates[ep.id])st=reviewStates[ep.id]==='approved'?'complete':reviewStates[ep.id]==='flagged'?'partial':'pending';
+      var sb=st==='complete'?'<span class="badge b-complete">&#x2705; Filled</span>':st==='partial'?'<span class="badge b-partial">&#x26A0;&#xFE0F; Flagged</span>':'<span class="badge b-pending">&#x1F534; Empty</span>';
+      var eo=getOwner(ep.requirement);
+      var nm=(ep.folder||'').match(/^(\d{3})/);var dn=nm?nm[1]:(ep.epId||ep.id);
+      var fh;
+      if(ep.hasFiles&&ep.files&&ep.files.length>0){
+        fh='<div class="fl">';
+        ep.files.forEach(function(f){var ext=(f.ext||'').replace('.','');var ic=ext==='pdf'?'&#x1F4D5;':ext==='xlsx'||ext==='xls'?'&#x1F4CA;':'&#x1F4C4;';var sz=f.size?formatSize(f.size):'';fh+='<div class="fi" onclick="openFile(\''+escA(ep.folder+'/'+f.name)+'\',\''+ext+'\',\''+escA(f.name)+'\',\''+escA(ep.id)+'\')" title="Click to preview">'+ic+' <span class="fn">'+esc(f.name)+'</span><span class="fk">'+sz+'</span></div>';});
+        fh+='</div>';
+      }else if(ep.hasFiles){fh='<div class="fl"><div class="fi" style="cursor:default"><span class="fn" style="color:#28a745">&#x2705; Evidence uploaded</span></div></div>';}
+      else{fh='<div class="fl empty">No evidence uploaded yet</div>';}
+      t+='<tr class="erow '+st+'" data-ep="'+dn+'" data-id="'+escA(ep.id)+'"><td class="tc">'+dn+'</td><td class="td">'+esc(ep.folder||'')+'</td><td class="to"><span class="owner-tag" style="background:'+eo.color+'">'+esc(eo.name)+'</span></td><td class="ts">'+sb+'</td><td class="tf">'+fh+'</td></tr>';
+    });
+    t+='</tbody></table>';body.innerHTML=t;div.appendChild(body);pane.appendChild(div);
+  });
+}
+
+function tog(id){var b=document.getElementById('rb'+id),t=document.getElementById('ti'+id);if(b.classList.contains('open')){b.classList.remove('open');if(t)t.innerHTML='&#x25BC;';}else{b.classList.add('open');if(t)t.innerHTML='&#x25B2;';}}
+function sf(f,btn){currentFilter=f;document.querySelectorAll('.ctrl .fb').forEach(function(b){b.classList.remove('active')});if(btn)btn.classList.add('active');applyFilters();}
+function ss(v){applyFilters(v);}
+function applyFilters(q){var flt=currentFilter,ql=(q||document.querySelector('.sb2').value||'').toLowerCase().trim();document.querySelectorAll('.erow').forEach(function(r){var ep=r.getAttribute('data-ep')||'',desc=(r.querySelector('.td')||{}).textContent||'';r.classList.toggle('hidden',!((!ql||ep.indexOf(ql)>-1||desc.toLowerCase().indexOf(ql)>-1)&&(flt==='all'||r.classList.contains(flt))));});if(ql)document.querySelectorAll('.rbody').forEach(function(b){if(b.querySelectorAll('.erow:not(.hidden)').length>0){b.classList.add('open');var id=b.id.replace('rb',''),ti=document.getElementById('ti'+id);if(ti)ti.innerHTML='&#x25B2;';}});}
+function ea(){document.querySelectorAll('.rbody').forEach(function(b){b.classList.add('open')});document.querySelectorAll('.ti').forEach(function(t){t.innerHTML='&#x25B2;'});}
+function ca(){document.querySelectorAll('.rbody').forEach(function(b){b.classList.remove('open')});document.querySelectorAll('.ti').forEach(function(t){t.innerHTML='&#x25BC;'});}
+
+function openFile(relPath,ext,name,epId){
+  currentEpId=epId;var pane=document.getElementById('previewPane'),content=document.getElementById('previewContent'),title=document.getElementById('previewTitle');
+  pane.classList.remove('hidden');title.textContent=name;content.innerHTML='';
+  document.getElementById('reviewActions').style.display='flex';document.getElementById('commentArea').style.display='block';
+  updateRevStatus();renderComments();
+  var imgExts=['jpg','jpeg','png','gif','bmp','webp','svg'];
+  if(ext==='pdf'){var iframe=document.createElement('iframe');iframe.src='/evidence/'+relPath+'#toolbar=1&navpanes=0';iframe.style.cssText='width:100%;height:100%;border:none';content.appendChild(iframe);}
+  else if(imgExts.indexOf(ext)>-1){var img=document.createElement('img');img.src='/evidence/'+relPath;img.style.cssText='max-width:100%;max-height:100%;display:block;margin:auto;padding:16px';content.appendChild(img);}
+  else if(ext==='docx'||ext==='doc'){content.innerHTML='<div class="no-preview"><div class="big">&#x1F4C4;</div><p><strong>'+esc(name)+'</strong></p><p style="font-size:11px;color:#888;max-width:300px">Word documents open best in Microsoft Word or Google Docs.</p><p style="font-size:10px;color:#aaa;margin-top:6px">File is in the Google Drive evidence folder</p></div>';}
+  else if(ext==='xlsx'||ext==='xls'){content.innerHTML='<div class="no-preview"><div class="big">&#x1F4CA;</div><p><strong>'+esc(name)+'</strong></p><p style="font-size:11px;color:#888">Excel files open best in Excel.</p></div>';}
+  else{content.innerHTML='<div class="no-preview"><div class="big">&#x1F4CE;</div><p><strong>'+esc(name)+'</strong></p><p style="font-size:11px;color:#888">Open in native application.</p></div>';}
+}
+function closePreview(){document.getElementById('previewPane').classList.add('hidden');currentEpId=null;}
+
+function setReview(status){
+  if(!currentEpId)return;reviewStates[currentEpId]=status;saveRS();updateRevStatus();
+  var row=document.querySelector('[data-id="'+currentEpId+'"]');
+  if(row){row.className='erow '+(status==='approved'?'complete':status==='flagged'?'partial':'pending');var bg=row.querySelector('.ts');if(bg)bg.innerHTML=status==='approved'?'<span class="badge b-complete">&#x2705; Approved</span>':status==='flagged'?'<span class="badge b-partial">&#x26A0;&#xFE0F; Flagged</span>':'<span class="badge b-pending">&#x274C; Rejected</span>';}
+  try{fetch('/api/review/'+currentEpId,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({status:status,reviewer_name:'iExperts Reviewer'})}).catch(function(){});}catch(e){}
+}
+function updateRevStatus(){var el=document.getElementById('revStatus'),s=reviewStates[currentEpId];if(s==='approved'){el.textContent='APPROVED';el.style.color='#28a745';}else if(s==='flagged'){el.textContent='FLAGGED';el.style.color='#e6a817';}else if(s==='rejected'){el.textContent='REJECTED';el.style.color='#dc3545';}else{el.textContent='PENDING REVIEW';el.style.color='#888';}document.querySelectorAll('.rev-btn').forEach(function(b){b.classList.remove('active')});if(s){var cls=s==='approved'?'.approve':s==='flagged'?'.flag':'.reject';var btn=document.querySelector('.rev-btn'+cls);if(btn)btn.classList.add('active');}}
+
+function renderComments(){var list=document.getElementById('commentList'),epC=comments[currentEpId]||[];list.innerHTML='';epC.forEach(function(c){var d=document.createElement('div');d.className='comment-item';d.innerHTML='<span class="ca">'+esc(c.author)+'</span>'+esc(c.text)+'<span class="ct">'+c.time+'</span>';list.appendChild(d);});list.scrollTop=list.scrollHeight;}
+function addComment(){var input=document.getElementById('commentInput'),text=input.value.trim();if(!text||!currentEpId)return;if(!comments[currentEpId])comments[currentEpId]=[];var now=new Date();comments[currentEpId].push({author:'Reviewer',text:text,time:now.toLocaleDateString()+' '+now.toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})});saveComments();renderComments();input.value='';try{fetch('/api/comments',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({evidence_point_id:currentEpId,comment:text,author:'iExperts Reviewer'})}).catch(function(){});}catch(e){}}
+
+function exportCSV(){var eps=DATA.evidencePoints||[],rows=[['EP_ID','Requirement','Folder','Type','Has_Files','File_Count','Owner','Review_Status']];eps.forEach(function(ep){var o=getOwner(ep.requirement);rows.push([ep.epId,'R'+ep.requirement,'"'+(ep.folder||'').replace(/"/g,'""')+'"',ep.type,ep.hasFiles?'Yes':'No',ep.fileCount,o.name,reviewStates[ep.id]||ep.reviewStatus||'pending']);});var csv=rows.map(function(r){return r.join(',')}).join('\n');var blob=new Blob([csv],{type:'text/csv'});var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='TRU_PCI_DSS_Evidence_'+new Date().toISOString().split('T')[0]+'.csv';a.click();}
+
+var resizing=false,startX,startW;
+document.getElementById('resizeHandle').addEventListener('mousedown',function(e){resizing=true;startX=e.clientX;startW=document.getElementById('previewPane').offsetWidth;document.body.style.userSelect='none';document.body.style.cursor='col-resize';});
+document.addEventListener('mousemove',function(e){if(!resizing)return;document.getElementById('previewPane').style.width=Math.max(300,Math.min(900,startW+(startX-e.clientX)))+'px';});
+document.addEventListener('mouseup',function(){resizing=false;document.body.style.userSelect='';document.body.style.cursor='';});
+
+function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML;}
+function escA(s){return(s||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");}
+function formatSize(b){if(b<1024)return b+' B';if(b<1048576)return Math.round(b/1024)+' KB';return(b/1048576).toFixed(1)+' MB';}
+
+buildHeader();buildFilters();buildRequirements();
+</script>
+</body>
+</html>

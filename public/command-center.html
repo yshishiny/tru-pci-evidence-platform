@@ -1,530 +1,621 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>TRU PCI DSS v4.0.1 — Evidence Command Center</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRU PCI DSS v4.0 | Command Center</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:13px;overflow-x:hidden}
-/* HEADER */
-.hdr{background:linear-gradient(135deg,#1F3864,#2E75B6);color:#fff;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.ht h1{font-size:16px;font-weight:700}.ht p{font-size:10px;opacity:.75;margin-top:2px}
-.sb{display:flex;gap:8px;align-items:center}
-.sbox{background:rgba(255,255,255,.15);border-radius:8px;padding:5px 12px;text-align:center}
-.sbox .n{font-size:18px;font-weight:700}.sbox .l{font-size:9px;opacity:.8;text-transform:uppercase}
-.op{font-size:24px;font-weight:700;color:#4FC3F7}
-/* TOOLBAR */
-.ctrl{background:#fff;padding:8px 20px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:200;border-bottom:2px solid #e0e4ea;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.ctrl label{font-size:10px;font-weight:700;color:#666;text-transform:uppercase}
-.fb{padding:3px 10px;border:1px solid #dde1ea;border-radius:12px;background:#f8f9fb;cursor:pointer;font-size:11px;font-weight:600;color:#555;white-space:nowrap}
-.fb.active{background:#1F3864;color:#fff;border-color:#1F3864}
-.fb.fc.active{background:#28a745;border-color:#28a745}
-.fb.fn.active{background:#dc3545;border-color:#dc3545}
-.sb2{padding:4px 10px;border:1px solid #dde1ea;border-radius:12px;font-size:12px;outline:none;min-width:200px}
-.ea{padding:3px 9px;border:1px solid #dde1ea;border-radius:5px;background:#f0f6ff;cursor:pointer;font-size:11px;font-weight:600;color:#2E75B6}
-/* MAIN LAYOUT */
-.layout{display:flex;height:calc(100vh - 100px)}
-.list-pane{flex:1;overflow-y:auto;padding:14px 18px;min-width:0}
-/* PREVIEW PANEL */
-.preview-pane{width:520px;min-width:350px;background:#fff;border-left:2px solid #d8e8f8;display:flex;flex-direction:column;position:relative}
-.preview-pane.hidden{display:none}
-.ph{background:#EBF3FF;padding:10px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #d8e8f8;flex-shrink:0}
-.ph h3{font-size:12px;font-weight:700;color:#1F3864;word-break:break-all;max-width:380px}
-.pc{flex:1;overflow:auto;padding:0}
-.pc iframe{width:100%;height:100%;border:none}
-.pc img{max-width:100%;max-height:100%;display:block;margin:auto;padding:12px}
-.pc .docx-body{padding:20px;font-size:12px;line-height:1.7;color:#222}
-.pc .docx-body h1,.pc .docx-body h2{color:#1F3864;margin:16px 0 8px}
-.pc .docx-body p{margin-bottom:8px}
-.pc .docx-body table{border-collapse:collapse;width:100%;margin:10px 0;font-size:11px}
-.pc .docx-body td,.pc .docx-body th{border:1px solid #ccc;padding:5px 8px}
-.pc .docx-body th{background:#EBF3FF;font-weight:700}
-.pc .no-preview{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;color:#888;text-align:center;gap:12px;padding:30px}
-.pc .no-preview .big{font-size:48px}
-.pc .no-preview a{color:#2E75B6;font-weight:700;text-decoration:none;padding:6px 16px;border:1px solid #2E75B6;border-radius:6px}
-.close-btn{background:rgba(220,53,69,.8);color:#fff;border:none;border-radius:4px;padding:2px 9px;cursor:pointer;font-size:13px;font-weight:700}
-.resize-handle{width:5px;background:#d8e8f8;cursor:col-resize;flex-shrink:0}
-.resize-handle:hover{background:#2E75B6}
-/* REQUIREMENTS */
-.rb{background:#fff;border-radius:10px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.07);overflow:hidden}
-.rh{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;cursor:pointer;gap:10px;user-select:none}
-.rh:hover{background:#f0f6ff}
-.rl{display:flex;align-items:center;gap:8px}
-.rn{background:#1F3864;color:#fff;border-radius:5px;padding:2px 8px;font-size:11px;font-weight:700}
-.rname{font-size:13px;font-weight:700;color:#1F3864}
-.rr{display:flex;align-items:center;gap:7px;flex-shrink:0;flex-wrap:wrap}
-.rpct{font-size:13px;font-weight:700;color:#2E75B6;min-width:34px;text-align:right}
-.rbar{width:80px;height:6px;background:#e0e4ea;border-radius:3px;overflow:hidden}
-.ti{font-size:11px;color:#999}
-.rbody{display:none;border-top:1px solid #e8eaed}
-.rbody.open{display:block}
-/* OWNER TAG */
-.owner-tag{font-size:9px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff;margin-left:6px}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+:root {
+  --bg-primary:#0a0e1a;--bg-secondary:#111827;--bg-card:#1a2236;--bg-card-hover:#1f2942;
+  --bg-sidebar:#0d1225;--border:#2a3550;--border-light:#334155;
+  --text-primary:#f1f5f9;--text-secondary:#94a3b8;--text-muted:#64748b;
+  --accent-blue:#3b82f6;--accent-cyan:#06b6d4;--accent-green:#10b981;--accent-emerald:#34d399;
+  --accent-yellow:#f59e0b;--accent-orange:#f97316;--accent-red:#ef4444;--accent-purple:#8b5cf6;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-primary);color:var(--text-primary);min-height:100vh;overflow-x:hidden;display:flex}
+
+/* SIDEBAR */
+.sidebar{width:260px;min-height:100vh;background:var(--bg-sidebar);border-right:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;z-index:200;overflow-y:auto}
+.sidebar-logo{padding:20px 24px;display:flex;align-items:center;gap:12px;border-bottom:1px solid var(--border)}
+.logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--accent-blue),var(--accent-cyan));border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;box-shadow:0 0 24px rgba(59,130,246,.35)}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:-.3px}
+.logo-sub{font-size:10px;color:var(--text-muted);font-weight:500;letter-spacing:.5px;text-transform:uppercase}
+.sidebar-nav{padding:16px 12px;flex:1}
+.nav-section{font-size:10px;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:1px;padding:12px 12px 6px}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 14px;margin:2px 0;border-radius:8px;cursor:pointer;transition:all .15s;font-size:13px;font-weight:500;color:var(--text-secondary);border:1px solid transparent}
+.nav-item:hover{background:rgba(59,130,246,.08);color:var(--text-primary)}
+.nav-item.active{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(6,182,212,.08));color:#fff;font-weight:600;border-color:rgba(59,130,246,.2)}
+.nav-item .icon{font-size:16px;width:22px;text-align:center}
+.nav-item .badge{margin-left:auto;background:var(--accent-red);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:10px}
+.sidebar-footer{padding:16px 20px;border-top:1px solid var(--border);font-size:11px;color:var(--text-muted)}
+.scan-date{font-size:10px;color:var(--accent-cyan);font-weight:600}
+
+/* MAIN */
+.main-area{margin-left:260px;flex:1;min-height:100vh}
+.topbar{background:linear-gradient(135deg,#0f1b33,#162040,#1a1040);border-bottom:1px solid var(--border);padding:0 32px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;backdrop-filter:blur(12px)}
+.topbar-title{font-size:15px;font-weight:700}
+.topbar-right{display:flex;align-items:center;gap:12px}
+.sprint-badge{background:linear-gradient(135deg,var(--accent-yellow),#d97706);color:#000;padding:5px 14px;border-radius:20px;font-weight:700;font-size:11px;letter-spacing:.5px;animation:pulse-glow 2s infinite}
+@keyframes pulse-glow{0%,100%{box-shadow:0 0 8px rgba(245,158,11,.3)}50%{box-shadow:0 0 20px rgba(245,158,11,.5)}}
+.btn-export{background:linear-gradient(135deg,var(--accent-blue),var(--accent-cyan));color:#fff;border:none;padding:6px 16px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;transition:all .2s;font-family:inherit}
+.btn-export:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(59,130,246,.4)}
+.content{padding:24px 32px 48px}
+
+/* KPIs */
+.kpi-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-bottom:24px}
+.kpi-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px;position:relative;overflow:hidden;transition:all .2s}
+.kpi-card:hover{transform:translateY(-2px);border-color:var(--accent-blue)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi-card.blue::before{background:linear-gradient(90deg,var(--accent-blue),var(--accent-cyan))}
+.kpi-card.green::before{background:linear-gradient(90deg,var(--accent-green),var(--accent-emerald))}
+.kpi-card.yellow::before{background:linear-gradient(90deg,var(--accent-yellow),var(--accent-orange))}
+.kpi-card.red::before{background:linear-gradient(90deg,var(--accent-red),#f87171)}
+.kpi-card.purple::before{background:linear-gradient(90deg,var(--accent-purple),#a78bfa)}
+.kpi-card.cyan::before{background:linear-gradient(90deg,var(--accent-cyan),#22d3ee)}
+.kpi-value{font-size:30px;font-weight:800;line-height:1;margin-bottom:4px}
+.kpi-label{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;font-weight:600}
+.kpi-delta{font-size:11px;font-weight:600;margin-top:4px}
+.kpi-delta.up{color:var(--accent-green)}.kpi-delta.down{color:var(--accent-red)}
+
+/* PROGRESS */
+.progress-section{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:18px 24px;margin-bottom:24px}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.progress-title{font-size:12px;color:var(--text-secondary);font-weight:600;text-transform:uppercase;letter-spacing:.8px}
+.progress-value{font-size:26px;font-weight:800;color:var(--accent-green)}
+.progress-track{height:26px;background:#1e293b;border-radius:13px;overflow:hidden;position:relative}
+.progress-fill{height:100%;border-radius:13px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:12px;color:#000;transition:width 1.5s cubic-bezier(.4,0,.2,1);background:linear-gradient(90deg,#10b981,#34d399,#6ee7b7);box-shadow:0 0 20px rgba(16,185,129,.4)}
+.progress-remaining{position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--text-muted)}
+
+/* LAYOUTS */
+.grid-2{display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-bottom:24px}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px;overflow:hidden}
+.card-title{font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;font-weight:600;margin-bottom:14px}
+
 /* TABLE */
-.et{width:100%;border-collapse:collapse}
-.et thead th{background:#EBF3FF;padding:6px 10px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:#2E75B6;font-weight:700;border-bottom:1px solid #d8e8f8}
-.et tbody tr{border-bottom:1px solid #f4f5f7}
-.et tbody tr:hover{background:#fafbff}
-.et tbody tr.hidden{display:none}
-.tc{padding:7px 10px;font-size:13px;font-weight:700;color:#2E75B6;white-space:nowrap;vertical-align:top}
-.td{padding:7px 10px;font-size:11px;color:#444;vertical-align:top;line-height:1.5}
-.ts{padding:7px 10px;vertical-align:top}
-.tf{padding:7px 10px;vertical-align:top}
-.to{padding:7px 10px;vertical-align:top;font-size:10px}
-.fl{display:flex;flex-direction:column;gap:4px}
-.fi{display:flex;align-items:center;gap:6px;padding:3px 7px;border-radius:5px;cursor:pointer;border:1px solid #e0e8f4;background:#f8faff;transition:.15s}
-.fi:hover{background:#ddeeff;border-color:#2E75B6}
-.fi:active{background:#c8e0ff}
-.fn{font-size:11px;color:#1F3864;font-weight:600;flex:1;word-break:break-all}
-.fk{font-size:10px;color:#aaa;white-space:nowrap}
-.fl.empty{font-size:11px;color:#c0392b;font-style:italic;padding:4px 0}
-/* BADGES */
-.badge{display:inline-block;padding:2px 8px;border-radius:9px;font-size:10px;font-weight:700;white-space:nowrap;margin:1px}
-.b-complete{background:#d4edda;color:#155724}
-.b-partial{background:#fff3cd;color:#856404}
-.b-pending{background:#f8d7da;color:#721c24}
-/* COMMENT */
-.comment-area{padding:10px 16px;border-top:1px solid #d8e8f8;background:#f8faff;flex-shrink:0}
-.comment-area h4{font-size:10px;color:#666;text-transform:uppercase;margin-bottom:6px}
-.comment-list{max-height:100px;overflow-y:auto;margin-bottom:6px}
-.comment-item{font-size:11px;color:#444;padding:3px 0;border-bottom:1px solid #eee}
-.comment-item .ca{font-weight:700;color:#1F3864;margin-right:4px}
-.comment-item .ct{font-size:9px;color:#aaa;margin-left:4px}
-.comment-form{display:flex;gap:4px}
-.comment-input{flex:1;padding:4px 8px;border:1px solid #dde1ea;border-radius:6px;font-size:11px;outline:none}
-.comment-input:focus{border-color:#2E75B6}
-.comment-submit{padding:4px 10px;border:none;background:#1F3864;color:#fff;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer}
-.comment-submit:hover{background:#2E75B6}
-/* REVIEW ACTIONS */
-.review-actions{padding:8px 16px;border-top:1px solid #d8e8f8;background:#fff;flex-shrink:0;display:flex;gap:6px;align-items:center}
-.rev-btn{padding:5px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:.15s}
-.rev-btn.approve{background:#d4edda;color:#155724;border-color:#c3e6cb}
-.rev-btn.approve:hover,.rev-btn.approve.active{background:#28a745;color:#fff}
-.rev-btn.flag{background:#fff3cd;color:#856404;border-color:#ffeeba}
-.rev-btn.flag:hover,.rev-btn.flag.active{background:#e6a817;color:#fff}
-.rev-btn.reject{background:#f8d7da;color:#721c24;border-color:#f5c6cb}
-.rev-btn.reject:hover,.rev-btn.reject.active{background:#dc3545;color:#fff}
-.rev-status{margin-left:auto;font-size:10px;font-weight:700;text-transform:uppercase}
-@media print{.ctrl,.preview-pane,.resize-handle,.comment-area,.review-actions{display:none}.rbody{display:block!important}.rb{box-shadow:none;border:1px solid #ddd;page-break-inside:avoid}body{background:#fff}.list-pane{height:auto;overflow:visible}}
+.req-table{width:100%;border-collapse:collapse}
+.req-table th{text-align:left;padding:8px 10px;font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--border)}
+.req-table td{padding:9px 10px;font-size:13px;border-bottom:1px solid rgba(42,53,80,.4)}
+.req-table tr{transition:background .15s;cursor:pointer}
+.req-table tr:hover{background:var(--bg-card-hover)}
+.mini-bar{height:7px;background:#1e293b;border-radius:4px;overflow:hidden;width:110px}
+.mini-fill{height:100%;border-radius:4px;transition:width 1s ease}
+.status-tag{display:inline-block;padding:2px 10px;border-radius:10px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}
+.status-tag.complete{background:rgba(16,185,129,.15);color:var(--accent-green)}
+.status-tag.near{background:rgba(245,158,11,.12);color:var(--accent-yellow)}
+.status-tag.progress{background:rgba(59,130,246,.12);color:var(--accent-blue)}
+.status-tag.behind{background:rgba(239,68,68,.12);color:var(--accent-red)}
+
+/* OWNERS */
+.owner-card{display:flex;align-items:center;gap:12px;padding:12px;background:var(--bg-primary);border-radius:10px;margin-bottom:8px;transition:all .15s}
+.owner-card:hover{background:rgba(59,130,246,.05)}
+.owner-avatar{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#fff}
+.owner-info{flex:1}
+.owner-name{font-weight:600;font-size:13px}
+.owner-role{font-size:11px;color:var(--text-muted)}
+.owner-stats{text-align:right}
+.owner-count{font-size:20px;font-weight:800}
+.owner-label{font-size:10px;color:var(--text-muted)}
+
+/* DONUT */
+.donut-container{display:flex;align-items:center;justify-content:center;padding:12px 0}
+.donut-legend{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:8px}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:11px}
+.legend-dot{width:10px;height:10px;border-radius:3px}
+
+/* TIMELINE */
+.timeline{padding-left:20px;border-left:2px solid var(--border)}
+.timeline-item{position:relative;padding:0 0 14px 0}
+.timeline-item::before{content:'';position:absolute;left:-27px;top:3px;width:12px;height:12px;border-radius:50%}
+.timeline-item.done::before{background:var(--accent-green)}
+.timeline-item.current::before{background:var(--accent-yellow);box-shadow:0 0 8px var(--accent-yellow)}
+.timeline-item.future::before{background:var(--border);border:2px solid var(--text-muted)}
+.timeline-date{font-size:10px;color:var(--text-muted);font-weight:600}
+.timeline-text{font-size:13px}
+
+/* ALERT */
+.alert-banner{border-radius:14px;padding:14px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px;font-size:13px}
+.alert-banner.warning{background:linear-gradient(135deg,rgba(245,158,11,.1),rgba(249,115,22,.05));border:1px solid rgba(245,158,11,.2)}
+.alert-banner.info{background:linear-gradient(135deg,rgba(59,130,246,.1),rgba(6,182,212,.05));border:1px solid rgba(59,130,246,.2)}
+.alert-icon{font-size:20px}
+.alert-text strong{color:var(--accent-yellow)}
+
+/* REVIEWER */
+.reviewer-toolbar{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:14px 18px;margin-bottom:18px;display:flex;flex-wrap:wrap;align-items:center;gap:10px;position:sticky;top:56px;z-index:50;backdrop-filter:blur(12px)}
+.filter-pills{display:flex;gap:5px;flex-wrap:wrap}
+.pill{padding:5px 12px;border-radius:20px;font-size:11px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid var(--border);background:transparent;color:var(--text-secondary);letter-spacing:.3px;font-family:inherit}
+.pill:hover{border-color:var(--accent-blue);color:var(--text-primary)}
+.pill.active{background:var(--accent-blue);border-color:var(--accent-blue);color:#fff}
+.pill .cnt{background:rgba(255,255,255,.15);padding:1px 5px;border-radius:8px;font-size:9px;margin-left:3px}
+.pill.active .cnt{background:rgba(255,255,255,.25)}
+.search-box{flex:1;min-width:180px;background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;padding:7px 14px;color:var(--text-primary);font-size:12px;font-family:inherit}
+.search-box::placeholder{color:var(--text-muted)}
+.search-box:focus{outline:none;border-color:var(--accent-blue);box-shadow:0 0 0 3px rgba(59,130,246,.12)}
+
+.reviewer-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.rev-stat{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.rev-stat .val{font-size:26px;font-weight:800}
+.rev-stat .lbl{font-size:10px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.8px;margin-top:2px}
+.rev-stat.green .val{color:var(--accent-green)}
+.rev-stat.yellow .val{color:var(--accent-yellow)}
+.rev-stat.red .val{color:var(--accent-red)}
+.rev-stat.blue .val{color:var(--accent-blue)}
+
+/* REQ SECTIONS */
+.req-section{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;margin-bottom:14px;overflow:hidden}
+.req-section-header{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer;transition:background .15s}
+.req-section-header:hover{background:var(--bg-card-hover)}
+.req-num{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;color:#fff}
+.req-section-info{flex:1}
+.req-section-name{font-weight:600;font-size:13px}
+.req-section-progress{font-size:11px;color:var(--text-secondary);margin-top:2px}
+.req-section-bar{width:180px;height:6px;background:#1e293b;border-radius:3px;overflow:hidden}
+.req-section-fill{height:100%;border-radius:3px}
+.req-section-badges{display:flex;gap:6px}
+.badge-count{font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.badge-count.filled{background:rgba(16,185,129,.12);color:var(--accent-green)}
+.badge-count.empty-b{background:rgba(239,68,68,.1);color:var(--accent-red)}
+.badge-count.reviewed{background:rgba(59,130,246,.12);color:var(--accent-blue)}
+.chevron{color:var(--text-muted);font-size:14px;transition:transform .2s;padding:0 6px}
+.req-section.open .chevron{transform:rotate(90deg)}
+
+/* EP CARDS */
+.ep-list{padding:0 10px 10px;display:none}
+.req-section.open .ep-list{display:block}
+.ep-card{background:var(--bg-primary);border:1px solid var(--border);border-radius:10px;margin:6px;padding:12px 14px;display:flex;align-items:flex-start;gap:12px;transition:all .2s;border-left:4px solid var(--border)}
+.ep-card:hover{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.02)}
+.ep-card.has-files{border-left-color:var(--accent-green)}
+.ep-card.empty-ep{border-left-color:var(--accent-red);opacity:.75}
+.ep-card.approved{border-left-color:var(--accent-emerald);background:rgba(16,185,129,.02)}
+.ep-card.flagged{border-left-color:var(--accent-orange);background:rgba(249,115,22,.02)}
+.ep-checkbox{margin-top:2px}
+.ep-checkbox input{width:15px;height:15px;cursor:pointer;accent-color:var(--accent-blue)}
+.ep-main{flex:1;min-width:0}
+.ep-title{font-size:12px;font-weight:600;margin-bottom:3px;word-wrap:break-word;line-height:1.4}
+.ep-id{font-size:10px;color:var(--accent-cyan);font-weight:700;margin-right:6px}
+.ep-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px}
+.ep-tag{font-size:9px;font-weight:600;padding:2px 7px;border-radius:5px;display:flex;align-items:center;gap:3px}
+.ep-tag.type{background:rgba(139,92,246,.12);color:var(--accent-purple)}
+.ep-tag.files{background:rgba(16,185,129,.12);color:var(--accent-green)}
+.ep-tag.empty-tag{background:rgba(239,68,68,.1);color:var(--accent-red)}
+.ep-tag.size{background:rgba(6,182,212,.1);color:var(--accent-cyan)}
+.ep-tag.approved-tag{background:rgba(16,185,129,.12);color:var(--accent-green)}
+.ep-tag.flagged-tag{background:rgba(245,158,11,.1);color:var(--accent-yellow)}
+.ep-files{margin-top:6px}
+.ep-file{display:flex;align-items:center;gap:6px;padding:3px 6px;font-size:11px;color:var(--text-secondary);border-radius:4px}
+.ep-file:hover{background:rgba(59,130,246,.04)}
+.ep-file .fname{flex:1;word-break:break-all}.ep-file .fsize{color:var(--text-muted);font-size:10px}
+.ep-actions{display:flex;flex-direction:column;gap:5px;align-items:flex-end}
+.review-btns{display:flex;gap:3px}
+.review-btn{padding:4px 10px;border-radius:6px;font-size:10px;font-weight:700;cursor:pointer;transition:all .15s;border:1px solid transparent;text-transform:uppercase;letter-spacing:.4px;font-family:inherit;background:transparent}
+.review-btn.approve{color:var(--accent-green);border-color:rgba(16,185,129,.2)}
+.review-btn.approve:hover,.review-btn.approve.active{background:var(--accent-green);color:#000}
+.review-btn.flag{color:var(--accent-yellow);border-color:rgba(245,158,11,.2)}
+.review-btn.flag:hover,.review-btn.flag.active{background:var(--accent-yellow);color:#000}
+.comment-input{width:160px;background:var(--bg-card);border:1px solid var(--border);border-radius:6px;padding:3px 7px;color:var(--text-primary);font-size:10px;font-family:inherit}
+.comment-input::placeholder{color:var(--text-muted)}
+.comment-input:focus{outline:none;border-color:var(--accent-blue)}
+
+/* REPORTS */
+.report-actions{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.report-btn{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:20px;cursor:pointer;transition:all .2s;flex:1;min-width:200px}
+.report-btn:hover{border-color:var(--accent-blue);transform:translateY(-2px)}
+.report-btn .r-icon{font-size:26px;margin-bottom:6px}
+.report-btn .r-title{font-weight:700;font-size:14px;margin-bottom:3px}
+.report-btn .r-desc{font-size:11px;color:var(--text-muted)}
+
+/* BULK BAR */
+.bulk-bar{position:fixed;bottom:24px;left:50%;transform:translateX(calc(-50% + 130px));background:var(--accent-blue);border-radius:14px;padding:10px 20px;display:none;align-items:center;gap:14px;z-index:300;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.bulk-bar.visible{display:flex}
+.bulk-count{font-weight:700;font-size:13px}
+.bulk-btn{padding:5px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:none;transition:all .15s;font-family:inherit}
+.bulk-btn.b-approve{background:var(--accent-green);color:#000}
+.bulk-btn.b-flag{background:var(--accent-yellow);color:#000}
+.bulk-btn.b-clear{background:rgba(255,255,255,.2);color:#fff}
+
+/* ANIMATIONS */
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeIn .4s ease-out}
+.d1{animation-delay:.05s;animation-fill-mode:both}.d2{animation-delay:.1s;animation-fill-mode:both}
+.d3{animation-delay:.15s;animation-fill-mode:both}.d4{animation-delay:.2s;animation-fill-mode:both}
+.d5{animation-delay:.25s;animation-fill-mode:both}.d6{animation-delay:.3s;animation-fill-mode:both}
+
+/* RESPONSIVE */
+@media(max-width:1200px){.kpi-grid{grid-template-columns:repeat(3,1fr)}.grid-2{grid-template-columns:1fr}}
+@media(max-width:900px){.sidebar{display:none}.main-area{margin-left:0}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
 
-<div class="hdr">
-  <div class="ht">
-    <h1>&#x1F6E1;&#xFE0F; TRU PCI DSS v4.0.1 — Evidence Command Center</h1>
-    <p>iExperts &middot; TRU Compliance &middot; Live Data &middot; Click any evidence file to preview</p>
-  </div>
-  <div class="sb" id="headerStats"></div>
-</div>
-
-<div class="ctrl">
-  <label>Filter:</label>
-  <div id="filterBtns"></div>
-  <input class="sb2" type="text" placeholder="&#x1F50D; Search EP # or description..." oninput="ss(this.value)">
-  <button class="ea" onclick="ea()">Expand All</button>
-  <button class="ea" onclick="ca()">Collapse All</button>
-  <button class="ea" onclick="window.print()" style="background:#1F3864;color:#fff;border-color:#1F3864">&#x1F5A8;&#xFE0F; Print</button>
-  <button class="ea" onclick="exportCSV()" style="background:#28a745;color:#fff;border-color:#28a745">&#x1F4E5; Export CSV</button>
-</div>
-
-<div class="layout">
-  <div class="list-pane" id="listPane"></div>
-  <div id="resizeHandle" class="resize-handle"></div>
-  <div class="preview-pane hidden" id="previewPane">
-    <div class="ph">
-      <h3 id="previewTitle">File Preview</h3>
-      <button class="close-btn" onclick="closePreview()">&#x2715;</button>
-    </div>
-    <div class="pc" id="previewContent"></div>
-    <div class="review-actions" id="reviewActions" style="display:none">
-      <button class="rev-btn approve" onclick="setReview('approved')">&#x2705; Approve</button>
-      <button class="rev-btn flag" onclick="setReview('flagged')">&#x26A0;&#xFE0F; Flag</button>
-      <button class="rev-btn reject" onclick="setReview('rejected')">&#x274C; Reject</button>
-      <span class="rev-status" id="revStatus"></span>
-    </div>
-    <div class="comment-area" id="commentArea" style="display:none">
-      <h4>Comments</h4>
-      <div class="comment-list" id="commentList"></div>
-      <div class="comment-form">
-        <input class="comment-input" id="commentInput" placeholder="Add a comment..." onkeydown="if(event.key==='Enter')addComment()">
-        <button class="comment-submit" onclick="addComment()">Send</button>
-      </div>
+<div class="sidebar" id="sidebar"></div>
+<div class="main-area">
+  <div class="topbar">
+    <div class="topbar-title" id="viewTitle">Dashboard</div>
+    <div class="topbar-right">
+      <span class="sprint-badge">DAY 5 OF SPRINT</span>
+      <button class="btn-export" onclick="exportReviewReport()">&#x1F4E4; Export Report</button>
     </div>
   </div>
+  <div class="content" id="viewContent"></div>
+</div>
+
+<div class="bulk-bar" id="bulkBar">
+  <span class="bulk-count"><span id="bulkCount">0</span> selected</span>
+  <button class="bulk-btn b-approve" onclick="bulkAction('approved')">Approve All</button>
+  <button class="bulk-btn b-flag" onclick="bulkAction('flagged')">Flag All</button>
+  <button class="bulk-btn b-clear" onclick="clearSelection()">Clear</button>
 </div>
 
 <script>
 // ===== EMBEDDED DATA =====
 var DATA = __DATA_PLACEHOLDER__;
 
-var currentFilter = 'all';
-var currentEpId = null;
-var reviewStates = {};
-var comments = {};
+// ===== STATE =====
+var state = {
+  view: 'dashboard', filter: 'all', filterReq: null, search: '',
+  selected: new Set(), reviewStates: loadRS()
+};
 
-// Load persisted review states
-try { reviewStates = JSON.parse(localStorage.getItem('tru_reviews') || '{}'); } catch(e) {}
-try { comments = JSON.parse(localStorage.getItem('tru_comments') || '{}'); } catch(e) {}
-
-function saveRS() { try { localStorage.setItem('tru_reviews', JSON.stringify(reviewStates)); } catch(e) {} }
-function saveComments() { try { localStorage.setItem('tru_comments', JSON.stringify(comments)); } catch(e) {} }
-
-// ===== OWNER MAP =====
-var OWNERS = DATA.owners || {};
-function getOwner(reqId) {
-  for (var name in OWNERS) {
-    if (OWNERS[name].reqs && OWNERS[name].reqs.indexOf(reqId) > -1) {
-      return { name: name.split(' ')[0], color: OWNERS[name].color, role: OWNERS[name].role };
-    }
-  }
-  return { name: '?', color: '#666', role: 'Unassigned' };
-}
-
-// ===== BUILD HEADER =====
-function buildHeader() {
-  var s = DATA.summary || {};
-  var h = document.getElementById('headerStats');
-  h.innerHTML =
-    '<div class="sbox"><div class="n">' + (s.filledEPs||0) + '</div><div class="l">Filled</div></div>' +
-    '<div class="sbox"><div class="n" style="color:#ffc">' + (s.emptyEPs||0) + '</div><div class="l">Empty</div></div>' +
-    '<div class="sbox"><div class="n">' + (s.totalEPs||0) + '</div><div class="l">Total EPs</div></div>' +
-    '<div class="sbox"><div class="n">' + (s.reqsAt100||0) + '</div><div class="l">Reqs@100%</div></div>' +
-    '<div class="sbox"><div class="op">' + (s.percentage||0) + '%</div><div class="l">Coverage</div></div>';
-}
-
-// ===== BUILD FILTERS =====
-function buildFilters() {
-  var s = DATA.summary || {};
-  var el = document.getElementById('filterBtns');
-  el.innerHTML =
-    '<button class="fb active" onclick="sf(\'all\',this)">All (' + (s.totalEPs||0) + ')</button> ' +
-    '<button class="fb fc" onclick="sf(\'complete\',this)">&#x2705; Filled (' + (s.filledEPs||0) + ')</button> ' +
-    '<button class="fb fn" onclick="sf(\'pending\',this)">&#x1F534; Empty (' + (s.emptyEPs||0) + ')</button>';
-}
-
-// ===== BUILD REQUIREMENT SECTIONS =====
-function buildRequirements() {
-  var reqs = DATA.requirements || [];
-  var eps = DATA.evidencePoints || [];
-  var pane = document.getElementById('listPane');
-  pane.innerHTML = '';
-
-  reqs.forEach(function(req) {
-    var reqEps = eps.filter(function(ep) { return ep.requirement === req.id; });
-    var owner = getOwner(req.id);
-
-    // Determine bar color
-    var barColor = req.percentage === 100 ? '#28a745' : req.percentage >= 50 ? '#e6a817' : '#dc3545';
-
-    var div = document.createElement('div');
-    div.className = 'rb';
-    div.id = 'r' + req.id;
-
-    // Header
-    div.innerHTML =
-      '<div class="rh" onclick="tog(' + req.id + ')">' +
-        '<div class="rl">' +
-          '<span class="rn">REQ ' + req.id + '</span>' +
-          '<span class="rname">' + esc(req.name) + '</span>' +
-          '<span class="owner-tag" style="background:' + owner.color + '">' + esc(owner.name) + '</span>' +
-        '</div>' +
-        '<div class="rr">' +
-          '<span class="badge b-complete">' + req.filled + ' &#x2705;</span>' +
-          '<span class="badge b-pending">' + req.empty + ' &#x1F534;</span>' +
-          '<span class="rpct">' + req.percentage + '%</span>' +
-          '<div class="rbar"><div style="width:' + req.percentage + '%;height:100%;background:' + barColor + ';border-radius:3px"></div></div>' +
-          '<span class="ti" id="ti' + req.id + '">&#x25BC;</span>' +
-        '</div>' +
-      '</div>';
-
-    // Body table
-    var body = document.createElement('div');
-    body.className = 'rbody';
-    body.id = 'rb' + req.id;
-
-    var table = '<table class="et"><thead><tr>' +
-      '<th style="width:50px">EP#</th>' +
-      '<th>Description</th>' +
-      '<th style="width:80px">Owner</th>' +
-      '<th style="width:80px">Status</th>' +
-      '<th>Evidence Files (click to preview)</th>' +
-    '</tr></thead><tbody>';
-
-    reqEps.forEach(function(ep) {
-      var status = ep.hasFiles ? 'complete' : 'pending';
-      // Check if there's a local review override
-      if (reviewStates[ep.id]) status = reviewStates[ep.id] === 'approved' ? 'complete' : (reviewStates[ep.id] === 'flagged' ? 'partial' : 'pending');
-      var statusBadge = status === 'complete' ? '<span class="badge b-complete">&#x2705; Filled</span>' :
-                        status === 'partial' ? '<span class="badge b-partial">&#x26A0;&#xFE0F; Flagged</span>' :
-                        '<span class="badge b-pending">&#x1F534; Empty</span>';
-
-      var epOwner = getOwner(ep.requirement);
-      var epNum = ep.epId || ep.id;
-      // Extract 3-digit number from folder name if possible
-      var numMatch = (ep.folder || '').match(/^(\d{3})/);
-      var displayNum = numMatch ? numMatch[1] : epNum;
-
-      var filesHtml;
-      if (ep.hasFiles && ep.files && ep.files.length > 0) {
-        filesHtml = '<div class="fl">';
-        ep.files.forEach(function(f) {
-          var ext = (f.ext || '').replace('.', '');
-          var icon = ext === 'pdf' ? '&#x1F4D5;' : ext === 'xlsx' || ext === 'xls' ? '&#x1F4CA;' : '&#x1F4C4;';
-          var sizeStr = f.size ? formatSize(f.size) : '';
-          filesHtml += '<div class="fi" onclick="openFile(\'' + escAttr(ep.folder) + '/' + escAttr(f.name) + '\',\'' + ext + '\',\'' + escAttr(f.name) + '\',\'' + escAttr(ep.id) + '\')" title="Click to preview">' +
-            icon + ' <span class="fn">' + esc(f.name) + '</span><span class="fk">' + sizeStr + '</span></div>';
-        });
-        filesHtml += '</div>';
-      } else if (ep.hasFiles) {
-        // has files but no file details
-        filesHtml = '<div class="fl"><div class="fi" style="cursor:default"><span class="fn" style="color:#28a745">&#x2705; Evidence uploaded</span></div></div>';
-      } else {
-        filesHtml = '<div class="fl empty">No evidence uploaded yet</div>';
-      }
-
-      table += '<tr class="erow ' + status + '" data-ep="' + displayNum + '" data-id="' + escAttr(ep.id) + '">' +
-        '<td class="tc">' + displayNum + '</td>' +
-        '<td class="td">' + esc(ep.folder || '') + '</td>' +
-        '<td class="to"><span class="owner-tag" style="background:' + epOwner.color + '">' + esc(epOwner.name) + '</span></td>' +
-        '<td class="ts">' + statusBadge + '</td>' +
-        '<td class="tf">' + filesHtml + '</td>' +
-      '</tr>';
-    });
-
-    table += '</tbody></table>';
-    body.innerHTML = table;
-    div.appendChild(body);
-    pane.appendChild(div);
-  });
-}
-
-// ===== TOGGLE REQUIREMENT =====
-function tog(id) {
-  var b = document.getElementById('rb' + id);
-  var t = document.getElementById('ti' + id);
-  if (b.classList.contains('open')) {
-    b.classList.remove('open');
-    if (t) t.innerHTML = '&#x25BC;';
-  } else {
-    b.classList.add('open');
-    if (t) t.innerHTML = '&#x25B2;';
-  }
-}
-
-// ===== FILTER =====
-function sf(f, btn) {
-  currentFilter = f;
-  document.querySelectorAll('.ctrl .fb').forEach(function(b) { b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  applyFilters();
-}
-function ss(v) { applyFilters(v); }
-
-function applyFilters(q) {
-  var flt = currentFilter;
-  var ql = (q || document.querySelector('.sb2').value || '').toLowerCase().trim();
-  document.querySelectorAll('.erow').forEach(function(r) {
-    var ep = (r.getAttribute('data-ep') || '');
-    var desc = (r.querySelector('.td') || {}).textContent || '';
-    var matchQ = !ql || ep.indexOf(ql) > -1 || desc.toLowerCase().indexOf(ql) > -1;
-    var matchF = flt === 'all' || r.classList.contains(flt);
-    r.classList.toggle('hidden', !(matchQ && matchF));
-  });
-  if (ql) {
-    document.querySelectorAll('.rbody').forEach(function(b) {
-      var vis = b.querySelectorAll('.erow:not(.hidden)');
-      var id = b.id.replace('rb', '');
-      var ti = document.getElementById('ti' + id);
-      if (vis.length > 0) { b.classList.add('open'); if (ti) ti.innerHTML = '&#x25B2;'; }
-    });
-  }
-}
-
-function ea() {
-  document.querySelectorAll('.rbody').forEach(function(b) { b.classList.add('open'); });
-  document.querySelectorAll('.ti').forEach(function(t) { t.innerHTML = '&#x25B2;'; });
-}
-function ca() {
-  document.querySelectorAll('.rbody').forEach(function(b) { b.classList.remove('open'); });
-  document.querySelectorAll('.ti').forEach(function(t) { t.innerHTML = '&#x25BC;'; });
-}
-
-// ===== FILE PREVIEW =====
-function openFile(relPath, ext, name, epId) {
-  currentEpId = epId;
-  var pane = document.getElementById('previewPane');
-  var content = document.getElementById('previewContent');
-  var title = document.getElementById('previewTitle');
-  pane.classList.remove('hidden');
-  title.textContent = name;
-  content.innerHTML = '';
-  document.getElementById('reviewActions').style.display = 'flex';
-  document.getElementById('commentArea').style.display = 'block';
-
-  // Update review status display
-  updateRevStatus();
-  renderComments();
-
-  var imgExts = ['jpg','jpeg','png','gif','bmp','webp','svg'];
-
-  if (ext === 'pdf') {
-    var iframe = document.createElement('iframe');
-    iframe.src = '/evidence/' + relPath + '#toolbar=1&navpanes=0';
-    iframe.style.cssText = 'width:100%;height:100%;border:none';
-    iframe.onerror = function() { content.innerHTML = '<div class="no-preview"><div class="big">&#x1F4D5;</div><p><strong>' + esc(name) + '</strong></p><p style="font-size:11px;color:#888">PDF preview not available on server.</p></div>'; };
-    content.appendChild(iframe);
-  } else if (imgExts.indexOf(ext) > -1) {
-    var img = document.createElement('img');
-    img.src = '/evidence/' + relPath;
-    img.style.cssText = 'max-width:100%;max-height:100%;display:block;margin:auto;padding:16px';
-    img.onerror = function() { content.innerHTML = '<div class="no-preview"><div class="big">&#x26A0;&#xFE0F;</div><p>Could not load image</p></div>'; };
-    content.appendChild(img);
-  } else if (ext === 'docx' || ext === 'doc') {
-    content.innerHTML = '<div class="no-preview"><div class="big">&#x1F4C4;</div><p><strong>' + esc(name) + '</strong></p><p style="font-size:11px;color:#888;max-width:300px">Word documents open best in Microsoft Word or Google Docs.</p><p style="font-size:10px;color:#aaa;margin-top:6px">File is in the Google Drive evidence folder</p></div>';
-  } else if (ext === 'xlsx' || ext === 'xls' || ext === 'csv') {
-    content.innerHTML = '<div class="no-preview"><div class="big">&#x1F4CA;</div><p><strong>' + esc(name) + '</strong></p><p style="font-size:11px;color:#888">Excel files open best in Excel.</p></div>';
-  } else {
-    content.innerHTML = '<div class="no-preview"><div class="big">&#x1F4CE;</div><p><strong>' + esc(name) + '</strong></p><p style="font-size:11px;color:#888">This file type opens in its native application.</p></div>';
-  }
-}
-
-function closePreview() {
-  document.getElementById('previewPane').classList.add('hidden');
-  currentEpId = null;
-}
-
-// ===== REVIEW =====
-function setReview(status) {
-  if (!currentEpId) return;
-  reviewStates[currentEpId] = status;
-  saveRS();
-  updateRevStatus();
-  // Update the row badge
-  var row = document.querySelector('[data-id="' + currentEpId + '"]');
-  if (row) {
-    row.className = 'erow ' + (status === 'approved' ? 'complete' : status === 'flagged' ? 'partial' : 'pending');
-    var badge = row.querySelector('.ts');
-    if (badge) {
-      badge.innerHTML = status === 'approved' ? '<span class="badge b-complete">&#x2705; Approved</span>' :
-                        status === 'flagged' ? '<span class="badge b-partial">&#x26A0;&#xFE0F; Flagged</span>' :
-                        '<span class="badge b-pending">&#x274C; Rejected</span>';
-    }
-  }
-  // Try to POST to server
-  try {
-    fetch('/api/review/' + currentEpId, {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ status: status, reviewer_name: 'iExperts Reviewer' })
-    }).catch(function(){});
-  } catch(e) {}
-}
-
-function updateRevStatus() {
-  var el = document.getElementById('revStatus');
-  var s = reviewStates[currentEpId];
-  if (s === 'approved') { el.textContent = '&#x2705; APPROVED'; el.style.color = '#28a745'; }
-  else if (s === 'flagged') { el.textContent = '&#x26A0; FLAGGED'; el.style.color = '#e6a817'; }
-  else if (s === 'rejected') { el.textContent = '&#x274C; REJECTED'; el.style.color = '#dc3545'; }
-  else { el.textContent = 'PENDING REVIEW'; el.style.color = '#888'; }
-  // Highlight active button
-  document.querySelectorAll('.rev-btn').forEach(function(b) { b.classList.remove('active'); });
-  if (s) {
-    var cls = s === 'approved' ? '.approve' : s === 'flagged' ? '.flag' : '.reject';
-    var btn = document.querySelector('.rev-btn' + cls);
-    if (btn) btn.classList.add('active');
-  }
-}
-
-// ===== COMMENTS =====
-function renderComments() {
-  var list = document.getElementById('commentList');
-  var epComments = comments[currentEpId] || [];
-  list.innerHTML = '';
-  epComments.forEach(function(c) {
-    var d = document.createElement('div');
-    d.className = 'comment-item';
-    d.innerHTML = '<span class="ca">' + esc(c.author) + '</span>' + esc(c.text) + '<span class="ct">' + c.time + '</span>';
-    list.appendChild(d);
-  });
-  list.scrollTop = list.scrollHeight;
-}
-
-function addComment() {
-  var input = document.getElementById('commentInput');
-  var text = input.value.trim();
-  if (!text || !currentEpId) return;
-  if (!comments[currentEpId]) comments[currentEpId] = [];
-  var now = new Date();
-  comments[currentEpId].push({
-    author: 'Reviewer',
-    text: text,
-    time: now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})
-  });
-  saveComments();
-  renderComments();
-  input.value = '';
-  // Try to POST to server
-  try {
-    fetch('/api/comments', {
-      method: 'POST', headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({ evidence_point_id: currentEpId, comment: text, author: 'iExperts Reviewer' })
-    }).catch(function(){});
-  } catch(e) {}
-}
-
-// ===== EXPORT CSV =====
-function exportCSV() {
-  var eps = DATA.evidencePoints || [];
-  var rows = [['EP_ID','Requirement','Folder','Type','Has_Files','File_Count','Owner','Review_Status']];
-  eps.forEach(function(ep) {
-    var o = getOwner(ep.requirement);
-    var rs = reviewStates[ep.id] || ep.reviewStatus || 'pending';
-    rows.push([ep.epId, 'R' + ep.requirement, '"' + (ep.folder||'').replace(/"/g,'""') + '"', ep.type, ep.hasFiles?'Yes':'No', ep.fileCount, o.name, rs]);
-  });
-  var csv = rows.map(function(r){return r.join(',')}).join('\n');
-  var blob = new Blob([csv], {type:'text/csv'});
-  var a = document.createElement('a');
-  a.href = URL.createObjectURL(blob);
-  a.download = 'TRU_PCI_DSS_Evidence_Report_' + new Date().toISOString().split('T')[0] + '.csv';
-  a.click();
-}
-
-// ===== RESIZE HANDLE =====
-var resizing = false, startX, startW;
-var handle = document.getElementById('resizeHandle');
-var pane = document.getElementById('previewPane');
-handle.addEventListener('mousedown', function(e) {
-  resizing = true; startX = e.clientX;
-  startW = pane.offsetWidth;
-  document.body.style.userSelect = 'none';
-  document.body.style.cursor = 'col-resize';
-});
-document.addEventListener('mousemove', function(e) {
-  if (!resizing) return;
-  var dx = startX - e.clientX;
-  var newW = Math.max(300, Math.min(900, startW + dx));
-  pane.style.width = newW + 'px';
-});
-document.addEventListener('mouseup', function() {
-  resizing = false;
-  document.body.style.userSelect = '';
-  document.body.style.cursor = '';
-});
+// ===== COLORS =====
+var REQ_COLORS = {1:'#3b82f6',2:'#10b981',3:'#f59e0b',4:'#06b6d4',5:'#f97316',6:'#8b5cf6',7:'#10b981',8:'#ef4444',9:'#06b6d4',10:'#ef4444',11:'#f97316',12:'#10b981'};
+function rc(id){return REQ_COLORS[id]||'#64748b'}
 
 // ===== HELPERS =====
-function esc(s) { var d=document.createElement('div'); d.textContent=s||''; return d.innerHTML; }
-function escAttr(s) { return (s||'').replace(/'/g,"\\'").replace(/"/g,'&quot;'); }
-function formatSize(b) {
-  if (b < 1024) return b + ' B';
-  if (b < 1048576) return Math.round(b/1024) + ' KB';
-  return (b/1048576).toFixed(1) + ' MB';
+function fmtSize(b){if(b<1024)return b+' B';if(b<1048576)return(b/1024).toFixed(1)+' KB';return(b/1048576).toFixed(1)+' MB'}
+function fmtDate(iso){return new Date(iso).toLocaleDateString('en-US',{month:'short',day:'numeric'})}
+function fIcon(ext){var m={'.docx':'\u{1F4C4}','.doc':'\u{1F4C4}','.xlsx':'\u{1F4CA}','.pdf':'\u{1F4D5}','.png':'\u{1F5BC}','.jpg':'\u{1F5BC}','.txt':'\u{1F4DD}','.csv':'\u{1F4CB}'};return m[ext]||'\u{1F4CE}'}
+function getRS(id){return(state.reviewStates[id]||{}).status||'pending'}
+function setRS(id,s,c){if(!state.reviewStates[id])state.reviewStates[id]={};state.reviewStates[id].status=s;state.reviewStates[id].date=new Date().toISOString();state.reviewStates[id].reviewer='Yasser Shishiny';if(c!==undefined)state.reviewStates[id].comment=c;saveRS()}
+function loadRS(){try{var s=localStorage.getItem('tru_pci_rs');return s?JSON.parse(s):{}}catch(e){return{}}}
+function saveRS(){try{localStorage.setItem('tru_pci_rs',JSON.stringify(state.reviewStates))}catch(e){}}
+function getCounts(){var a=0,f=0,nr=0,em=0;DATA.evidencePoints.forEach(function(ep){var r=getRS(ep.id);if(!ep.hasFiles){em++;return}if(r==='approved')a++;else if(r==='flagged')f++;else nr++});return{approved:a,flagged:f,needsReview:nr,empty:em}}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+
+// ===== SIDEBAR =====
+function buildSidebar(){
+  var s=DATA.summary;
+  var h='<div class="sidebar-logo"><div class="logo-icon">TRU</div><div><div class="logo-text">PCI DSS v4.0</div><div class="logo-sub">Command Center</div></div></div>';
+  h+='<div class="sidebar-nav">';
+  h+='<div class="nav-section">Main</div>';
+  h+='<div class="nav-item active" data-view="dashboard" onclick="switchView(\'dashboard\')"><span class="icon">\u{1F4CA}</span> Dashboard</div>';
+  h+='<div class="nav-item" data-view="reviewer" onclick="switchView(\'reviewer\')"><span class="icon">\u{1F50D}</span> Evidence Reviewer<span class="badge">'+s.emptyEPs+'</span></div>';
+  h+='<div class="nav-item" data-view="reports" onclick="switchView(\'reports\')"><span class="icon">\u{1F4CB}</span> Reports</div>';
+  h+='<a class="nav-item" href="/reviewer" style="text-decoration:none"><span class="icon">\u{1F4DD}</span> Standalone Reviewer</a>';
+  h+='<div class="nav-section">Requirements</div>';
+  DATA.requirements.forEach(function(r){
+    var name=r.name.length>22?r.name.substring(0,22)+'...':r.name;
+    var pctColor=r.percentage===100?'var(--accent-green)':r.percentage>=90?'var(--accent-yellow)':'var(--text-muted)';
+    h+='<div class="nav-item" onclick="switchView(\'reviewer\');filterByReq('+r.id+')">';
+    h+='<span style="font-size:11px;background:'+rc(r.id)+';width:22px;height:22px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800">'+r.id+'</span>';
+    h+='<span style="font-size:12px">'+name+'</span>';
+    h+='<span style="margin-left:auto;font-size:10px;color:'+pctColor+';font-weight:700">'+r.percentage+'%</span></div>';
+  });
+  h+='</div>';
+  h+='<div class="sidebar-footer"><div class="scan-date">Scanned: '+fmtDate(s.scanDate)+'</div><div style="margin-top:4px">TRU Properties &copy; 2026</div></div>';
+  document.getElementById('sidebar').innerHTML=h;
+}
+
+// ===== VIEWS =====
+function switchView(v){
+  state.view=v;
+  document.querySelectorAll('.nav-item[data-view]').forEach(function(el){el.classList.toggle('active',el.dataset.view===v)});
+  var titles={dashboard:'Dashboard',reviewer:'Evidence Reviewer',reports:'Reports & Export'};
+  document.getElementById('viewTitle').textContent=titles[v]||'Dashboard';
+  render();
+}
+
+function render(){
+  var c=document.getElementById('viewContent');
+  if(state.view==='dashboard')renderDash(c);
+  else if(state.view==='reviewer')renderReviewer(c);
+  else if(state.view==='reports')renderReports(c);
+}
+
+// ===== DASHBOARD =====
+function renderDash(el){
+  var s=DATA.summary,rc2=getCounts();
+  var h='<div class="alert-banner warning anim"><div class="alert-icon">\u26A1</div>';
+  h+='<div class="alert-text"><strong>Day 5 Sprint Update:</strong> '+s.filledEPs+'/'+s.totalEPs+' evidence folders populated ('+s.percentage+'%). '+rc2.approved+' reviewed & approved, '+rc2.needsReview+' pending review.</div></div>';
+
+  h+='<div class="kpi-grid">';
+  h+='<div class="kpi-card blue anim d1"><div class="kpi-value">'+s.totalEPs+'</div><div class="kpi-label">Total Evidence Points</div></div>';
+  h+='<div class="kpi-card green anim d2"><div class="kpi-value">'+s.filledEPs+'</div><div class="kpi-label">Folders Populated</div><div class="kpi-delta up">'+s.percentage+'% complete</div></div>';
+  h+='<div class="kpi-card red anim d3"><div class="kpi-value">'+s.emptyEPs+'</div><div class="kpi-label">Remaining</div></div>';
+  h+='<div class="kpi-card purple anim d4"><div class="kpi-value">'+rc2.approved+'</div><div class="kpi-label">Reviewed & Approved</div></div>';
+  h+='<div class="kpi-card yellow anim d5"><div class="kpi-value">'+s.reqsAt100+'</div><div class="kpi-label">Reqs at 100%</div></div>';
+  h+='<div class="kpi-card cyan anim d6"><div class="kpi-value">'+s.totalFiles+'</div><div class="kpi-label">Total Files</div><div class="kpi-delta up">'+fmtSize(s.totalSize)+'</div></div>';
+  h+='</div>';
+
+  h+='<div class="progress-section anim"><div class="progress-header"><div class="progress-title">Overall Evidence Completion</div><div class="progress-value">'+s.percentage+'%</div></div>';
+  h+='<div class="progress-track"><div class="progress-fill" style="width:'+s.percentage+'%">'+s.filledEPs+' / '+s.totalEPs+'</div><div class="progress-remaining">'+s.emptyEPs+' remaining</div></div></div>';
+
+  h+='<div class="grid-2"><div class="card anim">';
+  h+='<div class="card-title">Requirement Breakdown</div>';
+  h+='<table class="req-table"><thead><tr><th>#</th><th>Requirement</th><th>Progress</th><th>Bar</th><th>%</th><th>Status</th></tr></thead><tbody>';
+  DATA.requirements.sort(function(a,b){return a.id-b.id}).forEach(function(r){
+    var barColor=r.percentage===100?'#10b981':r.percentage>=90?'#f59e0b':r.percentage>=70?'#3b82f6':'#ef4444';
+    var statusClass=r.percentage===100?'complete':r.percentage>=90?'near':r.percentage>=70?'progress':'behind';
+    var statusText=r.percentage===100?'Complete':r.percentage>=90?'Near Complete':r.percentage>=70?'In Progress':'Behind';
+    h+='<tr onclick="switchView(\'reviewer\');filterByReq('+r.id+')">';
+    h+='<td><span style="display:inline-block;width:24px;height:24px;background:'+rc(r.id)+';border-radius:6px;text-align:center;line-height:24px;font-weight:800;font-size:11px;color:#fff">'+r.id+'</span></td>';
+    h+='<td>'+r.name+'</td><td style="font-weight:600">'+r.filled+'/'+r.total+'</td>';
+    h+='<td><div class="mini-bar"><div class="mini-fill" style="width:'+r.percentage+'%;background:'+barColor+'"></div></div></td>';
+    h+='<td style="font-weight:700;color:'+barColor+'">'+r.percentage+'%</td>';
+    h+='<td><span class="status-tag '+statusClass+'">'+statusText+'</span></td></tr>';
+  });
+  h+='</tbody></table></div>';
+
+  h+='<div style="display:flex;flex-direction:column;gap:16px">';
+  // Owners
+  h+='<div class="card anim d2"><div class="card-title">Owner Workload</div>';
+  Object.entries(DATA.owners).forEach(function(entry){
+    var name=entry[0],info=entry[1];
+    var ownerEPs=DATA.evidencePoints.filter(function(ep){return info.reqs.indexOf(ep.requirement)>=0});
+    var ownerEmpty=ownerEPs.filter(function(ep){return!ep.hasFiles}).length;
+    h+='<div class="owner-card"><div class="owner-avatar" style="background:'+info.color+'">'+name.split(' ').map(function(w){return w[0]}).join('')+'</div>';
+    h+='<div class="owner-info"><div class="owner-name">'+name+'</div><div class="owner-role">'+info.role+' \u2022 Reqs '+info.reqs.join(', ')+'</div></div>';
+    h+='<div class="owner-stats"><div class="owner-count" style="color:'+(ownerEmpty>0?'#f87171':'#10b981')+'">'+ownerEmpty+'</div><div class="owner-label">remaining</div></div></div>';
+  });
+  h+='</div>';
+  // Timeline
+  h+='<div class="card anim d3"><div class="card-title">Sprint Timeline</div><div class="timeline">';
+  h+='<div class="timeline-item done"><div class="timeline-date">Apr 1 (Day 1)</div><div class="timeline-text">Project kickoff, initial docs</div></div>';
+  h+='<div class="timeline-item done"><div class="timeline-date">Apr 2 (Day 3)</div><div class="timeline-text">50+ documents batch created</div></div>';
+  h+='<div class="timeline-item done"><div class="timeline-date">Apr 3 (Day 4)</div><div class="timeline-text">120+ docs, platform built</div></div>';
+  h+='<div class="timeline-item current"><div class="timeline-date">Apr 4 (Day 5)</div><div class="timeline-text">Command Center + review system</div></div>';
+  h+='<div class="timeline-item future"><div class="timeline-date">Apr 5-7</div><div class="timeline-text">IT evidence collection</div></div>';
+  h+='<div class="timeline-item future"><div class="timeline-date">Apr 8+</div><div class="timeline-text">iExperts review & assessor prep</div></div>';
+  h+='</div></div>';
+
+  h+='</div></div>';
+  el.innerHTML=h;
+}
+
+// ===== REVIEWER =====
+function filterByReq(id){
+  state.filterReq=id;state.filter='all';render();
+  setTimeout(function(){
+    var s=document.getElementById('req-section-'+id);
+    if(s){s.classList.add('open');s.scrollIntoView({behavior:'smooth',block:'start'})}
+  },100);
+}
+
+function renderReviewer(el){
+  var rc2=getCounts();
+  var h='<div class="reviewer-stats anim">';
+  h+='<div class="rev-stat green"><div class="val">'+rc2.approved+'</div><div class="lbl">Approved</div></div>';
+  h+='<div class="rev-stat yellow"><div class="val">'+rc2.needsReview+'</div><div class="lbl">Needs Review</div></div>';
+  h+='<div class="rev-stat red"><div class="val">'+rc2.empty+'</div><div class="lbl">Empty / Missing</div></div>';
+  var coverage=(rc2.approved+rc2.needsReview)>0?Math.round(rc2.approved/(rc2.approved+rc2.needsReview)*100):0;
+  h+='<div class="rev-stat blue"><div class="val">'+coverage+'%</div><div class="lbl">Review Coverage</div></div>';
+  h+='</div>';
+
+  h+='<div class="reviewer-toolbar anim"><div class="filter-pills">';
+  var filters=[['all','All',DATA.summary.totalEPs],['has_files','Has Files',DATA.summary.filledEPs],['approved','\u2705 Approved',rc2.approved],['needs_review','\u{1F50D} Needs Review',rc2.needsReview],['flagged','\u26A0 Flagged',rc2.flagged],['empty','\u274C Empty',rc2.empty]];
+  filters.forEach(function(f){
+    h+='<button class="pill'+(state.filter===f[0]?' active':'')+'" onclick="setFilter(\''+f[0]+'\')">'+f[1]+'<span class="cnt">'+f[2]+'</span></button>';
+  });
+  if(state.filterReq) h+='<button class="pill active" onclick="state.filterReq=null;render()">Req '+state.filterReq+' \u2715</button>';
+  h+='</div>';
+  h+='<input type="text" class="search-box" placeholder="\u{1F50E} Search evidence points..." value="'+esc(state.search)+'" oninput="state.search=this.value;updateSections()">';
+  h+='</div>';
+
+  h+='<div id="reqSections">'+buildSections()+'</div>';
+  el.innerHTML=h;
+}
+
+function setFilter(f){state.filter=f;render()}
+
+function buildSections(){
+  var reqs=state.filterReq?DATA.requirements.filter(function(r){return r.id===state.filterReq}):DATA.requirements.sort(function(a,b){return a.id-b.id});
+  var h='';
+  reqs.forEach(function(req){
+    var eps=DATA.evidencePoints.filter(function(ep){return ep.requirement===req.id});
+    // Filter
+    eps=eps.filter(function(ep){
+      var rs=getRS(ep.id);
+      if(state.filter==='has_files')return ep.hasFiles;
+      if(state.filter==='approved')return ep.hasFiles&&rs==='approved';
+      if(state.filter==='needs_review')return ep.hasFiles&&rs!=='approved'&&rs!=='flagged';
+      if(state.filter==='flagged')return rs==='flagged';
+      if(state.filter==='empty')return!ep.hasFiles;
+      return true;
+    });
+    // Search
+    if(state.search){
+      var q=state.search.toLowerCase();
+      eps=eps.filter(function(ep){return ep.folder.toLowerCase().indexOf(q)>=0||ep.id.toLowerCase().indexOf(q)>=0||ep.files.some(function(f){return f.name.toLowerCase().indexOf(q)>=0})});
+    }
+    if(eps.length===0&&!state.filterReq)return;
+
+    var filled=eps.filter(function(ep){return ep.hasFiles}).length;
+    var approved=eps.filter(function(ep){return getRS(ep.id)==='approved'}).length;
+    var isOpen=state.filterReq?true:false;
+
+    h+='<div class="req-section'+(isOpen?' open':'')+'" id="req-section-'+req.id+'">';
+    h+='<div class="req-section-header" onclick="this.parentElement.classList.toggle(\'open\')">';
+    h+='<div class="req-num" style="background:'+rc(req.id)+'">'+req.id+'</div>';
+    h+='<div class="req-section-info"><div class="req-section-name">Requirement '+req.id+' \u2013 '+req.name+'</div>';
+    h+='<div class="req-section-progress">'+filled+'/'+eps.length+' populated \u2022 '+approved+' approved</div></div>';
+    var pct=eps.length?Math.round(filled/eps.length*100):0;
+    h+='<div class="req-section-bar"><div class="req-section-fill" style="width:'+pct+'%;background:'+rc(req.id)+'"></div></div>';
+    h+='<div class="req-section-badges"><span class="badge-count filled">'+filled+' filled</span>';
+    if(eps.length-filled>0)h+='<span class="badge-count empty-b">'+(eps.length-filled)+' empty</span>';
+    if(approved>0)h+='<span class="badge-count reviewed">'+approved+' reviewed</span>';
+    h+='</div><div class="chevron">\u25B6</div></div>';
+
+    h+='<div class="ep-list">';
+    eps.forEach(function(ep){h+=buildEPCard(ep)});
+    h+='</div></div>';
+  });
+  return h;
+}
+
+function updateSections(){document.getElementById('reqSections').innerHTML=buildSections()}
+
+function buildEPCard(ep){
+  var rs=getRS(ep.id);
+  var comment=(state.reviewStates[ep.id]||{}).comment||'';
+  var cls=!ep.hasFiles?'empty-ep':rs==='approved'?'approved':rs==='flagged'?'flagged':'has-files';
+  var checked=state.selected.has(ep.id)?'checked':'';
+
+  var h='<div class="ep-card '+cls+'" id="ep-'+ep.id+'">';
+  h+='<div class="ep-checkbox"><input type="checkbox" '+checked+' onchange="toggleSel(\''+ep.id+'\',this.checked)"></div>';
+  h+='<div class="ep-main"><div class="ep-title"><span class="ep-id">'+ep.id+'</span>'+esc(ep.folder)+'</div>';
+  h+='<div class="ep-meta"><span class="ep-tag type">'+ep.type+'</span>';
+  if(ep.hasFiles){
+    h+='<span class="ep-tag files">\u{1F4C1} '+ep.fileCount+' file'+(ep.fileCount>1?'s':'')+'</span>';
+    h+='<span class="ep-tag size">'+fmtSize(ep.totalSize)+'</span>';
+  }else{
+    h+='<span class="ep-tag empty-tag">\u274C No files</span>';
+  }
+  if(rs==='approved')h+='<span class="ep-tag approved-tag">\u2705 Approved</span>';
+  if(rs==='flagged')h+='<span class="ep-tag flagged-tag">\u26A0 Flagged</span>';
+  h+='</div>';
+
+  if(ep.hasFiles){
+    h+='<div class="ep-files">';
+    ep.files.forEach(function(f){
+      h+='<div class="ep-file"><span>'+fIcon(f.ext)+'</span><span class="fname">'+esc(f.name)+'</span><span class="fsize">'+fmtSize(f.size)+'</span></div>';
+    });
+    h+='</div>';
+  }
+  h+='</div>';
+
+  h+='<div class="ep-actions">';
+  if(ep.hasFiles){
+    h+='<div class="review-btns">';
+    h+='<button class="review-btn approve'+(rs==='approved'?' active':'')+'" onclick="reviewEP(\''+ep.id+'\',\'approved\')">\u2705 OK</button>';
+    h+='<button class="review-btn flag'+(rs==='flagged'?' active':'')+'" onclick="reviewEP(\''+ep.id+'\',\'flagged\')">\u26A0 Flag</button>';
+    h+='</div>';
+  }
+  h+='<input type="text" class="comment-input" placeholder="Add comment..." value="'+esc(comment)+'" onchange="setComment(\''+ep.id+'\',this.value)">';
+  h+='</div></div>';
+  return h;
+}
+
+function reviewEP(id,s){var c=getRS(id);setRS(id,c===s?'pending':s);render()}
+function setComment(id,c){if(!state.reviewStates[id])state.reviewStates[id]={status:'pending'};state.reviewStates[id].comment=c;saveRS()}
+function toggleSel(id,chk){if(chk)state.selected.add(id);else state.selected.delete(id);document.getElementById('bulkBar').classList.toggle('visible',state.selected.size>0);document.getElementById('bulkCount').textContent=state.selected.size}
+function clearSelection(){state.selected.clear();document.getElementById('bulkBar').classList.remove('visible');render()}
+function bulkAction(s){state.selected.forEach(function(id){setRS(id,s)});state.selected.clear();document.getElementById('bulkBar').classList.remove('visible');render()}
+
+// ===== REPORTS =====
+function renderReports(el){
+  var rc2=getCounts();
+  var h='<div class="alert-banner info anim"><div class="alert-icon">\u{1F4CB}</div>';
+  h+='<div class="alert-text">Generate reports for internal review or to share with iExperts team before submitting to Google Drive.</div></div>';
+
+  h+='<div class="report-actions">';
+  h+='<div class="report-btn anim d1" onclick="exportReviewReport()"><div class="r-icon">\u{1F4CA}</div><div class="r-title">Review Status Report</div><div class="r-desc">Full HTML report with review status, comments, and metrics for iExperts.</div></div>';
+  h+='<div class="report-btn anim d2" onclick="exportCSV()"><div class="r-icon">\u{1F4CB}</div><div class="r-title">Evidence Matrix (CSV)</div><div class="r-desc">Spreadsheet of all EPs with status, files, review state, and owner.</div></div>';
+  h+='<div class="report-btn anim d3" onclick="exportEmptyList()"><div class="r-icon">\u26A0</div><div class="r-title">Missing Evidence Checklist</div><div class="r-desc">Printable checklist of empty folders grouped by owner for IT team.</div></div>';
+  h+='<div class="report-btn anim d4" onclick="exportDailyStatus()"><div class="r-icon">\u{1F4C5}</div><div class="r-title">Daily Status Board</div><div class="r-desc">Shareable daily status dashboard for stakeholders.</div></div>';
+  h+='</div>';
+
+  h+='<div class="card anim d5"><div class="card-title">Current Review Summary</div>';
+  h+='<table class="req-table"><thead><tr><th>Requirement</th><th>Total</th><th>With Files</th><th>Approved</th><th>Flagged</th><th>Pending</th><th>Empty</th></tr></thead><tbody>';
+  DATA.requirements.sort(function(a,b){return a.id-b.id}).forEach(function(r){
+    var eps=DATA.evidencePoints.filter(function(ep){return ep.requirement===r.id});
+    var wf=eps.filter(function(ep){return ep.hasFiles}).length;
+    var ap=eps.filter(function(ep){return getRS(ep.id)==='approved'}).length;
+    var fl=eps.filter(function(ep){return getRS(ep.id)==='flagged'}).length;
+    h+='<tr><td><span style="color:'+rc(r.id)+';font-weight:700">Req '+r.id+'</span> '+r.name+'</td>';
+    h+='<td>'+eps.length+'</td><td style="color:var(--accent-green);font-weight:600">'+wf+'</td>';
+    h+='<td style="color:var(--accent-green)">'+ap+'</td><td style="color:var(--accent-yellow)">'+fl+'</td>';
+    h+='<td>'+(wf-ap-fl)+'</td><td style="color:var(--accent-red)">'+(eps.length-wf)+'</td></tr>';
+  });
+  h+='</tbody></table></div>';
+  el.innerHTML=h;
+}
+
+// ===== EXPORT FUNCTIONS =====
+function downloadFile(name,content,type){var b=new Blob([content],{type:type});var u=URL.createObjectURL(b);var a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(u)}
+
+function exportReviewReport(){
+  var rc2=getCounts();var now=new Date();
+  var h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>TRU PCI DSS - Evidence Review Report</title>';
+  h+='<style>body{font-family:"Segoe UI",system-ui,sans-serif;margin:40px auto;max-width:1100px;color:#1e293b}h1{color:#1e3a5f;border-bottom:3px solid #3b82f6;padding-bottom:12px}h2{color:#334155;margin-top:28px;border-bottom:1px solid #e2e8f0;padding-bottom:8px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f1f5f9;padding:16px;border-radius:8px;margin:16px 0;font-size:14px}.meta strong{color:#1e3a5f}table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}th{background:#1e3a5f;color:#fff;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase}td{padding:8px 12px;border-bottom:1px solid #e2e8f0}tr:hover{background:#f8fafc}.approved{color:#059669;font-weight:700}.flagged{color:#d97706;font-weight:700}.pending{color:#64748b}.empty{color:#dc2626}.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}.sc{background:#f1f5f9;border-radius:8px;padding:16px;text-align:center}.sc .v{font-size:28px;font-weight:800}.sc .l{font-size:11px;color:#64748b;text-transform:uppercase}.footer{margin-top:40px;padding-top:16px;border-top:2px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}@media print{body{margin:20px}th{background:#1e3a5f!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body>';
+  h+='<h1>\u{1F4CA} TRU PCI DSS v4.0 \u2013 Evidence Review Report</h1>';
+  h+='<div class="meta"><div><strong>Report Date:</strong> '+now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'</div><div><strong>Sprint Day:</strong> 5</div><div><strong>Reviewer:</strong> Yasser Shishiny</div><div><strong>Phase:</strong> Evidence Collection & Review</div></div>';
+  h+='<div class="summary-grid"><div class="sc"><div class="v" style="color:#1e3a5f">'+DATA.summary.totalEPs+'</div><div class="l">Total EPs</div></div><div class="sc"><div class="v" style="color:#059669">'+DATA.summary.filledEPs+'</div><div class="l">With Evidence ('+DATA.summary.percentage+'%)</div></div><div class="sc"><div class="v" style="color:#059669">'+rc2.approved+'</div><div class="l">Approved</div></div><div class="sc"><div class="v" style="color:#dc2626">'+DATA.summary.emptyEPs+'</div><div class="l">Missing</div></div></div>';
+
+  h+='<h2>Requirement Summary</h2><table><thead><tr><th>Req</th><th>Name</th><th>Total</th><th>Files</th><th>Approved</th><th>Flagged</th><th>Empty</th><th>%</th></tr></thead><tbody>';
+  DATA.requirements.sort(function(a,b){return a.id-b.id}).forEach(function(r){
+    var eps=DATA.evidencePoints.filter(function(ep){return ep.requirement===r.id});
+    var wf=eps.filter(function(ep){return ep.hasFiles}).length;
+    var ap=eps.filter(function(ep){return getRS(ep.id)==='approved'}).length;
+    var fl=eps.filter(function(ep){return getRS(ep.id)==='flagged'}).length;
+    h+='<tr><td style="font-weight:700">'+r.id+'</td><td>'+r.name+'</td><td>'+eps.length+'</td><td>'+wf+'</td><td class="approved">'+ap+'</td><td class="flagged">'+fl+'</td><td class="empty">'+(eps.length-wf)+'</td><td style="font-weight:700">'+r.percentage+'%</td></tr>';
+  });
+  h+='</tbody></table>';
+
+  DATA.requirements.sort(function(a,b){return a.id-b.id}).forEach(function(r){
+    var eps=DATA.evidencePoints.filter(function(ep){return ep.requirement===r.id});
+    h+='<h2>Requirement '+r.id+' \u2013 '+r.name+' ('+r.percentage+'%)</h2>';
+    h+='<table><thead><tr><th>EP</th><th>Evidence Point</th><th>Files</th><th>Status</th><th>Comment</th></tr></thead><tbody>';
+    eps.forEach(function(ep){
+      var rs=getRS(ep.id);var comment=(state.reviewStates[ep.id]||{}).comment||'';
+      var st=!ep.hasFiles?'<span class="empty">MISSING</span>':rs==='approved'?'<span class="approved">APPROVED</span>':rs==='flagged'?'<span class="flagged">FLAGGED</span>':'<span class="pending">PENDING</span>';
+      h+='<tr><td style="font-weight:600">'+ep.id+'</td><td style="font-size:12px">'+esc(ep.folder)+'</td>';
+      h+='<td>'+(ep.hasFiles?ep.files.map(function(f){return esc(f.name)}).join('<br>'):'\u2014')+'</td>';
+      h+='<td>'+st+'</td><td style="font-size:11px;color:#64748b">'+esc(comment)+'</td></tr>';
+    });
+    h+='</tbody></table>';
+  });
+  h+='<div class="footer">Generated by TRU PCI DSS Command Center | '+now.toISOString()+' | Confidential</div></body></html>';
+  downloadFile('TRU_PCI_DSS_Review_Report_'+now.toISOString().split('T')[0]+'.html',h,'text/html');
+}
+
+function exportCSV(){
+  var csv='Requirement,EP ID,Folder,Type,HasFiles,FileCount,Files,Size,Owner,ReviewStatus,Comment\n';
+  DATA.evidencePoints.sort(function(a,b){return a.requirement-b.requirement}).forEach(function(ep){
+    var rs=getRS(ep.id);var c=((state.reviewStates[ep.id]||{}).comment||'').replace(/"/g,'""');
+    var files=ep.files.map(function(f){return f.name}).join('; ');
+    csv+=ep.requirement+',"'+ep.id+'","'+ep.folder.replace(/"/g,'""')+'",'+ep.type+','+ep.hasFiles+','+ep.fileCount+',"'+files+'",'+ep.totalSize+',"'+ep.owner+'",'+rs+',"'+c+'"\n';
+  });
+  downloadFile('TRU_PCI_DSS_Evidence_Matrix.csv',csv,'text/csv');
+}
+
+function exportEmptyList(){
+  var byOwner={};
+  DATA.evidencePoints.filter(function(ep){return!ep.hasFiles}).forEach(function(ep){
+    if(!byOwner[ep.owner])byOwner[ep.owner]=[];byOwner[ep.owner].push(ep);
+  });
+  var h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Missing Evidence Checklist</title><style>body{font-family:"Segoe UI",system-ui,sans-serif;margin:40px auto;max-width:900px;color:#1e293b}h1{color:#dc2626;border-bottom:3px solid #dc2626;padding-bottom:12px}.os{background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:16px;margin:16px 0}.on{font-size:18px;font-weight:700;color:#dc2626}.or{font-size:13px;color:#64748b}.cl{list-style:none;padding:0;margin:12px 0}.cl li{padding:8px 12px;border-bottom:1px solid #fecaca;font-size:13px;display:flex;gap:8px}.cb{width:16px;height:16px;border:2px solid #dc2626;border-radius:3px;flex-shrink:0;margin-top:2px}.rl{font-weight:700;color:#1e3a5f;min-width:50px}.ft{margin-top:40px;padding-top:16px;border-top:2px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}</style></head><body>';
+  h+='<h1>\u26A0 Missing Evidence Checklist</h1><p style="color:#64748b">Generated: '+new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+' | '+DATA.summary.emptyEPs+' items remaining</p>';
+  Object.entries(byOwner).sort(function(a,b){return b[1].length-a[1].length}).forEach(function(entry){
+    var name=entry[0],eps=entry[1];var info=DATA.owners[name]||{role:'Team Member'};
+    h+='<div class="os"><div class="on">'+name+' ('+eps.length+' items)</div><div class="or">'+info.role+'</div><ul class="cl">';
+    eps.sort(function(a,b){return a.requirement-b.requirement}).forEach(function(ep){
+      h+='<li><div class="cb"></div><span class="rl">R'+ep.requirement+'</span>'+esc(ep.folder)+'</li>';
+    });
+    h+='</ul></div>';
+  });
+  h+='<div class="ft">TRU PCI DSS v4.0 | Missing Evidence Checklist | Confidential</div></body></html>';
+  downloadFile('TRU_PCI_DSS_Missing_Evidence_Checklist.html',h,'text/html');
+}
+
+function exportDailyStatus(){
+  var s=DATA.summary,rc2=getCounts(),today=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
+  var h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>TRU PCI DSS Status | '+today+'</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Segoe UI",system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}.hd{background:linear-gradient(135deg,#1e3a5f,#1e40af);padding:24px 40px;display:flex;justify-content:space-between;align-items:center}.hd h1{font-size:24px;font-weight:700;color:#fff}.hd .dt{color:#93c5fd;font-size:14px}.hd .ph{background:#f59e0b;color:#000;padding:4px 16px;border-radius:20px;font-weight:700;font-size:13px}.db{padding:24px 40px}.kr{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}.k{background:#1e293b;border-radius:12px;padding:20px;text-align:center;border:1px solid #334155}.k .v{font-size:36px;font-weight:800;color:#60a5fa}.k .l{font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-top:4px}.k.g .v{color:#4ade80}.k.y .v{color:#fbbf24}.pb{background:#1e293b;border-radius:12px;padding:20px;margin-bottom:24px;border:1px solid #334155}.pb h3{margin-bottom:12px;font-size:14px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px}.bar{height:32px;background:#334155;border-radius:16px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#000}.gr{display:grid;grid-template-columns:2fr 1fr;gap:16px}.cd{background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155}.cd h3{font-size:14px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}table{width:100%;border-collapse:collapse}th{text-align:left;padding:8px 12px;font-size:11px;color:#64748b;text-transform:uppercase;border-bottom:1px solid #334155}td{padding:10px 12px;font-size:14px;border-bottom:1px solid rgba(30,41,59,.5)}.mb{height:8px;background:#334155;border-radius:4px;overflow:hidden;width:120px}.mf{height:100%;border-radius:4px}</style></head><body>';
+  h+='<div class="hd"><div><h1>TRU PCI DSS v4.0 - iExperts</h1><div class="dt">Daily Status | '+today+' | Day 5</div></div><div class="ph">EVIDENCE COLLECTION</div></div>';
+  h+='<div class="db"><div class="kr"><div class="k g"><div class="v">'+s.percentage+'%</div><div class="l">Overall</div></div><div class="k"><div class="v">'+s.filledEPs+'</div><div class="l">Populated</div></div><div class="k y"><div class="v">'+s.emptyEPs+'</div><div class="l">Remaining</div></div><div class="k g"><div class="v">'+rc2.approved+'</div><div class="l">Reviewed</div></div><div class="k"><div class="v">'+s.reqsAt100+'/12</div><div class="l">At 100%</div></div></div>';
+  h+='<div class="pb"><h3>Overall: '+s.filledEPs+' / '+s.totalEPs+'</h3><div class="bar"><div class="fill" style="width:'+s.percentage+'%">'+s.percentage+'%</div></div></div>';
+  h+='<div class="gr"><div class="cd"><h3>Requirement Status</h3><table><thead><tr><th>Req</th><th>Name</th><th>Progress</th><th>Bar</th><th>%</th></tr></thead><tbody>';
+  DATA.requirements.sort(function(a,b){return a.id-b.id}).forEach(function(r){
+    var col=r.percentage===100?'#4ade80':r.percentage>=90?'#fbbf24':'#60a5fa';
+    h+='<tr><td>'+r.id+'</td><td>'+r.name+'</td><td>'+r.filled+'/'+r.total+'</td><td><div class="mb"><div class="mf" style="width:'+r.percentage+'%;background:'+col+'"></div></div></td><td style="font-weight:700">'+r.percentage+'%</td></tr>';
+  });
+  h+='</tbody></table></div><div class="cd"><h3>Quick Stats</h3><div style="padding:12px 0;font-size:13px;color:#94a3b8"><div style="margin-bottom:8px">Files: <strong style="color:#e2e8f0">'+s.totalFiles+'</strong></div><div style="margin-bottom:8px">Size: <strong style="color:#e2e8f0">'+fmtSize(s.totalSize)+'</strong></div><div style="margin-bottom:8px">Reviewed: <strong style="color:#4ade80">'+rc2.approved+'</strong></div><div>Flagged: <strong style="color:#fbbf24">'+rc2.flagged+'</strong></div></div></div></div></div></body></html>';
+  downloadFile('TRU_PCI_DSS_Status_'+new Date().toISOString().split('T')[0]+'.html',h,'text/html');
 }
 
 // ===== INIT =====
-buildHeader();
-buildFilters();
-buildRequirements();
+buildSidebar();
+switchView('dashboard');
 </script>
 </body>
 </html>

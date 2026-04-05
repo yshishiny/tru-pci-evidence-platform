@@ -44,6 +44,83 @@ app.use('/api/alerts', alertsRoutes);
 // Command Center - public, no auth required, shareable URL
 app.use('/command-center', commandCenterRoutes);
 
+// Evidence Reviewer - public, same live data as command center
+app.get('/reviewer', (req, res) => {
+  try {
+    const templatePath = path.join(__dirname, 'public', 'evidence-reviewer.html');
+    if (fs.existsSync(templatePath)) {
+      let html = fs.readFileSync(templatePath, 'utf8');
+      const { buildLiveData } = require('./src/routes/command-center');
+      // buildLiveData isn't exported, so we use the same approach as command-center route
+      const { getDb: getDatabase } = require('./src/db');
+      const db = getDatabase();
+
+      const REQUIREMENTS = [
+        { id: 1, name: 'Network Security Controls' },{ id: 2, name: 'Secure Configurations' },
+        { id: 3, name: 'Protect Stored Account Data' },{ id: 4, name: 'Protect Cardholder Data in Transit' },
+        { id: 5, name: 'Protect Against Malicious Software' },{ id: 6, name: 'Develop and Maintain Secure Systems' },
+        { id: 7, name: 'Restrict Access by Business Need' },{ id: 8, name: 'Identify Users and Authenticate Access' },
+        { id: 9, name: 'Restrict Physical Access' },{ id: 10, name: 'Log and Monitor All Access' },
+        { id: 11, name: 'Test Security Regularly' },{ id: 12, name: 'Support InfoSec with Policies and Programs' }
+      ];
+      const OWNERS = {
+        'Amr Abdelnasr': { role: 'IT Infrastructure', reqs: [1,2,4,5], color: '#3b82f6' },
+        'Tamer Sherif': { role: 'App Development', reqs: [3,6,8], color: '#8b5cf6' },
+        'Ahmad Sayed': { role: 'Cyber Force / SOC', reqs: [9,10,11], color: '#10b981' },
+        'Yasser Shishiny': { role: 'Project Lead', reqs: [7,12], color: '#f59e0b' }
+      };
+
+      const allEPs = db.prepare('SELECT * FROM evidence_points ORDER BY requirement_id, sub_requirement').all();
+      const fileCounts = {};
+      try {
+        db.prepare('SELECT evidence_point_id, COUNT(*) as cnt, GROUP_CONCAT(file_name, \'||\') as names, SUM(file_size) as total_size FROM evidence_files GROUP BY evidence_point_id').all().forEach(row => {
+          fileCounts[row.evidence_point_id] = { count: row.cnt, names: row.names ? row.names.split('||') : [], totalSize: row.total_size || 0 };
+        });
+      } catch(e) {}
+
+      const evidencePoints = allEPs.map(ep => {
+        const fc = fileCounts[ep.id] || { count: 0, names: [], totalSize: 0 };
+        const hasFiles = ep.status !== 'empty';
+        let owner = 'Unassigned';
+        for (const [name, info] of Object.entries(OWNERS)) {
+          if (info.reqs.includes(ep.requirement_id)) { owner = name; break; }
+        }
+        return {
+          id: 'R' + ep.requirement_id + '-' + (ep.sub_requirement || ep.id),
+          epId: ep.sub_requirement || String(ep.id), requirement: ep.requirement_id,
+          folder: ep.folder_name || 'EP-' + ep.id, type: ep.evidence_type || 'document',
+          hasFiles, files: fc.names.map(n => ({ name: n, size: 0, ext: path.extname(n).toLowerCase() })),
+          fileCount: hasFiles ? Math.max(fc.count, 1) : 0, totalSize: fc.totalSize,
+          owner, reviewStatus: 'pending'
+        };
+      });
+
+      const requirements = REQUIREMENTS.map(req => {
+        const eps = evidencePoints.filter(ep => ep.requirement === req.id);
+        const filled = eps.filter(ep => ep.hasFiles).length;
+        return { id: req.id, name: req.name, total: eps.length, filled, empty: eps.length - filled,
+          percentage: eps.length > 0 ? Math.round((filled / eps.length) * 100) : 0 };
+      });
+
+      const totalEPs = evidencePoints.length, filledEPs = evidencePoints.filter(ep => ep.hasFiles).length;
+      const data = {
+        requirements, evidencePoints, owners: OWNERS,
+        summary: { totalEPs, filledEPs, emptyEPs: totalEPs - filledEPs,
+          percentage: totalEPs > 0 ? Math.round((filledEPs / totalEPs) * 100) : 0,
+          reqsAt100: requirements.filter(r => r.percentage === 100).length }
+      };
+
+      html = html.replace('__DATA_PLACEHOLDER__', JSON.stringify(data));
+      res.type('html').send(html);
+    } else {
+      res.status(404).send('Evidence reviewer template not found');
+    }
+  } catch(err) {
+    console.error('Evidence reviewer error:', err);
+    res.status(500).send('Error loading Evidence Reviewer');
+  }
+});
+
 // Public rescan endpoint - rebuilds DB from seed-172.json
 app.post('/api/rescan', (req, res) => {
   try {
