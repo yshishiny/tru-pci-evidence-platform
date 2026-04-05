@@ -160,9 +160,68 @@ app.post('/api/rescan', (req, res) => {
   }
 });
 
-// SPA fallback (skip command-center and API routes)
+// CEO Dashboard - public, read-only, no auth required
+app.get('/ceo', (req, res) => {
+  try {
+    const templatePath = path.join(__dirname, 'public', 'ceo-dashboard.html');
+    if (fs.existsSync(templatePath)) {
+      let html = fs.readFileSync(templatePath, 'utf8');
+      const db = getDb();
+
+      const REQUIREMENTS = [
+        { id: 1, name: 'Network Security Controls' },{ id: 2, name: 'Secure Configurations' },
+        { id: 3, name: 'Protect Stored Account Data' },{ id: 4, name: 'Protect Cardholder Data in Transit' },
+        { id: 5, name: 'Protect Against Malicious Software' },{ id: 6, name: 'Develop and Maintain Secure Systems' },
+        { id: 7, name: 'Restrict Access by Business Need' },{ id: 8, name: 'Identify Users and Authenticate Access' },
+        { id: 9, name: 'Restrict Physical Access' },{ id: 10, name: 'Log and Monitor All Access' },
+        { id: 11, name: 'Test Security Regularly' },{ id: 12, name: 'Support InfoSec with Policies and Programs' }
+      ];
+      const OWNERS = {
+        'Amr Abdelnasr': { role: 'IT Infrastructure', reqs: [1,2,4,5], color: '#3b82f6' },
+        'Tamer Sherif': { role: 'App Development', reqs: [3,6,8], color: '#8b5cf6' },
+        'Ahmad Sayed': { role: 'Cyber Force / SOC', reqs: [9,10,11], color: '#10b981' },
+        'Yasser Shishiny': { role: 'Project Lead', reqs: [7,12], color: '#f59e0b' }
+      };
+
+      const allEPs = db.prepare('SELECT * FROM evidence_points ORDER BY requirement_id, sub_requirement').all();
+      const evidencePoints = allEPs.map(ep => {
+        const hasFiles = ep.status !== 'empty';
+        let owner = 'Unassigned';
+        for (const [name, info] of Object.entries(OWNERS)) {
+          if (info.reqs.includes(ep.requirement_id)) { owner = name; break; }
+        }
+        return { id: ep.id, requirement: ep.requirement_id, hasFiles, owner };
+      });
+
+      const requirements = REQUIREMENTS.map(req => {
+        const eps = evidencePoints.filter(ep => ep.requirement === req.id);
+        const filled = eps.filter(ep => ep.hasFiles).length;
+        return { id: req.id, name: req.name, total: eps.length, filled, empty: eps.length - filled,
+          percentage: eps.length > 0 ? Math.round((filled / eps.length) * 100) : 0 };
+      });
+
+      const totalEPs = evidencePoints.length, filledEPs = evidencePoints.filter(ep => ep.hasFiles).length;
+      const data = {
+        requirements, owners: OWNERS,
+        summary: { totalEPs, filledEPs, emptyEPs: totalEPs - filledEPs,
+          percentage: totalEPs > 0 ? Math.round((filledEPs / totalEPs) * 100) : 0,
+          reqsAt100: requirements.filter(r => r.percentage === 100).length }
+      };
+
+      html = html.replace('__DATA_PLACEHOLDER__', JSON.stringify(data));
+      res.type('html').send(html);
+    } else {
+      res.status(404).send('CEO Dashboard template not found');
+    }
+  } catch(err) {
+    console.error('CEO Dashboard error:', err);
+    res.status(500).send('Error loading CEO Dashboard');
+  }
+});
+
+// SPA fallback (skip command-center, ceo, and API routes)
 app.get('*', (req, res) => {
-  if (req.path.startsWith('/command-center') || req.path.startsWith('/api/')) return;
+  if (req.path.startsWith('/command-center') || req.path.startsWith('/api/') || req.path === '/ceo') return;
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

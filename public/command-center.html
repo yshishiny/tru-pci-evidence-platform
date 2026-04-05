@@ -283,6 +283,7 @@ function buildSidebar(){
   h+='<div class="nav-item" data-view="reviewer" onclick="switchView(\'reviewer\')"><span class="icon">\u{1F50D}</span> Evidence Reviewer<span class="badge">'+s.emptyEPs+'</span></div>';
   h+='<div class="nav-item" data-view="reports" onclick="switchView(\'reports\')"><span class="icon">\u{1F4CB}</span> Reports</div>';
   h+='<a class="nav-item" href="/reviewer" style="text-decoration:none"><span class="icon">\u{1F4DD}</span> Standalone Reviewer</a>';
+  h+='<a class="nav-item" href="/ceo" style="text-decoration:none"><span class="icon">\u{1F451}</span> CEO Dashboard</a>';
   h+='<div class="nav-section">Requirements</div>';
   DATA.requirements.forEach(function(r){
     var name=r.name.length>22?r.name.substring(0,22)+'...':r.name;

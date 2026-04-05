@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRU PCI DSS v4.0.1 | CEO Dashboard</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f0f4f8;color:#1e293b;line-height:1.6;min-height:100vh}
+
+/* Header */
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#0ea5e9 100%);padding:36px 48px 32px;color:#fff;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(14,165,233,.25) 0%,transparent 70%);border-radius:50%}
+.header::after{content:'';position:absolute;bottom:-40%;left:15%;width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.15) 0%,transparent 70%);border-radius:50%}
+.header-inner{position:relative;z-index:1;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end}
+.header-left{}
+.header .label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7dd3fc;margin-bottom:6px}
+.header h1{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.header .sub{font-size:16px;font-weight:300;color:#bae6fd;margin-top:2px}
+.header-right{text-align:right}
+.header .date{font-size:13px;color:#93c5fd}
+.header .live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:6px}
+.live-dot{width:7px;height:7px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.container{max-width:1200px;margin:0 auto;padding:32px 48px 48px}
+
+/* KPI Row */
+.kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-bottom:32px}
+.kpi{border-radius:16px;padding:24px 20px;text-align:center;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.kpi-total{background:linear-gradient(135deg,#eff6ff,#e0f2fe)}.kpi-total::before{background:linear-gradient(90deg,#3b82f6,#0ea5e9)}
+.kpi-filled{background:linear-gradient(135deg,#ecfdf5,#d1fae5)}.kpi-filled::before{background:linear-gradient(90deg,#10b981,#34d399)}
+.kpi-pending{background:linear-gradient(135deg,#fef2f2,#fce7f3)}.kpi-pending::before{background:linear-gradient(90deg,#ef4444,#f87171)}
+.kpi-pct{background:linear-gradient(135deg,#f5f3ff,#ede9fe)}.kpi-pct::before{background:linear-gradient(90deg,#8b5cf6,#6366f1)}
+.kpi .number{font-size:40px;font-weight:900;letter-spacing:-2px;line-height:1}
+.kpi-total .number{color:#2563eb}.kpi-filled .number{color:#059669}.kpi-pending .number{color:#dc2626}.kpi-pct .number{color:#7c3aed}
+.kpi .klabel{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1.5px;color:#64748b;margin-top:6px}
+
+/* Progress Bar */
+.progress-section{margin-bottom:36px}
+.progress-header{display:flex;justify-content:space-between;margin-bottom:8px;font-size:13px;font-weight:600;color:#475569}
+.progress-bar{height:32px;background:#e2e8f0;border-radius:16px;overflow:hidden;position:relative}
+.progress-fill{height:100%;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;transition:width 1.5s ease;background:linear-gradient(90deg,#059669,#10b981,#34d399)}
+
+/* Section Title */
+.section-title{font-size:20px;font-weight:700;color:#0f172a;margin:36px 0 18px;display:flex;align-items:center;gap:10px}
+.section-title .icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+/* Requirement Grid */
+.req-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:32px}
+.req-card{background:#fff;border-radius:14px;padding:18px 20px;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:transform .15s,box-shadow .15s}
+.req-card:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.req-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.req-badge{font-size:11px;font-weight:700;color:#fff;border-radius:6px;padding:3px 10px}
+.req-pct{font-size:20px;font-weight:800}
+.req-name{font-size:13px;font-weight:500;color:#475569;margin-bottom:8px;line-height:1.3}
+.req-bar-bg{height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden}
+.req-bar-fill{height:100%;border-radius:4px;transition:width 1s ease}
+.req-meta{display:flex;justify-content:space-between;margin-top:8px;font-size:11px;color:#94a3b8}
+
+/* Colors */
+.c-green{color:#059669}.bg-green{background:linear-gradient(90deg,#059669,#34d399)}.badge-green{background:#059669}
+.c-blue{color:#2563eb}.bg-blue{background:linear-gradient(90deg,#2563eb,#60a5fa)}.badge-blue{background:#2563eb}
+.c-amber{color:#d97706}.bg-amber{background:linear-gradient(90deg,#d97706,#fbbf24)}.badge-amber{background:#d97706}
+.c-red{color:#dc2626}.bg-red{background:linear-gradient(90deg,#dc2626,#f87171)}.badge-red{background:#dc2626}
+
+/* Owner Cards */
+.owner-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.owner-card{background:#fff;border-radius:14px;padding:20px;border:1px solid #e2e8f0;position:relative;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.owner-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.owner-card:nth-child(1)::before{background:linear-gradient(90deg,#3b82f6,#6366f1)}
+.owner-card:nth-child(2)::before{background:linear-gradient(90deg,#8b5cf6,#a855f7)}
+.owner-card:nth-child(3)::before{background:linear-gradient(90deg,#10b981,#14b8a6)}
+.owner-card:nth-child(4)::before{background:linear-gradient(90deg,#f59e0b,#f97316)}
+.owner-name{font-size:15px;font-weight:700;color:#0f172a}
+.owner-role{font-size:11px;color:#64748b;margin-bottom:10px}
+.owner-reqs{font-size:12px;color:#475569;margin-bottom:10px}
+.owner-stats{display:flex;justify-content:space-between;align-items:flex-end}
+.owner-pct{font-size:28px;font-weight:900;line-height:1}
+.owner-detail{font-size:11px;color:#94a3b8;text-align:right}
+
+/* Critical Alert */
+.critical-alert{background:linear-gradient(135deg,#fef2f2,#fff1f2);border:2px solid #fca5a5;border-radius:16px;padding:28px 32px;margin:32px 0;position:relative;overflow:hidden}
+.critical-alert::before{content:'';position:absolute;left:0;top:0;bottom:0;width:6px;background:linear-gradient(180deg,#dc2626,#ef4444);border-radius:16px 0 0 16px}
+.alert-header{display:flex;align-items:center;gap:12px;margin-bottom:14px}
+.alert-badge{background:#dc2626;color:#fff;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:5px 14px;border-radius:6px}
+.alert-title{font-size:18px;font-weight:700;color:#991b1b}
+.critical-alert p{font-size:14px;color:#7f1d1d;margin-bottom:10px;line-height:1.7}
+.service-tags{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.service-tag{background:#fecaca;color:#991b1b;font-size:11px;font-weight:600;padding:5px 14px;border-radius:20px}
+.action-btn{background:linear-gradient(135deg,#dc2626,#b91c1c);color:#fff;border:none;font-size:13px;font-weight:700;padding:12px 24px;border-radius:10px;margin-top:10px;display:inline-block;cursor:default}
+
+/* Footer */
+.footer{background:#fff;border-top:1px solid #e2e8f0;padding:24px 48px;max-width:1200px;margin:0 auto;display:flex;justify-content:space-between;font-size:12px;color:#94a3b8}
+.footer a{color:#3b82f6;text-decoration:none}
+
+/* Auto-refresh indicator */
+.refresh-bar{position:fixed;top:0;left:0;right:0;height:3px;z-index:999}
+.refresh-bar .fill{height:100%;background:linear-gradient(90deg,#3b82f6,#06b6d4,#10b981);width:0;transition:width linear}
+
+@media(max-width:900px){
+  .kpi-row,.owner-grid{grid-template-columns:repeat(2,1fr)}
+  .req-grid{grid-template-columns:1fr 1fr}
+  .container,.header{padding-left:24px;padding-right:24px}
+}
+@media(max-width:600px){
+  .kpi-row,.owner-grid,.req-grid{grid-template-columns:1fr}
+}
+@media print{
+  body{background:#fff}
+  .refresh-bar{display:none}
+  .header{padding:24px 32px 20px}
+  .container{padding:20px 32px}
+}
+</style>
+</head>
+<body>
+
+<div class="refresh-bar"><div class="fill" id="refreshFill"></div></div>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="label">CEO Executive Dashboard</div>
+      <h1>PCI DSS v4.0.1 Compliance</h1>
+      <div class="sub">TRU &mdash; Evidence Collection Tracker</div>
+    </div>
+    <div class="header-right">
+      <div class="date" id="dateDisplay"></div>
+      <div class="live-badge"><span class="live-dot"></span> Live Data</div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="app">
+  <p style="text-align:center;padding:80px 0;color:#94a3b8">Loading dashboard data...</p>
+</div>
+
+<script>
+// Data injected by server
+const DATA = __DATA_PLACEHOLDER__;
+
+function pctClass(p) {
+  if (p === 100) return 'green';
+  if (p >= 70) return 'blue';
+  if (p >= 50) return 'amber';
+  return 'red';
+}
+
+const OWNERS_META = {
+  'Amr Abdelnasr': { role: 'IT Infrastructure', reqs: [1,2,4,5] },
+  'Tamer Sherif': { role: 'App Development', reqs: [3,6,8] },
+  'Ahmad Sayed': { role: 'Cyber Force / SOC', reqs: [9,10,11] },
+  'Yasser Shishiny': { role: 'Project Lead', reqs: [7,12] }
+};
+
+function render() {
+  const d = DATA;
+  const s = d.summary;
+  const reqs = d.requirements;
+
+  // Date
+  document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  let h = '';
+
+  // KPI cards
+  h += '<div class="kpi-row">';
+  h += '<div class="kpi kpi-total"><div class="number">' + s.totalEPs + '</div><div class="klabel">Total Evidence</div></div>';
+  h += '<div class="kpi kpi-filled"><div class="number">' + s.filledEPs + '</div><div class="klabel">Submitted</div></div>';
+  h += '<div class="kpi kpi-pending"><div class="number">' + s.emptyEPs + '</div><div class="klabel">Pending</div></div>';
+  h += '<div class="kpi kpi-pct"><div class="number">' + s.percentage + '%</div><div class="klabel">Complete</div></div>';
+  h += '</div>';
+
+  // Progress bar
+  h += '<div class="progress-section">';
+  h += '<div class="progress-header"><span>Overall Evidence Collection Progress</span><span>' + s.filledEPs + ' of ' + s.totalEPs + ' Evidence Points</span></div>';
+  h += '<div class="progress-bar"><div class="progress-fill" style="width:' + s.percentage + '%">' + s.percentage + '% Complete</div></div>';
+  h += '</div>';
+
+  // Requirements grid
+  h += '<div class="section-title"><div class="icon" style="background:#eff6ff;color:#3b82f6">\u{1F4CA}</div>12 PCI DSS Requirements</div>';
+  h += '<div class="req-grid">';
+  for (const r of reqs) {
+    const cls = pctClass(r.percentage);
+    let owner = 'Unassigned';
+    for (const [name, info] of Object.entries(OWNERS_META)) {
+      if (info.reqs.includes(r.id)) { owner = name.split(' ')[0]; break; }
+    }
+    h += '<div class="req-card">';
+    h += '<div class="req-top"><span class="req-badge badge-' + cls + '">R' + r.id + '</span><span class="req-pct c-' + cls + '">' + r.percentage + '%</span></div>';
+    h += '<div class="req-name">' + r.name + '</div>';
+    h += '<div class="req-bar-bg"><div class="req-bar-fill bg-' + cls + '" style="width:' + r.percentage + '%"></div></div>';
+    h += '<div class="req-meta"><span>' + r.filled + '/' + r.total + ' filled</span><span>' + owner + '</span></div>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  // Owner cards
+  h += '<div class="section-title"><div class="icon" style="background:#f0fdf4;color:#10b981">\u{1F465}</div>Team Progress</div>';
+  h += '<div class="owner-grid">';
+  for (const [name, meta] of Object.entries(OWNERS_META)) {
+    const ownerReqs = reqs.filter(r => meta.reqs.includes(r.id));
+    const filled = ownerReqs.reduce((a,r) => a + r.filled, 0);
+    const total = ownerReqs.reduce((a,r) => a + r.total, 0);
+    const pct = total > 0 ? Math.round((filled/total)*100) : 0;
+    const cls = pctClass(pct);
+    h += '<div class="owner-card">';
+    h += '<div class="owner-name">' + name + '</div>';
+    h += '<div class="owner-role">' + meta.role + '</div>';
+    h += '<div class="owner-reqs">Requirements: ' + meta.reqs.map(r=>'R'+r).join(', ') + '</div>';
+    h += '<div class="owner-stats"><div class="owner-pct c-' + cls + '">' + pct + '%</div><div class="owner-detail">' + filled + '/' + total + ' filled<br>' + (total-filled) + ' pending</div></div>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  // Critical alert
+  const cyberReqs = reqs.filter(r => [9,10,11].includes(r.id));
+  const cyberEmpty = cyberReqs.reduce((a,r) => a + r.empty, 0);
+  h += '<div class="critical-alert">';
+  h += '<div class="alert-header"><span class="alert-badge">\u26A0 Critical Blocker</span><span class="alert-title">Cyber Force Contract</span></div>';
+  h += '<p>The <strong>Cyber Force contract for SIEM, Log Management, EDR, and VSOC</strong> has not been finalized. ';
+  h += 'This blocks <strong>' + cyberEmpty + ' evidence points</strong> across Requirements 9, 10, and 11.</p>';
+  h += '<div class="service-tags"><span class="service-tag">SIEM</span><span class="service-tag">Log Management</span><span class="service-tag">EDR</span><span class="service-tag">VSOC</span></div>';
+  h += '<p>Without this contract, operational evidence for logging, monitoring, and security testing cannot be produced.</p>';
+  h += '<div class="action-btn">\u26A1 CEO Intervention Requested</div>';
+  h += '</div>';
+
+  // Milestones
+  h += '<div class="section-title"><div class="icon" style="background:#faf5ff;color:#8b5cf6">\u{1F680}</div>Next Milestones</div>';
+  h += '<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px">';
+  const milestones = [
+    { pct: '67%', label: 'Current', color: '#10b981', bg: '#ecfdf5', done: true },
+    { pct: '80%', label: 'IExperts Review', color: '#3b82f6', bg: '#eff6ff', done: false },
+    { pct: '95%', label: 'QSA Pre-Review', color: '#8b5cf6', bg: '#f5f3ff', done: false },
+    { pct: '100%', label: 'Assessment Ready', color: '#f59e0b', bg: '#fffbeb', done: false }
+  ];
+  for (const m of milestones) {
+    h += '<div style="background:' + m.bg + ';border-radius:14px;padding:20px;text-align:center;border:1px solid ' + m.color + '22;position:relative">';
+    if (m.done) h += '<div style="position:absolute;top:10px;right:10px;background:' + m.color + ';color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px">\u2713 NOW</div>';
+    h += '<div style="font-size:32px;font-weight:900;color:' + m.color + '">' + m.pct + '</div>';
+    h += '<div style="font-size:12px;font-weight:600;color:#64748b;margin-top:4px">' + m.label + '</div>';
+    h += '</div>';
+  }
+  h += '</div>';
+
+  // Footer
+  h += '<div style="text-align:center;padding:24px 0;border-top:1px solid #e2e8f0;font-size:12px;color:#94a3b8">';
+  h += '<strong>TRU PCI DSS v4.0.1</strong> &mdash; Confidential &mdash; Auto-refreshes every 60 seconds<br>';
+  h += 'Prepared by Yasser Shishiny, Project Lead';
+  h += '</div>';
+
+  document.getElementById('app').innerHTML = h;
+}
+
+render();
+
+// Auto-refresh every 60s
+let refreshTimer = 0;
+const REFRESH_INTERVAL = 60;
+function tickRefresh() {
+  refreshTimer++;
+  const pct = (refreshTimer / REFRESH_INTERVAL) * 100;
+  document.getElementById('refreshFill').style.width = pct + '%';
+  document.getElementById('refreshFill').style.transitionDuration = '1s';
+  if (refreshTimer >= REFRESH_INTERVAL) {
+    refreshTimer = 0;
+    document.getElementById('refreshFill').style.transitionDuration = '0s';
+    document.getElementById('refreshFill').style.width = '0%';
+    location.reload();
+  }
+}
+setInterval(tickRefresh, 1000);
+</script>
+
+</body>
+</html>
