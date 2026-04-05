@@ -214,6 +214,61 @@ router.get('/audit-log', requireAuth, requireRole('admin'), (req, res) => {
   }
 });
 
+// POST /rebuild-evidence - clear and rebuild evidence_points to exactly 172 from seed
+router.post('/rebuild-evidence', requireAuth, requireRole('admin'), (req, res) => {
+  try {
+    const db = getDb();
+    const fs = require('fs');
+    const seedPath = path.join(__dirname, '../../data/seed-172.json');
+
+    let seedData;
+    if (req.body && req.body.evidence_points && Array.isArray(req.body.evidence_points)) {
+      seedData = req.body.evidence_points;
+    } else if (fs.existsSync(seedPath)) {
+      seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+    } else {
+      return res.status(400).json({ error: 'No seed data found. Provide evidence_points in body or ensure data/seed-172.json exists.' });
+    }
+
+    const oldCount = db.prepare('SELECT COUNT(*) as count FROM evidence_points').get().count;
+
+    // Clear and rebuild in transaction
+    const tx = db.transaction(() => {
+      db.prepare('DELETE FROM evidence_points').run();
+      const insertStmt = db.prepare(`
+        INSERT INTO evidence_points (
+          requirement_id, sub_requirement, folder_path, folder_name,
+          evidence_type, status, has_original_doc, updated_at
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+      `);
+      for (const ep of seedData) {
+        insertStmt.run(
+          ep.r || ep.requirement_id,
+          ep.s || ep.sub_requirement || '',
+          ep.p || ep.folder_path,
+          ep.n || ep.folder_name,
+          ep.t || ep.evidence_type || 'document',
+          ep.st || ep.status || 'empty',
+          ep.d !== undefined ? ep.d : (ep.has_original_doc !== undefined ? ep.has_original_doc : 0)
+        );
+      }
+    });
+    tx();
+
+    const newCount = db.prepare('SELECT COUNT(*) as count FROM evidence_points').get().count;
+
+    db.prepare(`
+      INSERT INTO audit_log (user_id, username, action, target, details)
+      VALUES (?, ?, 'rebuild_evidence', 'evidence', ?)
+    `).run(req.user.id, req.user.username, `Rebuilt evidence: ${oldCount} -> ${newCount} EPs`);
+
+    res.json({ success: true, old_count: oldCount, new_count: newCount });
+  } catch (err) {
+    console.error('Rebuild evidence error:', err);
+    res.status(500).json({ error: 'Failed to rebuild evidence points' });
+  }
+});
+
 // POST /seed-evidence - bulk seed evidence points from JSON
 router.post('/seed-evidence', requireAuth, requireRole('admin'), (req, res) => {
   try {
