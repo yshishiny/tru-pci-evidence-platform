@@ -407,4 +407,19 @@ async function startServer() {
       console.log('Empty database, no seed file - running initial folder scan...');
       const scanResults = scanFolders(evidenceDir);
       const stats = syncToDb(db, scanResults);
-      console.log(`Scan
+      console.log(`Scan complete: ${stats.inserted} inserted, ${stats.updated} updated`);
+    }
+
+    app.listen(PORT, () => {
+      console.log(`TRU PCI DSS Evidence Platform server running on port ${PORT}`);
+      console.log(`API available at http://localhost:${PORT}/api`);
+    });
+  } catch (err) {
+    console.error('Failed to start server:', err);
+    process.exit(1);
+  }
+}
+
+startServer();
+
+module.exports = app;
