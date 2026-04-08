@@ -169,15 +169,19 @@ function render() {
   // KPI cards
   h += '<div class="kpi-row">';
   h += '<div class="kpi kpi-total"><div class="number">' + s.totalEPs + '</div><div class="klabel">Total Evidence</div></div>';
-  h += '<div class="kpi kpi-filled"><div class="number">' + s.filledEPs + '</div><div class="klabel">Submitted</div></div>';
+  h += '<div class="kpi kpi-filled"><div class="number">' + s.filledEPs + '</div><div class="klabel">TRU Submitted</div></div>';
   h += '<div class="kpi kpi-pending"><div class="number">' + s.emptyEPs + '</div><div class="klabel">Pending</div></div>';
-  h += '<div class="kpi kpi-pct"><div class="number">' + s.percentage + '%</div><div class="klabel">Complete</div></div>';
+  h += '<div class="kpi kpi-pct"><div class="number">' + s.percentage + '%</div><div class="klabel">TRU Complete</div></div>';
+  h += '<div class="kpi" style="border-top:3px solid #28a745"><div class="number" style="color:#28a745">' + (s.ieApprovedPct||0) + '%</div><div class="klabel">Audit Approved</div></div>';
+  h += '<div class="kpi" style="border-top:3px solid #28a745"><div class="number" style="color:#28a745">' + (s.ieApproved||0) + '</div><div class="klabel">Assessor Accepted</div></div>';
   h += '</div>';
 
-  // Progress bar
+  // Progress bars - TRU upload + Audit
   h += '<div class="progress-section">';
-  h += '<div class="progress-header"><span>Overall Evidence Collection Progress</span><span>' + s.filledEPs + ' of ' + s.totalEPs + ' Evidence Points</span></div>';
-  h += '<div class="progress-bar"><div class="progress-fill" style="width:' + s.percentage + '%">' + s.percentage + '% Complete</div></div>';
+  h += '<div class="progress-header"><span>TRU Evidence Upload Progress</span><span>' + s.filledEPs + ' of ' + s.totalEPs + ' Evidence Points</span></div>';
+  h += '<div class="progress-bar"><div class="progress-fill" style="width:' + s.percentage + '%">' + s.percentage + '% Uploaded</div></div>';
+  h += '<div class="progress-header" style="margin-top:8px"><span>Assessor Audit Acceptance</span><span>' + (s.ieApproved||0) + ' of ' + s.totalEPs + ' Approved</span></div>';
+  h += '<div class="progress-bar"><div class="progress-fill" style="width:' + (s.ieApprovedPct||0) + '%;background:linear-gradient(90deg,#28a745,#34ce57)">' + (s.ieApprovedPct||0) + '% Approved</div></div>';
   h += '</div>';
 
   // Requirements grid
@@ -193,6 +197,9 @@ function render() {
     h += '<div class="req-top"><span class="req-badge badge-' + cls + '">R' + r.id + '</span><span class="req-pct c-' + cls + '">' + r.percentage + '%</span></div>';
     h += '<div class="req-name">' + r.name + '</div>';
     h += '<div class="req-bar-bg"><div class="req-bar-fill bg-' + cls + '" style="width:' + r.percentage + '%"></div></div>';
+    var aP=r.iePct||0;
+    h += '<div style="margin-top:3px;font-size:9px;color:#28a745;font-weight:600">Audit: '+(r.ieApproved||0)+'/'+r.total+' approved ('+aP+'%)</div>';
+    h += '<div class="req-bar-bg" style="height:3px;margin-top:2px"><div class="req-bar-fill" style="width:'+aP+'%;background:#28a745"></div></div>';
     h += '<div class="req-meta"><span>' + r.filled + '/' + r.total + ' filled</span><span>' + owner + '</span></div>';
     h += '</div>';
   }

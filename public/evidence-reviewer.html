@@ -81,6 +81,19 @@ body{font-family:Arial,sans-serif;background:#f0f2f5;color:#1a1a2e;font-size:13p
 .comment-input:focus{border-color:#2E75B6}
 .comment-submit{padding:4px 10px;border:none;background:#1F3864;color:#fff;border-radius:6px;font-size:11px;font-weight:700;cursor:pointer}
 .comment-submit:hover{background:#2E75B6}
+.drive-link{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:5px;font-size:10px;font-weight:700;color:#1a73e8;background:#e8f0fe;border:1px solid #c6dafc;text-decoration:none;white-space:nowrap;cursor:pointer;transition:.15s}
+.drive-link:hover{background:#1a73e8;color:#fff;border-color:#1a73e8}
+.drive-link svg{width:12px;height:12px;fill:currentColor}
+.drive-req{display:inline-flex;align-items:center;gap:3px;padding:1px 7px;border-radius:5px;font-size:10px;font-weight:600;color:#1a73e8;text-decoration:none;margin-left:6px;opacity:.8}
+.drive-req:hover{opacity:1;text-decoration:underline}
+.ie-badge{display:inline-block;padding:2px 8px;border-radius:9px;font-size:9px;font-weight:700;white-space:nowrap}
+.ie-approved{background:#d4edda;color:#155724}
+.ie-need-review{background:#fff3cd;color:#856404}
+.ie-rejected{background:#f8d7da;color:#721c24}
+.ie-na{background:#e2e3e5;color:#6c757d}
+.ie-pending{background:#f0f0f0;color:#aaa}
+.ie-bar{height:4px;background:#e0e4ea;border-radius:2px;margin-top:2px;overflow:hidden}
+.ie-fill{height:100%;background:#28a745;border-radius:2px}
 .review-actions{padding:8px 16px;border-top:1px solid #d8e8f8;background:#fff;flex-shrink:0;display:flex;gap:6px;align-items:center}
 .rev-btn{padding:5px 14px;border-radius:8px;font-size:11px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:.15s}
 .rev-btn.approve{background:#d4edda;color:#155724;border-color:#c3e6cb}
@@ -156,10 +169,11 @@ function getOwner(rid){for(var n in OWNERS){if(OWNERS[n].reqs&&OWNERS[n].reqs.in
 function buildHeader(){
   var s=DATA.summary||{};
   document.getElementById('headerStats').innerHTML=
-    '<div class="sbox"><div class="n">'+s.filledEPs+'</div><div class="l">Filled</div></div>'+
-    '<div class="sbox"><div class="n" style="color:#ffc">'+s.emptyEPs+'</div><div class="l">Empty</div></div>'+
-    '<div class="sbox"><div class="n">'+s.totalEPs+'</div><div class="l">Total</div></div>'+
-    '<div class="sbox"><div class="op">'+s.percentage+'%</div><div class="l">Coverage</div></div>';
+    '<div class="sbox"><div class="op">'+s.percentage+'%</div><div class="l">TRU Uploaded</div></div>'+
+    '<div class="sbox"><div class="n">'+s.filledEPs+'/'+s.totalEPs+'</div><div class="l">Filled</div></div>'+
+    '<div class="sbox" style="border-left:2px solid rgba(255,255,255,.3);padding-left:14px"><div class="op" style="color:#90EE90">'+(s.ieApprovedPct||0)+'%</div><div class="l">Audit Approved</div></div>'+
+    '<div class="sbox"><div class="n">'+(s.ieApproved||0)+'/'+s.totalEPs+'</div><div class="l">Approved</div></div>'+
+    '<div class="sbox"><div class="n" style="color:#ffc">'+(s.ieReviewed||0)+'</div><div class="l">Reviewed</div></div>';
 }
 
 function buildFilters(){
@@ -178,9 +192,12 @@ function buildRequirements(){
     var ow=getOwner(req.id);
     var bc=req.percentage===100?'#28a745':req.percentage>=50?'#e6a817':'#dc3545';
     var div=document.createElement('div');div.className='rb';div.id='r'+req.id;
-    div.innerHTML='<div class="rh" onclick="tog('+req.id+')"><div class="rl"><span class="rn">REQ '+req.id+'</span><span class="rname">'+esc(req.name)+'</span><span class="owner-tag" style="background:'+ow.color+'">'+esc(ow.name)+'</span></div><div class="rr"><span class="badge b-complete">'+req.filled+' &#x2705;</span><span class="badge b-pending">'+req.empty+' &#x1F534;</span><span class="rpct">'+req.percentage+'%</span><div class="rbar"><div style="width:'+req.percentage+'%;height:100%;background:'+bc+';border-radius:3px"></div></div><span class="ti" id="ti'+req.id+'">&#x25BC;</span></div></div>';
+    var driveReq=req.driveUrl?'<a class="drive-req" href="'+escA(req.driveUrl)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open Requirement folder in Google Drive">&#x1F4C2; Drive</a>':'';
+    var ieA=req.ieApproved||0,ieR=req.ieReviewed||0;
+    var iePct=req.total>0?Math.round((ieA/req.total)*100):0;
+    div.innerHTML='<div class="rh" onclick="tog('+req.id+')"><div class="rl"><span class="rn">REQ '+req.id+'</span><span class="rname">'+esc(req.name)+'</span><span class="owner-tag" style="background:'+ow.color+'">'+esc(ow.name)+'</span>'+driveReq+'</div><div class="rr"><span class="badge b-complete">'+req.filled+' &#x2705;</span><span class="badge b-pending">'+req.empty+' &#x1F534;</span><span class="rpct">'+req.percentage+'%</span><div class="rbar"><div style="width:'+req.percentage+'%;height:100%;background:'+bc+';border-radius:3px"></div></div><span style="margin-left:8px;font-size:9px;color:#155724;font-weight:700" title="Audit: '+ieA+' approved, '+ieR+' reviewed">&#x1F50D; '+iePct+'%</span><span class="ti" id="ti'+req.id+'">&#x25BC;</span></div></div>';
     var body=document.createElement('div');body.className='rbody';body.id='rb'+req.id;
-    var t='<table class="et"><thead><tr><th style="width:50px">EP#</th><th>Description</th><th style="width:80px">Owner</th><th style="width:80px">Status</th><th>Evidence Files (click to preview)</th></tr></thead><tbody>';
+    var t='<table class="et"><thead><tr><th style="width:50px">EP#</th><th>Description</th><th style="width:80px">Owner</th><th style="width:80px">Status</th><th style="width:85px">Audit</th><th>Evidence Files (click to preview)</th><th style="width:55px">Drive</th></tr></thead><tbody>';
     rEps.forEach(function(ep){
       var st=ep.hasFiles?'complete':'pending';
       if(reviewStates[ep.id])st=reviewStates[ep.id]==='approved'?'complete':reviewStates[ep.id]==='flagged'?'partial':'pending';
@@ -194,7 +211,11 @@ function buildRequirements(){
         fh+='</div>';
       }else if(ep.hasFiles){fh='<div class="fl"><div class="fi" style="cursor:default"><span class="fn" style="color:#28a745">&#x2705; Evidence uploaded</span></div></div>';}
       else{fh='<div class="fl empty">No evidence uploaded yet</div>';}
-      t+='<tr class="erow '+st+'" data-ep="'+dn+'" data-id="'+escA(ep.id)+'"><td class="tc">'+dn+'</td><td class="td">'+esc(ep.folder||'')+'</td><td class="to"><span class="owner-tag" style="background:'+eo.color+'">'+esc(eo.name)+'</span></td><td class="ts">'+sb+'</td><td class="tf">'+fh+'</td></tr>';
+      var dh=ep.driveUrl?'<a class="drive-link" href="'+escA(ep.driveUrl)+'" target="_blank" rel="noopener" title="Open in Google Drive"><svg viewBox="0 0 87.3 78"><path d="M6.6 66.85l14.5-25.2L35.6 66.85z" fill="#0066DA"/><path d="M21.1 41.65L35.6 66.85h51.7l-14.5-25.2z" fill="#00AC47"/><path d="M29.35 0L6.6 41.65h28.7L57.85 0z" fill="#EA4335"/><path d="M35.3 41.65L21.1 41.65 43.65 0z" fill="#00832D"/><path d="M57.85 0L35.3 41.65 72.8 41.65z" fill="#2684FC"/><path d="M72.8 41.65l14.5 25.2H35.6l14.5-25.2z" fill="#FFBA00"/></svg>Open</a>':'<span style="color:#ccc;font-size:10px">—</span>';
+      var ies=ep.ieStatus||'not_reviewed';
+      var ieb=ies==='approved'?'<span class="ie-badge ie-approved">&#x2705; Approved</span>':ies==='need_review'?'<span class="ie-badge ie-need-review">&#x1F50D; Review</span>':ies==='rejected'?'<span class="ie-badge ie-rejected">&#x274C; Rejected</span>':ies==='na'?'<span class="ie-badge ie-na">N/A</span>':'<span class="ie-badge ie-pending">Pending</span>';
+      if(ep.ieComment){ieb+='<div style="font-size:9px;color:#856404;margin-top:2px;max-width:100px;word-break:break-word" title="'+escA(ep.ieComment)+'">'+esc(ep.ieComment.length>40?ep.ieComment.substring(0,40)+'...':ep.ieComment)+'</div>';}
+      t+='<tr class="erow '+st+'" data-ep="'+dn+'" data-id="'+escA(ep.id)+'"><td class="tc">'+dn+'</td><td class="td">'+esc(ep.folder||'')+'</td><td class="to"><span class="owner-tag" style="background:'+eo.color+'">'+esc(eo.name)+'</span></td><td class="ts">'+sb+'</td><td class="ts">'+ieb+'</td><td class="tf">'+fh+'</td><td class="tf" style="text-align:center">'+dh+'</td></tr>';
     });
     t+='</tbody></table>';body.innerHTML=t;div.appendChild(body);pane.appendChild(div);
   });
