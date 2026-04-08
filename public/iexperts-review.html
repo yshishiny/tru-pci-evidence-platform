@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IExperts Audit Portal — TRU PCI DSS v4.0.1</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',system-ui,sans-serif;background:#f0f4f8;color:#1e293b;line-height:1.6;min-height:100vh}
+
+/* Header */
+.header{background:linear-gradient(135deg,#0f172a 0%,#1e3a5f 50%,#0ea5e9 100%);padding:36px 48px 32px;color:#fff;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;right:-10%;width:500px;height:500px;background:radial-gradient(circle,rgba(14,165,233,.25) 0%,transparent 70%);border-radius:50%}
+.header::after{content:'';position:absolute;bottom:-40%;left:15%;width:400px;height:400px;background:radial-gradient(circle,rgba(99,102,241,.15) 0%,transparent 70%);border-radius:50%}
+.header-inner{position:relative;z-index:1;max-width:1600px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-end;gap:40px}
+.header-left{}
+.header .label{font-size:11px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:#7dd3fc;margin-bottom:6px}
+.header h1{font-size:28px;font-weight:800;letter-spacing:-.5px}
+.header .sub{font-size:16px;font-weight:300;color:#bae6fd;margin-top:2px}
+.header-right{text-align:right;white-space:nowrap}
+.header .date{font-size:13px;color:#93c5fd}
+.header .live-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(16,185,129,.2);border:1px solid rgba(16,185,129,.4);color:#6ee7b7;font-size:11px;font-weight:600;padding:4px 12px;border-radius:20px;margin-top:6px}
+.live-dot{width:7px;height:7px;background:#10b981;border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+.container{max-width:1600px;margin:0 auto;padding:32px 48px 48px}
+
+/* Summary Stats */
+.summary-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px}
+.stat-card{background:#fff;border-radius:16px;padding:24px 20px;text-align:center;border:1px solid #e2e8f0;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.stat-card .number{font-size:40px;font-weight:900;line-height:1;letter-spacing:-1px;margin-bottom:8px}
+.stat-card .label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:#64748b}
+.stat-green .number{color:#059669}.stat-amber .number{color:#d97706}.stat-red .number{color:#dc2626}.stat-blue .number{color:#2563eb}
+
+/* Recent Changes Panel */
+.changes-panel{background:linear-gradient(135deg,#f0fdf4,#e0f8f5);border:2px solid #a7f3d0;border-radius:16px;padding:24px;margin-bottom:32px;display:none}
+.changes-panel.show{display:block}
+.changes-panel h3{font-size:14px;font-weight:700;color:#065f46;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.changes-list{display:flex;flex-direction:column;gap:8px}
+.change-item{font-size:12px;color:#047857;background:#fff;padding:10px 12px;border-radius:8px;border-left:3px solid #10b981;display:flex;justify-content:space-between;align-items:center}
+
+/* Progress Bar */
+.progress-section{background:#fff;border-radius:16px;padding:24px;margin-bottom:32px;border:1px solid #e2e8f0}
+.progress-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:600;color:#475569}
+.progress-bar{height:32px;background:#e2e8f0;border-radius:16px;overflow:hidden}
+.progress-fill{height:100%;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;background:linear-gradient(90deg,#059669,#10b981,#34d399);transition:width .3s ease}
+
+/* Section Title */
+.section-title{font-size:20px;font-weight:700;color:#0f172a;margin:32px 0 20px;padding:0 0 12px;border-bottom:2px solid #e2e8f0;display:flex;align-items:center;gap:10px}
+.section-title .icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px}
+
+/* Requirement Accordion */
+.req-accordion{margin-bottom:20px;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden;background:#fff}
+.req-header{padding:20px 24px;background:#f8fafc;cursor:pointer;display:flex;align-items:center;justify-content:space-between;transition:background .15s}
+.req-header:hover{background:#f1f5f9}
+.req-header-left{display:flex;align-items:center;gap:16px;flex:1;min-width:0}
+.req-number{font-size:16px;font-weight:700;color:#fff;background:#2563eb;width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.req-info{flex:1;min-width:0}
+.req-name{font-size:13px;font-weight:600;color:#0f172a;margin-bottom:2px;line-height:1.2}
+.req-owner{font-size:11px;color:#64748b}
+.req-header-right{display:flex;align-items:center;gap:12px;flex-shrink:0}
+.req-quick-stats{display:flex;gap:14px;font-size:12px;color:#475569;font-weight:600}
+.req-stat-item{display:flex;align-items:center;gap:4px}
+.req-stat-badge{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;font-size:10px;font-weight:700;color:#fff}
+.badge-green{background:#059669}.badge-amber{background:#d97706}.badge-red{background:#dc2626}.badge-gray{background:#94a3b8}
+.req-toggle{color:#94a3b8;transition:transform .2s}
+.req-toggle.open{transform:rotate(180deg)}
+.req-drive-link{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:8px;background:#eff6ff;color:#3b82f6;text-decoration:none;font-size:16px;transition:all .15s}
+.req-drive-link:hover{background:#dbeafe;transform:translateY(-2px)}
+
+/* Requirement Content */
+.req-content{border-top:1px solid #e2e8f0;padding:0;max-height:0;overflow:hidden;transition:max-height .3s ease}
+.req-content.open{max-height:none}
+.eps-table{width:100%;border-collapse:collapse}
+.ep-row{border-bottom:1px solid #e2e8f0;transition:background .15s}
+.ep-row:last-child{border-bottom:none}
+.ep-row:hover{background:#fafbfc}
+.ep-cell{padding:16px 20px;font-size:12px}
+.ep-cell-header{background:#f8fafc;font-weight:700;color:#475569;text-transform:uppercase;font-size:11px;letter-spacing:.5px;padding:12px 20px}
+.ep-id{font-weight:600;color:#0f172a;width:80px}
+.ep-name{color:#475569;flex:1;min-width:200px}
+.ep-status{display:flex;gap:4px;align-items:center}
+.ep-upload{font-size:10px;font-weight:600;padding:4px 10px;border-radius:6px;display:flex;align-items:center;gap:4px}
+.upload-ok{background:#ecfdf5;color:#059669}.upload-empty{background:#f1f5f9;color:#64748b}
+.ep-review-section{display:flex;flex-direction:column;gap:8px;min-width:300px}
+.status-select{padding:6px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:11px;font-weight:600;background:#fff;cursor:pointer;transition:all .15s}
+.status-select:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.comment-input{width:100%;padding:8px 10px;border:1px solid #cbd5e1;border-radius:6px;font-size:11px;font-family:inherit;resize:vertical;transition:all .15s}
+.comment-input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 3px rgba(59,130,246,.1)}
+.save-btn{padding:6px 12px;background:#3b82f6;color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;transition:all .15s}
+.save-btn:hover{background:#2563eb}
+.save-btn:active{transform:scale(.98)}
+.save-btn.saving{background:#94a3b8;cursor:not-allowed}
+.ep-drive{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:6px;background:#eff6ff;color:#3b82f6;text-decoration:none;font-size:14px;transition:all .15s}
+.ep-drive:hover{background:#dbeafe}
+
+/* Status colors */
+.status-approved{background:#ecfdf5;color:#059669}.status-need_review{background:#fef3c7;color:#d97706}.status-rejected{background:#fef2f2;color:#dc2626}.status-partial{background:#eff6ff;color:#2563eb}.status-na{background:#f1f5f9;color:#64748b}.status-not_reviewed{background:#f3f4f6;color:#6b7280}
+.status-badge{display:inline-block;padding:4px 10px;border-radius:6px;font-size:10px;font-weight:600;white-space:nowrap}
+
+/* Action Bar */
+.action-bar{background:#fff;border-radius:16px;padding:24px;border:1px solid #e2e8f0;display:flex;gap:12px;margin-bottom:32px;flex-wrap:wrap}
+.btn{padding:10px 20px;border-radius:8px;font-size:12px;font-weight:600;border:none;cursor:pointer;transition:all .15s;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn-primary{background:#3b82f6;color:#fff}
+.btn-primary:hover{background:#2563eb}
+.btn-secondary{background:#f1f5f9;color:#475569;border:1px solid #cbd5e1}
+.btn-secondary:hover{background:#e2e8f0}
+.btn:active{transform:scale(.98)}
+
+/* Footer */
+.footer{border-top:1px solid #e2e8f0;padding:24px 0;text-align:center;color:#94a3b8;font-size:12px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-links{display:flex;gap:16px}
+.footer-links a{color:#3b82f6;text-decoration:none}
+.footer-links a:hover{text-decoration:underline}
+
+/* Responsive */
+@media(max-width:1200px){
+  .summary-stats{grid-template-columns:repeat(2,1fr)}
+  .req-quick-stats{font-size:11px}
+  .ep-review-section{min-width:250px}
+}
+@media(max-width:900px){
+  .header-inner{flex-direction:column;align-items:flex-start}
+  .header-right{text-align:left;width:100%}
+  .container{padding:24px}
+  .summary-stats{grid-template-columns:1fr}
+  .req-header{flex-direction:column;align-items:flex-start}
+  .req-header-right{width:100%;margin-top:12px;justify-content:space-between}
+  .eps-table{font-size:11px}
+  .ep-cell{padding:12px 16px}
+  .ep-review-section{min-width:100%;flex-direction:row;gap:6px}
+}
+@media(max-width:600px){
+  .header h1{font-size:22px}
+  .container{padding:16px}
+  .stat-card{padding:16px 12px}
+  .stat-card .number{font-size:32px}
+  .req-header{padding:16px}
+  .ep-cell{padding:12px 12px;font-size:11px}
+  .ep-id,.ep-name{display:block;width:100%;margin-bottom:4px}
+  .ep-review-section{flex-direction:column}
+  .footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-left">
+      <div class="label">IExperts Audit Team</div>
+      <h1>IExperts Audit Portal</h1>
+      <div class="sub">TRU PCI DSS v4.0.1 — Review & Approval</div>
+    </div>
+    <div class="header-right">
+      <div class="date" id="dateDisplay"></div>
+      <div class="live-badge"><span class="live-dot"></span> Live Edits</div>
+    </div>
+  </div>
+</div>
+
+<div class="container" id="app">
+  <p style="text-align:center;padding:80px 0;color:#94a3b8">Loading IExperts portal data...</p>
+</div>
+
+<script>
+const DATA = __DATA_PLACEHOLDER__;
+
+// Track original state for change detection
+const ORIGINAL_STATE = {};
+
+function initializeOriginalState() {
+  DATA.evidencePoints.forEach(ep => {
+    ORIGINAL_STATE[ep.id] = { status: ep.ieStatus, comment: ep.ieComment };
+  });
+}
+
+function hasChanged(epId, currentStatus, currentComment) {
+  const orig = ORIGINAL_STATE[epId];
+  return orig && (orig.status !== currentStatus || orig.comment !== currentComment);
+}
+
+function getChangedEPs() {
+  const changed = [];
+  DATA.evidencePoints.forEach(ep => {
+    const statusEl = document.getElementById('status-' + ep.id);
+    const commentEl = document.getElementById('comment-' + ep.id);
+    if (statusEl && commentEl) {
+      const currentStatus = statusEl.value;
+      const currentComment = commentEl.value;
+      if (hasChanged(ep.id, currentStatus, currentComment)) {
+        changed.push({ id: ep.id, requirement: ep.requirement, oldStatus: ORIGINAL_STATE[ep.id].status, newStatus: currentStatus });
+      }
+    }
+  });
+  return changed;
+}
+
+function renderChangesPanel() {
+  const changed = getChangedEPs();
+  const panel = document.getElementById('changesPanel');
+  if (!panel) return;
+
+  if (changed.length === 0) {
+    panel.classList.remove('show');
+    return;
+  }
+
+  panel.classList.add('show');
+  let html = '<h3>Recent Changes (' + changed.length + ')</h3><div class="changes-list">';
+  changed.forEach(c => {
+    const ep = DATA.evidencePoints.find(e => e.id === c.id);
+    html += '<div class="change-item">';
+    html += '<span>EP ' + ep.epId + ' (R' + c.requirement + '): ' + c.oldStatus + ' → ' + c.newStatus + '</span>';
+    html += '<span style="font-size:10px;color:#059669">Changed</span>';
+    html += '</div>';
+  });
+  html += '</div>';
+  panel.innerHTML = html;
+}
+
+async function saveReview(epId) {
+  const statusEl = document.getElementById('status-' + epId);
+  const commentEl = document.getElementById('comment-' + epId);
+  const saveBtn = document.getElementById('save-' + epId);
+
+  if (!statusEl || !commentEl || !saveBtn) return;
+
+  const status = statusEl.value;
+  const comment = commentEl.value;
+
+  saveBtn.classList.add('saving');
+  saveBtn.textContent = 'Saving...';
+
+  try {
+    const response = await fetch('/api/iexperts/review', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ epId, status, comment })
+    });
+
+    if (response.ok) {
+      saveBtn.textContent = 'Saved!';
+      setTimeout(() => {
+        saveBtn.classList.remove('saving');
+        saveBtn.textContent = 'Save';
+        renderChangesPanel();
+      }, 1500);
+    } else {
+      saveBtn.textContent = 'Error';
+      saveBtn.classList.remove('saving');
+    }
+  } catch(err) {
+    console.error('Save error:', err);
+    saveBtn.textContent = 'Error';
+    saveBtn.classList.remove('saving');
+  }
+}
+
+function exportReview() {
+  const review = {};
+  DATA.evidencePoints.forEach(ep => {
+    const statusEl = document.getElementById('status-' + ep.id);
+    const commentEl = document.getElementById('comment-' + ep.id);
+    if (statusEl && commentEl) {
+      review[ep.id] = { status: statusEl.value, comment: commentEl.value };
+    }
+  });
+
+  const json = JSON.stringify(review, null, 2);
+  navigator.clipboard.writeText(json).then(() => {
+    alert('Review data copied to clipboard! (' + Object.keys(review).length + ' EPs)');
+  }).catch(() => {
+    console.log('Clipboard export failed, showing in console');
+    console.log(json);
+  });
+}
+
+function render() {
+  const d = DATA;
+  const s = d.summary;
+
+  document.getElementById('dateDisplay').textContent = new Date().toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+
+  let h = '';
+
+  // ===== SUMMARY STATS =====
+  h += '<div class="summary-stats">';
+  h += '<div class="stat-card stat-blue"><div class="number">' + s.totalEPs + '</div><div class="label">Total EPs</div></div>';
+  h += '<div class="stat-card stat-green"><div class="number">' + s.ieApproved + '</div><div class="label">Approved</div></div>';
+  h += '<div class="stat-card stat-amber"><div class="number">' + (s.ieNeedReview || 0) + '</div><div class="label">Need Review</div></div>';
+  h += '<div class="stat-card stat-red"><div class="number">' + (s.ieRejected || 0) + '</div><div class="label">Rejected</div></div>';
+  h += '</div>';
+
+  // Progress bars
+  h += '<div class="progress-section">';
+  h += '<div class="progress-header"><span>Audit Approval Progress</span><span>' + s.ieApproved + ' / ' + s.totalEPs + ' approved</span></div>';
+  const appPct = s.totalEPs > 0 ? Math.round((s.ieApproved / s.totalEPs) * 100) : 0;
+  h += '<div class="progress-bar"><div class="progress-fill" style="width:' + appPct + '%">' + appPct + '%</div></div>';
+
+  h += '<div class="progress-header" style="margin-top:16px"><span>Overall Review Status</span><span>' + (s.ieReviewed || 0) + ' / ' + s.totalEPs + ' reviewed</span></div>';
+  const revPct = s.totalEPs > 0 ? Math.round(((s.ieReviewed || 0) / s.totalEPs) * 100) : 0;
+  h += '<div class="progress-bar"><div class="progress-fill" style="width:' + revPct + '%;background:linear-gradient(90deg,#6366f1,#8b5cf6)">' + revPct + '%</div></div>';
+  h += '</div>';
+
+  // Changes panel (initially hidden, populated on demand)
+  h += '<div id="changesPanel" class="changes-panel"></div>';
+
+  // Action bar
+  h += '<div class="action-bar">';
+  h += '<button class="btn btn-primary" onclick="exportReview()">Export Review (JSON)</button>';
+  h += '<a href="/reviewer" class="btn btn-secondary">View Reviewer</a>';
+  h += '<a href="/ceo" class="btn btn-secondary">View CEO Dashboard</a>';
+  h += '</div>';
+
+  // ===== REQUIREMENTS SECTIONS =====
+  h += '<div class="section-title"><div class="icon" style="background:#eff6ff;color:#3b82f6">📋</div>12 Requirements — Evidence Review</div>';
+
+  d.requirements.forEach((req, reqIdx) => {
+    const reqEPs = d.evidencePoints.filter(ep => ep.requirement === req.id);
+    const reqOwner = Object.entries(d.owners).find(([name, info]) => info.reqs.includes(req.id));
+    const ownerName = reqOwner ? reqOwner[0] : 'Unassigned';
+
+    h += '<div class="req-accordion">';
+    h += '<div class="req-header" onclick="document.getElementById(\'content-' + req.id + '\').classList.toggle(\'open\'); this.querySelector(\'.req-toggle\').classList.toggle(\'open\')">';
+    h += '<div class="req-header-left">';
+    h += '<div class="req-number">R' + req.id + '</div>';
+    h += '<div class="req-info">';
+    h += '<div class="req-name">' + req.name + '</div>';
+    h += '<div class="req-owner">' + ownerName + ' • ' + reqEPs.length + ' evidence points</div>';
+    h += '</div></div>';
+    h += '<div class="req-header-right">';
+    h += '<div class="req-quick-stats">';
+    h += '<div class="req-stat-item"><span class="req-stat-badge badge-green">' + req.ieApproved + '</span>Approved</div>';
+    h += '<div class="req-stat-item"><span class="req-stat-badge badge-amber">' + (req.ieNeedReview || 0) + '</span>Review</div>';
+    h += '<div class="req-stat-item"><span class="req-stat-badge badge-red">' + (req.ieRejected || 0) + '</span>Reject</div>';
+    h += '<div class="req-stat-item"><span class="req-stat-badge badge-gray">' + (req.ieNA || 0) + '</span>N/A</div>';
+    h += '</div>';
+    h += '<a href="' + req.driveUrl + '" target="_blank" class="req-drive-link" title="Open in Google Drive">📁</a>';
+    h += '<div class="req-toggle">▼</div>';
+    h += '</div></div>';
+
+    // Content
+    h += '<div id="content-' + req.id + '" class="req-content">';
+    h += '<table class="eps-table">';
+    h += '<tr>';
+    h += '<th class="ep-cell-header" style="width:80px">EP</th>';
+    h += '<th class="ep-cell-header" style="flex:1">Description</th>';
+    h += '<th class="ep-cell-header" style="width:100px">Upload</th>';
+    h += '<th class="ep-cell-header" style="width:120px">Review Status</th>';
+    h += '<th class="ep-cell-header" style="width:300px">Comment</th>';
+    h += '<th class="ep-cell-header" style="width:140px">Action</th>';
+    h += '<th class="ep-cell-header" style="width:60px">Files</th>';
+    h += '</tr>';
+
+    reqEPs.forEach(ep => {
+      const statusCls = 'status-' + ep.ieStatus;
+      h += '<tr class="ep-row">';
+      h += '<td class="ep-cell ep-id">' + ep.epId + '</td>';
+      h += '<td class="ep-cell ep-name"><strong>' + (ep.folder || 'EP-' + ep.id) + '</strong></td>';
+      h += '<td class="ep-cell"><span class="ep-upload ' + (ep.hasFiles ? 'upload-ok' : 'upload-empty') + '">' + (ep.hasFiles ? '✓ Uploaded' : '○ Empty') + '</span></td>';
+      h += '<td class="ep-cell">';
+      h += '<span class="status-badge ' + statusCls + '">' + ep.ieStatus.replace('_', ' ') + '</span>';
+      h += '</td>';
+      h += '<td class="ep-cell">';
+      h += '<textarea id="comment-' + ep.id + '" class="comment-input" placeholder="Add reviewer comment..." style="height:60px">' + (ep.ieComment || '') + '</textarea>';
+      h += '</td>';
+      h += '<td class="ep-cell" style="width:140px">';
+      h += '<select id="status-' + ep.id + '" class="status-select">';
+      h += '<option value="not_reviewed" ' + (ep.ieStatus === 'not_reviewed' ? 'selected' : '') + '>Not Reviewed</option>';
+      h += '<option value="approved" ' + (ep.ieStatus === 'approved' ? 'selected' : '') + '>Approved</option>';
+      h += '<option value="need_review" ' + (ep.ieStatus === 'need_review' ? 'selected' : '') + '>Need Review</option>';
+      h += '<option value="rejected" ' + (ep.ieStatus === 'rejected' ? 'selected' : '') + '>Rejected</option>';
+      h += '<option value="partial" ' + (ep.ieStatus === 'partial' ? 'selected' : '') + '>Partial</option>';
+      h += '<option value="na" ' + (ep.ieStatus === 'na' ? 'selected' : '') + '>N/A</option>';
+      h += '</select>';
+      h += '<button id="save-' + ep.id + '" class="save-btn" onclick="saveReview(\'' + ep.id + '\')">Save</button>';
+      h += '</td>';
+      h += '<td class="ep-cell" style="width:60px;text-align:center">';
+      if (ep.driveUrl) {
+        h += '<a href="' + ep.driveUrl + '" target="_blank" class="ep-drive" title="View evidence">📄</a>';
+      }
+      h += '</td>';
+      h += '</tr>';
+    });
+
+    h += '</table></div></div>';
+  });
+
+  // Footer
+  h += '<div class="footer">';
+  h += '<div><strong>TRU PCI DSS v4.0.1</strong> — IExperts Audit Review Portal</div>';
+  h += '<div class="footer-links">';
+  h += '<a href="/reviewer">Evidence Reviewer</a>';
+  h += '<a href="/ceo">CEO Dashboard</a>';
+  h += '</div>';
+  h += '</div>';
+
+  document.getElementById('app').innerHTML = h;
+  initializeOriginalState();
+  renderChangesPanel();
+}
+
+render();
+
+// Auto-render changes panel every 2s as user makes edits
+setInterval(() => {
+  renderChangesPanel();
+}, 2000);
+</script>
+
+</body>
+</html>

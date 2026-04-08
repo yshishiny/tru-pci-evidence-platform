@@ -44,6 +44,10 @@ app.use('/api/alerts', alertsRoutes);
 // Command Center - public, no auth required, shareable URL
 app.use('/command-center', commandCenterRoutes);
 
+// IExperts Audit Portal - public, interactive review
+const iexpertsRoutes = require('./iexperts-route');
+app.use(iexpertsRoutes);
+
 // Evidence Reviewer - public, same live data as command center
 app.get('/reviewer', (req, res) => {
   try {
