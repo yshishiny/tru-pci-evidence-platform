@@ -234,7 +234,7 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-
   <div class="topbar">
     <div class="topbar-title" id="viewTitle">Dashboard</div>
     <div class="topbar-right">
-      <span class="sprint-badge">DAY 5 OF SPRINT</span>
+      <span class="sprint-badge" id="sprintBadge">DAY — OF SPRINT</span>
       <button class="btn-export" onclick="exportReviewReport()">&#x1F4E4; Export Report</button>
     </div>
   </div>
@@ -251,6 +251,13 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg-
 <script>
 // ===== EMBEDDED DATA =====
 var DATA = __DATA_PLACEHOLDER__;
+
+// ===== SPRINT DAY (dynamic) =====
+var SPRINT_START = new Date('2026-04-01T00:00:00');
+var SPRINT_END = new Date('2026-04-14T23:59:59');
+function getSprintDay(){var now=new Date();var diff=Math.floor((now-SPRINT_START)/(1000*60*60*24))+1;if(diff<1)return 0;if(diff>14)return 14;return diff}
+function getSprintLabel(){var d=getSprintDay();if(d<1)return'PRE-SPRINT';if(d>14)return'SPRINT COMPLETE';return'DAY '+d+' OF 14'}
+document.getElementById('sprintBadge').textContent=getSprintLabel();
 
 // ===== STATE =====
 var state = {
@@ -294,7 +301,7 @@ function buildSidebar(){
     h+='<span style="margin-left:auto;font-size:10px;color:'+pctColor+';font-weight:700">'+r.percentage+'%</span></div>';
   });
   h+='</div>';
-  h+='<div class="sidebar-footer"><div class="scan-date">Scanned: '+fmtDate(s.scanDate)+'</div><div style="margin-top:4px">TRU Properties &copy; 2026</div></div>';
+  h+='<div class="sidebar-footer"><div style="display:flex;align-items:center;gap:6px;margin-bottom:6px"><span style="font-size:14px">\u2601\uFE0F</span><span style="font-size:10px;color:var(--accent-cyan);font-weight:600">Synced from Google Drive</span></div><div class="scan-date">Last scan: '+fmtDate(s.scanDate)+'</div><div style="margin-top:4px">TRU Properties &copy; 2026</div></div>';
   document.getElementById('sidebar').innerHTML=h;
 }
 
@@ -318,7 +325,8 @@ function render(){
 function renderDash(el){
   var s=DATA.summary,rc2=getCounts();
   var h='<div class="alert-banner warning anim"><div class="alert-icon">\u26A1</div>';
-  h+='<div class="alert-text"><strong>Day 5 Sprint Update:</strong> '+s.filledEPs+'/'+s.totalEPs+' evidence folders populated ('+s.percentage+'%). '+rc2.approved+' reviewed & approved, '+rc2.needsReview+' pending review.</div></div>';
+  h+='<div class="alert-text"><strong>'+getSprintLabel()+' Update:</strong> '+s.filledEPs+'/'+s.totalEPs+' evidence folders populated ('+s.percentage+'%). '+rc2.approved+' reviewed & approved, '+rc2.needsReview+' pending review.</div></div>';
+  h+='<div class="alert-banner" style="background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(6,182,212,.08));border:1px solid rgba(59,130,246,.25);border-radius:10px;padding:10px 18px;margin-bottom:16px;display:flex;align-items:center;gap:10px"><div class="alert-icon" style="font-size:18px">\u2601\uFE0F</div><div class="alert-text" style="font-size:12px;color:var(--text-secondary)">This dashboard reflects evidence stored in <strong style="color:var(--accent-cyan)">Google Drive</strong>. Data is synced from the shared project folder. Last scan: '+fmtDate(s.scanDate)+'</div></div>';
 
   h+='<div class="kpi-grid">';
   h+='<div class="kpi-card blue anim d1"><div class="kpi-value">'+s.totalEPs+'</div><div class="kpi-label">Total Evidence Points</div></div>';
@@ -362,12 +370,23 @@ function renderDash(el){
   h+='</div>';
   // Timeline
   h+='<div class="card anim d3"><div class="card-title">Sprint Timeline</div><div class="timeline">';
-  h+='<div class="timeline-item done"><div class="timeline-date">Apr 1 (Day 1)</div><div class="timeline-text">Project kickoff, initial docs</div></div>';
-  h+='<div class="timeline-item done"><div class="timeline-date">Apr 2 (Day 3)</div><div class="timeline-text">50+ documents batch created</div></div>';
-  h+='<div class="timeline-item done"><div class="timeline-date">Apr 3 (Day 4)</div><div class="timeline-text">120+ docs, platform built</div></div>';
-  h+='<div class="timeline-item current"><div class="timeline-date">Apr 4 (Day 5)</div><div class="timeline-text">Command Center + review system</div></div>';
-  h+='<div class="timeline-item future"><div class="timeline-date">Apr 5-7</div><div class="timeline-text">IT evidence collection</div></div>';
-  h+='<div class="timeline-item future"><div class="timeline-date">Apr 8+</div><div class="timeline-text">iExperts review & assessor prep</div></div>';
+  var spDay=getSprintDay();
+  var tl=[
+    {day:1,date:'Apr 1',text:'Project kickoff, initial docs & gap assessment'},
+    {day:2,date:'Apr 2',text:'50+ documents batch created, folder structure'},
+    {day:3,date:'Apr 3',text:'120+ docs, platform built on Railway'},
+    {day:4,date:'Apr 4',text:'Command Center + review system deployed'},
+    {day:5,date:'Apr 5-6',text:'IT infra evidence: Kaspersky, Sophos, Huawei'},
+    {day:7,date:'Apr 7',text:'Network diagrams, firewall configs mapped'},
+    {day:8,date:'Apr 8',text:'Evidence at 85%, dashboard synced to Drive'},
+    {day:9,date:'Apr 9-10',text:'Remaining gaps: physical security, DB encryption'},
+    {day:11,date:'Apr 11-12',text:'iExperts review & feedback cycle'},
+    {day:13,date:'Apr 13-14',text:'Assessor prep & final submission'}
+  ];
+  tl.forEach(function(t){
+    var cls=t.day<spDay?'done':t.day===spDay?'current':'future';
+    h+='<div class="timeline-item '+cls+'"><div class="timeline-date">'+t.date+'</div><div class="timeline-text">'+t.text+'</div></div>';
+  });
   h+='</div></div>';
 
   h+='</div></div>';
@@ -540,7 +559,7 @@ function exportReviewReport(){
   var h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>TRU PCI DSS - Evidence Review Report</title>';
   h+='<style>body{font-family:"Segoe UI",system-ui,sans-serif;margin:40px auto;max-width:1100px;color:#1e293b}h1{color:#1e3a5f;border-bottom:3px solid #3b82f6;padding-bottom:12px}h2{color:#334155;margin-top:28px;border-bottom:1px solid #e2e8f0;padding-bottom:8px}.meta{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#f1f5f9;padding:16px;border-radius:8px;margin:16px 0;font-size:14px}.meta strong{color:#1e3a5f}table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px}th{background:#1e3a5f;color:#fff;padding:10px 12px;text-align:left;font-size:11px;text-transform:uppercase}td{padding:8px 12px;border-bottom:1px solid #e2e8f0}tr:hover{background:#f8fafc}.approved{color:#059669;font-weight:700}.flagged{color:#d97706;font-weight:700}.pending{color:#64748b}.empty{color:#dc2626}.summary-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}.sc{background:#f1f5f9;border-radius:8px;padding:16px;text-align:center}.sc .v{font-size:28px;font-weight:800}.sc .l{font-size:11px;color:#64748b;text-transform:uppercase}.footer{margin-top:40px;padding-top:16px;border-top:2px solid #e2e8f0;font-size:11px;color:#94a3b8;text-align:center}@media print{body{margin:20px}th{background:#1e3a5f!important;color:#fff!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}</style></head><body>';
   h+='<h1>\u{1F4CA} TRU PCI DSS v4.0 \u2013 Evidence Review Report</h1>';
-  h+='<div class="meta"><div><strong>Report Date:</strong> '+now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'</div><div><strong>Sprint Day:</strong> 5</div><div><strong>Reviewer:</strong> Yasser Shishiny</div><div><strong>Phase:</strong> Evidence Collection & Review</div></div>';
+  h+='<div class="meta"><div><strong>Report Date:</strong> '+now.toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'})+'</div><div><strong>Sprint Day:</strong> '+getSprintDay()+'</div><div><strong>Reviewer:</strong> Yasser Shishiny</div><div><strong>Phase:</strong> Evidence Collection & Review</div></div>';
   h+='<div class="summary-grid"><div class="sc"><div class="v" style="color:#1e3a5f">'+DATA.summary.totalEPs+'</div><div class="l">Total EPs</div></div><div class="sc"><div class="v" style="color:#059669">'+DATA.summary.filledEPs+'</div><div class="l">With Evidence ('+DATA.summary.percentage+'%)</div></div><div class="sc"><div class="v" style="color:#059669">'+rc2.approved+'</div><div class="l">Approved</div></div><div class="sc"><div class="v" style="color:#dc2626">'+DATA.summary.emptyEPs+'</div><div class="l">Missing</div></div></div>';
 
   h+='<h2>Requirement Summary</h2><table><thead><tr><th>Req</th><th>Name</th><th>Total</th><th>Files</th><th>Approved</th><th>Flagged</th><th>Empty</th><th>%</th></tr></thead><tbody>';
@@ -602,7 +621,7 @@ function exportEmptyList(){
 function exportDailyStatus(){
   var s=DATA.summary,rc2=getCounts(),today=new Date().toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'});
   var h='<!DOCTYPE html><html><head><meta charset="UTF-8"><title>TRU PCI DSS Status | '+today+'</title><style>*{margin:0;padding:0;box-sizing:border-box}body{font-family:"Segoe UI",system-ui,sans-serif;background:#0f172a;color:#e2e8f0;min-height:100vh}.hd{background:linear-gradient(135deg,#1e3a5f,#1e40af);padding:24px 40px;display:flex;justify-content:space-between;align-items:center}.hd h1{font-size:24px;font-weight:700;color:#fff}.hd .dt{color:#93c5fd;font-size:14px}.hd .ph{background:#f59e0b;color:#000;padding:4px 16px;border-radius:20px;font-weight:700;font-size:13px}.db{padding:24px 40px}.kr{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:24px}.k{background:#1e293b;border-radius:12px;padding:20px;text-align:center;border:1px solid #334155}.k .v{font-size:36px;font-weight:800;color:#60a5fa}.k .l{font-size:12px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-top:4px}.k.g .v{color:#4ade80}.k.y .v{color:#fbbf24}.pb{background:#1e293b;border-radius:12px;padding:20px;margin-bottom:24px;border:1px solid #334155}.pb h3{margin-bottom:12px;font-size:14px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px}.bar{height:32px;background:#334155;border-radius:16px;overflow:hidden}.fill{height:100%;background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:16px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;color:#000}.gr{display:grid;grid-template-columns:2fr 1fr;gap:16px}.cd{background:#1e293b;border-radius:12px;padding:20px;border:1px solid #334155}.cd h3{font-size:14px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;margin-bottom:16px}table{width:100%;border-collapse:collapse}th{text-align:left;padding:8px 12px;font-size:11px;color:#64748b;text-transform:uppercase;border-bottom:1px solid #334155}td{padding:10px 12px;font-size:14px;border-bottom:1px solid rgba(30,41,59,.5)}.mb{height:8px;background:#334155;border-radius:4px;overflow:hidden;width:120px}.mf{height:100%;border-radius:4px}</style></head><body>';
-  h+='<div class="hd"><div><h1>TRU PCI DSS v4.0 - iExperts</h1><div class="dt">Daily Status | '+today+' | Day 5</div></div><div class="ph">EVIDENCE COLLECTION</div></div>';
+  h+='<div class="hd"><div><h1>TRU PCI DSS v4.0 - iExperts</h1><div class="dt">Daily Status | '+today+' | '+getSprintLabel()+'</div></div><div class="ph">EVIDENCE COLLECTION</div></div>';
   h+='<div class="db"><div class="kr"><div class="k g"><div class="v">'+s.percentage+'%</div><div class="l">Overall</div></div><div class="k"><div class="v">'+s.filledEPs+'</div><div class="l">Populated</div></div><div class="k y"><div class="v">'+s.emptyEPs+'</div><div class="l">Remaining</div></div><div class="k g"><div class="v">'+rc2.approved+'</div><div class="l">Reviewed</div></div><div class="k"><div class="v">'+s.reqsAt100+'/12</div><div class="l">At 100%</div></div></div>';
   h+='<div class="pb"><h3>Overall: '+s.filledEPs+' / '+s.totalEPs+'</h3><div class="bar"><div class="fill" style="width:'+s.percentage+'%">'+s.percentage+'%</div></div></div>';
   h+='<div class="gr"><div class="cd"><h3>Requirement Status</h3><table><thead><tr><th>Req</th><th>Name</th><th>Progress</th><th>Bar</th><th>%</th></tr></thead><tbody>';

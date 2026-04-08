@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TRU PCI DSS — Platform UI Preview (Dashboard + Review)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #111827;
+  --bg-card: #1a2236;
+  --bg-card-hover: #1f2942;
+  --border: #2a3550;
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-green: #10b981;
+  --accent-emerald: #34d399;
+  --accent-yellow: #f59e0b;
+  --accent-orange: #f97316;
+  --accent-red: #ef4444;
+  --accent-purple: #8b5cf6;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Inter',system-ui,sans-serif; background:var(--bg-primary); color:var(--text-primary); }
+
+/* ===== VIEW TOGGLE ===== */
+.view-toggle { position:fixed; top:70px; right:20px; z-index:300; display:flex; gap:4px; background:rgba(0,0,0,.5); padding:4px; border-radius:10px; backdrop-filter:blur(8px); }
+.view-toggle button { padding:8px 18px; border:none; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer; transition:all .2s; background:transparent; color:#94a3b8; }
+.view-toggle button.active { background:var(--accent-blue); color:#fff; }
+.view-toggle button:hover:not(.active) { color:#fff; }
+.view-panel { display:none; }
+.view-panel.active { display:block; }
+
+/* ===== NAV TOPBAR ===== */
+.nav-topbar { background:linear-gradient(135deg,#0f1b33 0%,#162040 50%,#1a1040 100%); border-bottom:1px solid var(--border); padding:0 24px; height:60px; display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:200; backdrop-filter:blur(12px); }
+.nav-left { display:flex; align-items:center; gap:16px; }
+.nav-logo { width:36px; height:36px; background:linear-gradient(135deg,#3b82f6,#06b6d4); border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:13px; color:#fff; box-shadow:0 0 20px rgba(59,130,246,.3); }
+.nav-brand { margin-right:16px; }
+.nav-title { font-size:14px; font-weight:700; color:#f1f5f9; }
+.nav-subtitle { font-size:10px; color:#64748b; }
+.nav-links { display:flex; gap:0; }
+.nav-link { color:#94a3b8; text-decoration:none; padding:8px 14px; font-weight:600; font-size:12px; border-radius:6px; transition:all .15s; }
+.nav-link:hover { color:#f1f5f9; background:rgba(255,255,255,.05); }
+.nav-link.active { color:#3b82f6; background:rgba(59,130,246,.1); }
+.nav-right { display:flex; align-items:center; gap:14px; }
+.nav-date { font-size:11px; color:#94a3b8; }
+.nav-phase { background:linear-gradient(135deg,#f59e0b,#d97706); color:#000; padding:4px 12px; border-radius:16px; font-weight:700; font-size:10px; text-transform:uppercase; letter-spacing:.5px; }
+.nav-user-name { font-size:12px; font-weight:600; color:#f1f5f9; }
+.nav-user-role { font-size:9px; color:#64748b; text-transform:uppercase; }
+.nav-logout { background:transparent; border:1px solid #2a3550; color:#94a3b8; padding:6px 14px; border-radius:6px; font-weight:600; font-size:11px; cursor:pointer; }
+
+/* ===== DASHBOARD ===== */
+.db-main { padding:20px 28px 48px; max-width:1600px; margin:0 auto; }
+.db-alert { background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(245,158,11,.03)); border:1px solid rgba(245,158,11,.25); border-radius:12px; padding:14px 20px; margin-bottom:24px; display:flex; align-items:center; gap:14px; }
+.db-alert-icon { font-size:20px; }
+.db-alert-text { font-size:13px; color:#94a3b8; line-height:1.5; }
+.db-alert-text strong { color:#fbbf24; }
+
+.db-kpi-grid { display:grid; grid-template-columns:repeat(6,1fr); gap:14px; margin-bottom:24px; }
+.db-kpi { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px; position:relative; overflow:hidden; transition:all .25s; }
+.db-kpi:hover { border-color:var(--accent-blue); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,.3); }
+.db-kpi::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; border-radius:14px 14px 0 0; }
+.db-kpi.blue::before { background:linear-gradient(90deg,#3b82f6,#06b6d4); }
+.db-kpi.green::before { background:linear-gradient(90deg,#10b981,#34d399); }
+.db-kpi.yellow::before { background:linear-gradient(90deg,#f59e0b,#f97316); }
+.db-kpi.purple::before { background:linear-gradient(90deg,#8b5cf6,#3b82f6); }
+.db-kpi-label { font-size:10px; text-transform:uppercase; letter-spacing:1px; color:#64748b; font-weight:600; margin-bottom:8px; }
+.db-kpi-value { font-size:32px; font-weight:800; letter-spacing:-1px; line-height:1; }
+.db-kpi-value.cyan { color:#06b6d4; }
+.db-kpi-value.green { color:#10b981; }
+.db-kpi-value.yellow { color:#f59e0b; }
+.db-kpi-value.purple { color:#8b5cf6; }
+.db-kpi-value.blue { color:#3b82f6; }
+.db-kpi-detail { font-size:11px; color:#64748b; margin-top:6px; }
+
+.db-progress { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:20px 24px; margin-bottom:24px; }
+.db-progress h3 { font-size:12px; text-transform:uppercase; letter-spacing:1px; color:#64748b; font-weight:600; margin-bottom:12px; }
+.db-prog-bar-wrap { height:40px; background:#111827; border-radius:20px; overflow:hidden; border:1px solid var(--border); }
+.db-prog-fill { height:100%; border-radius:20px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:15px; color:#fff; background:linear-gradient(90deg,#059669,#10b981,#34d399); transition:width 1.2s ease; }
+.db-prog-segments { display:flex; gap:24px; margin-top:12px; }
+.db-prog-seg { display:flex; align-items:center; gap:8px; font-size:12px; color:#94a3b8; }
+.db-prog-dot { width:10px; height:10px; border-radius:3px; }
+
+.db-grid-main { display:grid; grid-template-columns:1fr 380px; gap:20px; }
+.db-card { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; overflow:hidden; }
+.db-card-header { padding:16px 20px; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+.db-card-header h3 { font-size:13px; font-weight:700; }
+.db-badge { font-size:10px; background:#111827; border:1px solid var(--border); padding:4px 10px; border-radius:6px; color:#64748b; font-weight:600; }
+
+.db-table { width:100%; border-collapse:collapse; }
+.db-table thead th { text-align:left; padding:10px 16px; font-size:10px; text-transform:uppercase; letter-spacing:.8px; color:#64748b; font-weight:600; background:rgba(0,0,0,.15); border-bottom:1px solid var(--border); }
+.db-table tbody td { padding:12px 16px; font-size:13px; border-bottom:1px solid rgba(42,53,80,.5); vertical-align:middle; }
+.db-table tbody tr { transition:background .15s; cursor:pointer; }
+.db-table tbody tr:hover { background:var(--bg-card-hover); }
+.db-req-cell { display:flex; align-items:center; gap:10px; }
+.db-req-badge { width:28px; height:28px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:11px; color:#fff; flex-shrink:0; }
+.db-req-name { font-weight:500; font-size:12px; color:#94a3b8; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.db-mini-bar { height:8px; background:#111827; border-radius:4px; overflow:hidden; width:120px; }
+.db-mini-fill { height:100%; border-radius:4px; }
+.db-pct { font-weight:700; font-size:14px; text-align:right; }
+.db-count { font-size:12px; color:#64748b; }
+.db-status { display:flex; align-items:center; gap:6px; }
+.db-status-dot { width:8px; height:8px; border-radius:50%; }
+
+.db-sidebar-stack { display:flex; flex-direction:column; gap:20px; }
+.db-sidebar-card { background:var(--bg-card); border:1px solid var(--border); border-radius:14px; padding:16px 20px; }
+.db-section-hdr { font-size:13px; font-weight:700; margin-bottom:14px; }
+
+.db-donut-wrap { display:flex; align-items:center; gap:24px; }
+.db-donut { width:140px; height:140px; position:relative; flex-shrink:0; }
+.db-donut svg { width:100%; height:100%; }
+.db-donut-center { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); text-align:center; }
+.db-donut-pct { font-size:28px; font-weight:800; color:#10b981; line-height:1; }
+.db-donut-lbl { font-size:9px; text-transform:uppercase; color:#64748b; margin-top:2px; }
+.db-legend-item { display:flex; align-items:center; gap:8px; font-size:12px; color:#94a3b8; margin-bottom:6px; }
+.db-legend-dot { width:10px; height:10px; border-radius:3px; flex-shrink:0; }
+
+.db-owner-card { display:flex; align-items:center; gap:12px; padding:12px; background:#111827; border:1px solid var(--border); border-radius:10px; margin-bottom:8px; }
+.db-owner-avatar { width:42px; height:42px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:15px; color:#fff; flex-shrink:0; }
+.db-owner-info { flex:1; }
+.db-owner-name { font-weight:600; font-size:13px; }
+.db-owner-role { font-size:11px; color:#64748b; margin-top:2px; }
+.db-owner-stat { text-align:center; }
+.db-owner-stat-val { font-size:22px; font-weight:800; color:#ef4444; line-height:1; }
+.db-owner-stat-lbl { font-size:9px; color:#64748b; text-transform:uppercase; margin-top:2px; }
+
+.db-tl-item { display:flex; gap:14px; padding-bottom:14px; position:relative; }
+.db-tl-item:not(:last-child)::after { content:''; position:absolute; left:5px; top:18px; bottom:0; width:2px; background:var(--border); }
+.db-tl-dot { width:12px; height:12px; border-radius:50%; flex-shrink:0; margin-top:3px; position:relative; z-index:1; }
+.db-tl-dot.done { background:#10b981; }
+.db-tl-dot.current { background:#f59e0b; box-shadow:0 0 10px #f59e0b; animation:pulse 1.5s infinite; }
+.db-tl-dot.future { background:var(--border); border:2px solid #64748b; }
+@keyframes pulse { 0%,100%{box-shadow:0 0 6px #f59e0b} 50%{box-shadow:0 0 16px #f59e0b} }
+.db-tl-date { font-size:10px; color:#64748b; font-weight:500; }
+.db-tl-text { font-size:13px; color:#94a3b8; margin-top:2px; }
+
+/* ===== REVIEWER ===== */
+.rv-hdr { background:linear-gradient(135deg,#1F3864,#2E75B6); color:#fff; padding:14px 24px; display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap; box-shadow:0 2px 8px rgba(0,0,0,.3); }
+.rv-hdr-left h1 { font-size:17px; font-weight:700; margin:0; }
+.rv-hdr-left p { font-size:10px; opacity:.75; margin-top:3px; }
+.rv-hdr-stats { display:flex; gap:10px; }
+.rv-sbox { background:rgba(255,255,255,.18); border-radius:8px; padding:7px 14px; text-align:center; min-width:70px; }
+.rv-sbox-n { font-size:20px; font-weight:700; line-height:1; }
+.rv-sbox-n.rv-red { color:#ffcdd2; }
+.rv-sbox-l { font-size:9px; opacity:.8; text-transform:uppercase; }
+.rv-overall { background:rgba(79,195,247,.25); border-radius:8px; padding:7px 18px; text-align:center; }
+.rv-overall-pct { font-size:26px; font-weight:700; color:#4FC3F7; line-height:1; }
+.rv-overall-lbl { font-size:9px; opacity:.8; text-transform:uppercase; }
+
+.rv-toolbar { background:#fff; padding:10px 20px; border-bottom:2px solid #e0e4ea; position:sticky; top:60px; z-index:100; box-shadow:0 2px 6px rgba(0,0,0,.07); display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+.rv-toolbar-label { font-size:10px; font-weight:700; color:#888; text-transform:uppercase; }
+.rv-fbtn { padding:5px 13px; border:1.5px solid #dde1ea; border-radius:14px; background:#f8f9fb; cursor:pointer; font-size:11px; font-weight:600; color:#666; transition:all .15s; }
+.rv-fbtn.active { background:#1F3864; color:#fff; border-color:#1F3864; }
+.rv-fbtn:hover:not(.active) { background:#e8ecf0; }
+.rv-search { flex:1; min-width:180px; max-width:320px; padding:6px 12px; border:1.5px solid #dde1ea; border-radius:14px; font-size:11px; outline:none; }
+.rv-expand-btn { padding:5px 12px; border:1.5px solid #2E75B6; border-radius:8px; background:#EBF3FF; cursor:pointer; font-size:11px; font-weight:600; color:#2E75B6; margin-left:auto; }
+
+.rv-main { padding:16px 20px; background:#f0f2f5; min-height:50vh; }
+.rv-req-section { background:#fff; border-radius:10px; margin-bottom:12px; box-shadow:0 1px 4px rgba(0,0,0,.07); overflow:hidden; }
+.rv-req-hdr { display:flex; align-items:center; justify-content:space-between; padding:12px 18px; cursor:pointer; gap:12px; transition:background .12s; }
+.rv-req-hdr:hover { background:#f0f6ff; }
+.rv-req-hdr-left { display:flex; align-items:center; gap:10px; }
+.rv-req-num { background:#1F3864; color:#fff; border-radius:6px; padding:3px 10px; font-size:11px; font-weight:700; }
+.rv-req-title { font-size:13px; font-weight:700; color:#1F3864; }
+.rv-req-hdr-right { display:flex; align-items:center; gap:8px; }
+.rv-badge { display:inline-block; padding:2px 9px; border-radius:10px; font-size:10px; font-weight:700; }
+.rv-badge-complete { background:#d4edda; color:#155724; }
+.rv-badge-partial { background:#fff3cd; color:#856404; }
+.rv-badge-pending { background:#f8d7da; color:#721c24; }
+.rv-req-bar { width:80px; height:5px; background:#e0e4ea; border-radius:3px; overflow:hidden; }
+.rv-req-bar-fill { height:100%; background:linear-gradient(90deg,#2E75B6,#4FC3F7); border-radius:3px; }
+.rv-req-pct { font-size:13px; font-weight:700; color:#2E75B6; min-width:35px; text-align:right; }
+.rv-req-toggle { font-size:11px; color:#aaa; transition:transform .2s; }
+.rv-req-toggle.open { transform:rotate(180deg); }
+.rv-req-body { border-top:1px solid #eef0f4; padding:10px 14px; display:flex; flex-direction:column; gap:8px; }
+.rv-req-body.hidden { display:none; }
+
+.rv-ep-card { border:1.5px solid #e8eaed; border-radius:8px; padding:10px 14px; background:#fff; transition:border-color .15s; }
+.rv-ep-card:hover { border-color:#2E75B6; box-shadow:0 1px 6px rgba(46,117,182,.12); }
+.rv-ep-complete { border-left:4px solid #28a745; }
+.rv-ep-partial { border-left:4px solid #ffc107; }
+.rv-ep-pending { border-left:4px solid #dc3545; background:#fff8f8; }
+.rv-ep-card-top { display:flex; align-items:flex-start; gap:10px; margin-bottom:8px; flex-wrap:wrap; }
+.rv-ep-ref { font-size:10px; font-weight:700; color:#fff; background:#2E75B6; padding:2px 8px; border-radius:8px; }
+.rv-ep-name { font-size:11px; color:#333; flex:1; line-height:1.5; }
+.rv-flist { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.rv-flink { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:6px; text-decoration:none; font-size:11px; font-weight:600; border:1px solid; cursor:pointer; transition:all .15s; }
+.rv-flink-doc { background:#EBF3FF; border-color:#b8d4f0; color:#1F3864; }
+.rv-flink-doc:hover { background:#2E75B6; color:#fff; border-color:#2E75B6; }
+.rv-flink-status { background:#f5f5f5; border-color:#ddd; color:#888; }
+.rv-fsize { font-size:9px; opacity:.7; font-weight:400; }
+.rv-flist-empty { font-size:11px; color:#c0392b; font-style:italic; padding:4px 0; }
+.rv-ep-actions { display:flex; align-items:center; gap:6px; margin-top:8px; flex-wrap:wrap; }
+.rv-action-btn { padding:4px 12px; border:none; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer; color:#fff; }
+.rv-view-btn { background:#2E75B6; }
+.rv-approve { background:#28a745; }
+.rv-revision { background:#ffc107; color:#333; }
+.rv-workflow { font-size:9px; color:#aaa; margin-left:auto; }
+
+@keyframes fadeInUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+.animate-in { animation:fadeInUp .5s ease both; }
+.delay-1 { animation-delay:.1s; }
+.delay-2 { animation-delay:.2s; }
+.delay-3 { animation-delay:.3s; }
+
+@media(max-width:1200px) { .db-grid-main{grid-template-columns:1fr} .db-kpi-grid{grid-template-columns:repeat(3,1fr)} }
+</style>
+</head>
+<body>
+
+<!-- VIEW TOGGLE -->
+<div class="view-toggle">
+  <button class="active" onclick="showView('dashboard',this)">Dashboard</button>
+  <button onclick="showView('review',this)">Reviewer</button>
+</div>
+
+<!-- ========================== DASHBOARD VIEW ========================== -->
+<div class="view-panel active" id="view-dashboard">
+
+<!-- NAV -->
+<div class="nav-topbar">
+  <div class="nav-left">
+    <div class="nav-logo">TRU</div>
+    <div class="nav-brand"><div class="nav-title">PCI DSS v4.0 Evidence Tracker</div><div class="nav-subtitle">iExperts Compliance Program</div></div>
+    <nav class="nav-links">
+      <a class="nav-link active">Dashboard</a>
+      <a class="nav-link">Review</a>
+      <a class="nav-link">Reports</a>
+      <a class="nav-link">Cloud Storage</a>
+      <a class="nav-link">Admin</a>
+    </nav>
+  </div>
+  <div class="nav-right">
+    <div class="nav-date">Fri, Apr 4, 2026</div>
+    <div class="nav-phase">Day 5</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end"><span class="nav-user-name">Yasser</span><span class="nav-user-role">ADMIN</span></div>
+    <button class="nav-logout">Logout</button>
+  </div>
+</div>
+
+<div class="db-main">
+  <!-- Alert -->
+  <div class="db-alert animate-in">
+    <div class="db-alert-icon">⚠️</div>
+    <div class="db-alert-text"><strong>Phase Transition Complete:</strong> All 120+ policy/procedure documents deployed. Remaining 53 evidence points require live system screenshots, scan reports, and config exports from TRU IT team.</div>
+  </div>
+
+  <!-- KPIs -->
+  <div class="db-kpi-grid animate-in delay-1">
+    <div class="db-kpi blue"><div class="db-kpi-label">Total Evidence Points</div><div class="db-kpi-value cyan">172</div><div class="db-kpi-detail">Across 12 PCI DSS requirements</div></div>
+    <div class="db-kpi green"><div class="db-kpi-label">Folders Populated</div><div class="db-kpi-value green">119</div><div class="db-kpi-detail">With documents or evidence</div></div>
+    <div class="db-kpi yellow"><div class="db-kpi-label">Remaining Items</div><div class="db-kpi-value yellow">53</div><div class="db-kpi-detail">All require IT team action</div></div>
+    <div class="db-kpi green"><div class="db-kpi-label">Documents Created</div><div class="db-kpi-value green">267</div><div class="db-kpi-detail">.docx policies &amp; procedures</div></div>
+    <div class="db-kpi purple"><div class="db-kpi-label">Reqs at 100%</div><div class="db-kpi-value purple">3</div><div class="db-kpi-detail">Req 2, 7, 12 fully addressed</div></div>
+    <div class="db-kpi blue"><div class="db-kpi-label">Sprint Day</div><div class="db-kpi-value blue">5</div><div class="db-kpi-detail">Started March 31, 2026</div></div>
+  </div>
+
+  <!-- Progress Bar -->
+  <div class="db-progress animate-in delay-2">
+    <h3>Overall Completion Progress</h3>
+    <div class="db-prog-bar-wrap"><div class="db-prog-fill" id="progBar" style="width:0%">69%</div></div>
+    <div class="db-prog-segments">
+      <div class="db-prog-seg"><div class="db-prog-dot" style="background:#10b981"></div> Policy/Procedure Documents (267)</div>
+      <div class="db-prog-seg"><div class="db-prog-dot" style="background:#3b82f6"></div> Other Evidence Files</div>
+      <div class="db-prog-seg"><div class="db-prog-dot" style="background:#2a3550"></div> Awaiting IT Evidence (53)</div>
+    </div>
+  </div>
+
+  <!-- Two Column -->
+  <div class="db-grid-main animate-in delay-3">
+    <!-- Table -->
+    <div class="db-card">
+      <div class="db-card-header"><h3>Requirement Breakdown</h3><div class="db-badge">12 Requirements &bull; PCI DSS v4.0</div></div>
+      <table class="db-table">
+        <thead><tr><th>Requirement</th><th>Progress</th><th style="width:60px">%</th><th style="width:80px">Folders</th><th style="width:90px">Status</th></tr></thead>
+        <tbody id="reqTable"></tbody>
+      </table>
+    </div>
+    <!-- Sidebar -->
+    <div class="db-sidebar-stack">
+      <!-- Donut -->
+      <div class="db-sidebar-card">
+        <div class="db-section-hdr">Completion Status</div>
+        <div class="db-donut-wrap">
+          <div class="db-donut">
+            <svg viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="50" fill="none" stroke="#2a3550" stroke-width="14"/>
+              <circle cx="60" cy="60" r="50" fill="none" stroke="url(#dg)" stroke-width="14" stroke-dasharray="314.16" stroke-dashoffset="97.39" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+              <defs><linearGradient id="dg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#10b981"/><stop offset="100%" style="stop-color:#06b6d4"/></linearGradient></defs>
+            </svg>
+            <div class="db-donut-center"><div class="db-donut-pct">69%</div><div class="db-donut-lbl">COMPLETE</div></div>
+          </div>
+          <div>
+            <div class="db-legend-item"><div class="db-legend-dot" style="background:#10b981"></div> Completed (119)</div>
+            <div class="db-legend-item"><div class="db-legend-dot" style="background:#2a3550"></div> Remaining (53)</div>
+            <div class="db-legend-item"><div class="db-legend-dot" style="background:#06b6d4"></div> Docs Created (267)</div>
+          </div>
+        </div>
+      </div>
+      <!-- Owners -->
+      <div class="db-sidebar-card">
+        <div class="db-section-hdr">Evidence Owners</div>
+        <div class="db-owner-card"><div class="db-owner-avatar" style="background:linear-gradient(135deg,#3b82f6,#5b9cf6)">AA</div><div class="db-owner-info"><div class="db-owner-name">Amr Abdelnasr</div><div class="db-owner-role">IT Infrastructure</div></div><div class="db-owner-stat"><div class="db-owner-stat-val">14</div><div class="db-owner-stat-lbl">PENDING</div></div></div>
+        <div class="db-owner-card"><div class="db-owner-avatar" style="background:linear-gradient(135deg,#8b5cf6,#ab7cf6)">TS</div><div class="db-owner-info"><div class="db-owner-name">Tamer Sherif</div><div class="db-owner-role">App Development</div></div><div class="db-owner-stat"><div class="db-owner-stat-val">15</div><div class="db-owner-stat-lbl">PENDING</div></div></div>
+        <div class="db-owner-card"><div class="db-owner-avatar" style="background:linear-gradient(135deg,#10b981,#30d9a1)">AS</div><div class="db-owner-info"><div class="db-owner-name">Ahmad Sayed</div><div class="db-owner-role">Cyber Force</div></div><div class="db-owner-stat"><div class="db-owner-stat-val">18</div><div class="db-owner-stat-lbl">PENDING</div></div></div>
+      </div>
+      <!-- Timeline -->
+      <div class="db-sidebar-card">
+        <div class="db-section-hdr">Sprint Timeline</div>
+        <div class="db-tl-item"><div class="db-tl-dot done"></div><div><div class="db-tl-date">Day 1</div><div class="db-tl-text">Sprint Start — Mar 31</div></div></div>
+        <div class="db-tl-item"><div class="db-tl-dot done"></div><div><div class="db-tl-date">Day 2-4</div><div class="db-tl-text">Apr 1-3 — Document deployment</div></div></div>
+        <div class="db-tl-item"><div class="db-tl-dot current"></div><div><div class="db-tl-date">Day 5</div><div class="db-tl-text">Current Day — Apr 4</div></div></div>
+        <div class="db-tl-item"><div class="db-tl-dot future"></div><div><div class="db-tl-date">Apr 5-7</div><div class="db-tl-text">iExperts Review</div></div></div>
+        <div class="db-tl-item"><div class="db-tl-dot future"></div><div><div class="db-tl-date">Apr 8+</div><div class="db-tl-text">PCI QSA Review</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ========================== REVIEWER VIEW ========================== -->
+<div class="view-panel" id="view-review">
+
+<div class="nav-topbar">
+  <div class="nav-left">
+    <div class="nav-logo">TRU</div>
+    <div class="nav-brand"><div class="nav-title">PCI DSS v4.0 Evidence Tracker</div><div class="nav-subtitle">iExperts Compliance Program</div></div>
+    <nav class="nav-links">
+      <a class="nav-link">Dashboard</a>
+      <a class="nav-link active">Review</a>
+      <a class="nav-link">Reports</a>
+      <a class="nav-link">Cloud Storage</a>
+      <a class="nav-link">Admin</a>
+    </nav>
+  </div>
+  <div class="nav-right">
+    <div class="nav-date">Fri, Apr 4, 2026</div>
+    <div class="nav-phase">Day 5</div>
+    <div style="display:flex;flex-direction:column;align-items:flex-end"><span class="nav-user-name">Yasser</span><span class="nav-user-role">ADMIN</span></div>
+    <button class="nav-logout">Logout</button>
+  </div>
+</div>
+
+<div class="rv-hdr">
+  <div class="rv-hdr-left"><h1>TRU PCI DSS v4.1 — Evidence Reviewer</h1><p>Click any evidence file to open and review &middot; iExperts &middot; Cyberforce &middot; TRU Finance</p></div>
+  <div class="rv-hdr-stats">
+    <div class="rv-sbox"><div class="rv-sbox-n">0</div><div class="rv-sbox-l">Reviewed</div></div>
+    <div class="rv-sbox"><div class="rv-sbox-n">119</div><div class="rv-sbox-l">Needs Review</div></div>
+    <div class="rv-sbox"><div class="rv-sbox-n rv-red">53</div><div class="rv-sbox-l">Empty</div></div>
+    <div class="rv-overall"><div class="rv-overall-pct">69%</div><div class="rv-overall-lbl">Coverage</div></div>
+  </div>
+</div>
+
+<div class="rv-toolbar">
+  <label class="rv-toolbar-label">Show:</label>
+  <button class="rv-fbtn active">All (172)</button>
+  <button class="rv-fbtn">✅ Reviewed (0)</button>
+  <button class="rv-fbtn">⚠️ Needs Review (119)</button>
+  <button class="rv-fbtn">🔴 Empty (53)</button>
+  <input class="rv-search" type="text" placeholder="Search EP name, folder, file...">
+  <button class="rv-expand-btn" onclick="toggleAllRev()">Expand All ▼</button>
+</div>
+
+<div class="rv-main" id="rvMain"></div>
+</div>
+
+<script>
+// View toggle
+function showView(name, btn) {
+  document.querySelectorAll('.view-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+  document.getElementById('view-'+name).classList.add('active');
+  btn.classList.add('active');
+}
+
+// Requirements data (from live API)
+const reqs = [
+  {id:1,name:'Network Security Controls',total:17,filled:11,pct:65,color:'#3b82f6'},
+  {id:2,name:'Secure Configurations',total:4,filled:4,pct:100,color:'#10b981'},
+  {id:3,name:'Protect Stored Account Data',total:23,filled:14,pct:61,color:'#f59e0b'},
+  {id:4,name:'Protect Data in Transit',total:6,filled:5,pct:83,color:'#06b6d4'},
+  {id:5,name:'Protect from Malware',total:13,filled:6,pct:46,color:'#f97316'},
+  {id:6,name:'Secure Systems & Applications',total:20,filled:14,pct:70,color:'#8b5cf6'},
+  {id:7,name:'Restrict Access to Data',total:7,filled:7,pct:100,color:'#10b981'},
+  {id:8,name:'Identify & Authenticate Access',total:13,filled:7,pct:54,color:'#ef4444'},
+  {id:9,name:'Restrict Physical Access',total:16,filled:13,pct:81,color:'#06b6d4'},
+  {id:10,name:'Log & Monitor Access',total:15,filled:6,pct:40,color:'#ef4444'},
+  {id:11,name:'Test Security',total:18,filled:12,pct:67,color:'#f97316'},
+  {id:12,name:'Organizational Processes',total:20,filled:20,pct:100,color:'#10b981'}
+];
+
+// Dashboard table
+const tbody = document.getElementById('reqTable');
+reqs.forEach(r => {
+  const sc = r.pct===100?'#10b981':r.pct>=85?'#f59e0b':'#ef4444';
+  const sl = r.pct===100?'Complete':r.pct>=85?'Near Complete':'In Progress';
+  tbody.innerHTML += `<tr><td><div class="db-req-cell"><div class="db-req-badge" style="background:${r.color}">${r.id}</div><span class="db-req-name">${r.name}</span></div></td><td><div class="db-mini-bar"><div class="db-mini-fill" style="width:${r.pct}%;background:linear-gradient(90deg,${r.color},${r.color}99)"></div></div></td><td class="db-pct" style="color:${sc}">${r.pct}%</td><td class="db-count">${r.filled}/${r.total}</td><td><div class="db-status"><div class="db-status-dot" style="background:${sc};box-shadow:0 0 6px ${sc}"></div><span style="color:${sc};font-size:11px;font-weight:600">${sl}</span></div></td></tr>`;
+});
+
+// Animate progress bar
+setTimeout(()=>{ document.getElementById('progBar').style.width='69%'; },200);
+
+// Reviewer sections with sample EP cards
+const rvMain = document.getElementById('rvMain');
+const sampleFiles = {
+  1: [
+    {ref:'001',name:'Security policy for Network Security Controls',status:'partial',files:['STATUS.md']},
+    {ref:'002',name:'Roles and responsibilities — Network Security Controls',status:'complete',files:['TRU-PCI-001-RR-001 Roles and Responsibilities.docx','STATUS.md']},
+    {ref:'003',name:'Configuration Document for NSC (firewalls, routers)',status:'complete',files:['TRU-PCI-001-CFG-001 NSC Configuration Standard.docx','STATUS.md']},
+    {ref:'012',name:'Firewall screenshot for inbound/outbound rules',status:'pending',files:[]},
+  ],
+  2: [
+    {ref:'018',name:'Secure baseline configuration policy',status:'partial',files:['sop_secure_config_policy.docx','COVERAGE.md']},
+    {ref:'019',name:'Roles and responsibilities — Secure Config',status:'partial',files:['sop_rr_req2.docx','COVERAGE.md']},
+    {ref:'020',name:'Configuration and Hardening Documentation',status:'partial',files:['5- Configuration and Hardening Policy.docx','7- IT Configuration and Capacity Management.docx','STATUS.md']},
+  ],
+  3: [
+    {ref:'022',name:'Data retention and disposal policy',status:'partial',files:['TRU-PCI-003-POL-001 Data Retention Policy.docx']},
+    {ref:'030',name:'SAD/PAN storage screenshot — database level',status:'pending',files:[]},
+  ]
+};
+
+reqs.slice(0,3).forEach(r => {
+  const eps = sampleFiles[r.id] || [];
+  const complete = eps.filter(e=>e.status==='complete').length;
+  const partial = eps.filter(e=>e.status==='partial').length;
+  const pending = eps.filter(e=>e.status==='pending').length;
+
+  rvMain.innerHTML += `
+    <div class="rv-req-section">
+      <div class="rv-req-hdr" onclick="this.nextElementSibling.classList.toggle('hidden');this.querySelector('.rv-req-toggle').classList.toggle('open')">
+        <div class="rv-req-hdr-left"><span class="rv-req-num">REQ ${r.id}</span><span class="rv-req-title">Req ${r.id} — ${r.name}</span></div>
+        <div class="rv-req-hdr-right">
+          ${complete?`<span class="rv-badge rv-badge-complete">✅ ${complete}</span>`:''}
+          ${partial?`<span class="rv-badge rv-badge-partial">⚠️ ${partial}</span>`:''}
+          ${pending?`<span class="rv-badge rv-badge-pending">🔴 ${pending}</span>`:''}
+          <div class="rv-req-bar"><div class="rv-req-bar-fill" style="width:${r.pct}%"></div></div>
+          <span class="rv-req-pct">${r.pct}%</span>
+          <span class="rv-req-toggle">▼</span>
+        </div>
+      </div>
+      <div class="rv-req-body hidden">
+        ${eps.map(ep => {
+          const cls = ep.status==='complete'?'rv-ep-complete':ep.status==='partial'?'rv-ep-partial':'rv-ep-pending';
+          const badge = ep.status==='complete'?'<span class="rv-badge rv-badge-complete">✅ COMPLETE</span>':ep.status==='partial'?'<span class="rv-badge rv-badge-partial">⚠️ NEEDS REVIEW</span>':'<span class="rv-badge rv-badge-pending">🔴 PENDING</span>';
+          const flinks = ep.files.length ? ep.files.map(f=>`<a class="rv-flink rv-flink-doc">${f.endsWith('.md')?'📝':'📄'} ${f}</a>`).join('') : '<div class="rv-flist-empty">No files uploaded yet — awaiting evidence</div>';
+          return `<div class="rv-ep-card ${cls}"><div class="rv-ep-card-top"><span class="rv-ep-ref">EP-${ep.ref}</span><span class="rv-ep-name">${ep.name}</span>${badge}</div><div class="rv-flist">${flinks}</div><div class="rv-ep-actions"><button class="rv-action-btn rv-view-btn">View Docs</button><button class="rv-action-btn rv-approve">✅ Approve</button><button class="rv-action-btn rv-revision">⚠️ Revision</button><span class="rv-workflow">Workflow: Upload → PM → GRC → Admin → Assessor</span></div></div>`;
+        }).join('')}
+      </div>
+    </div>`;
+});
+
+// Add remaining reqs as collapsed
+reqs.slice(3).forEach(r => {
+  const complete = r.pct===100 ? r.filled : Math.floor(r.filled*0.3);
+  const partial = r.filled - complete;
+  const pending = r.total - r.filled;
+  rvMain.innerHTML += `
+    <div class="rv-req-section">
+      <div class="rv-req-hdr" onclick="this.querySelector('.rv-req-toggle').classList.toggle('open')">
+        <div class="rv-req-hdr-left"><span class="rv-req-num">REQ ${r.id}</span><span class="rv-req-title">Req ${r.id} — ${r.name}</span></div>
+        <div class="rv-req-hdr-right">
+          ${complete?`<span class="rv-badge rv-badge-complete">✅ ${complete}</span>`:''}
+          ${partial?`<span class="rv-badge rv-badge-partial">⚠️ ${partial}</span>`:''}
+          ${pending?`<span class="rv-badge rv-badge-pending">🔴 ${pending}</span>`:''}
+          <div class="rv-req-bar"><div class="rv-req-bar-fill" style="width:${r.pct}%"></div></div>
+          <span class="rv-req-pct">${r.pct}%</span>
+          <span class="rv-req-toggle">▼</span>
+        </div>
+      </div>
+    </div>`;
+});
+
+function toggleAllRev() {
+  const bodies = document.querySelectorAll('.rv-req-body');
+  const btn = document.querySelector('.rv-expand-btn');
+  const allVisible = [...bodies].every(b => !b.classList.contains('hidden'));
+  bodies.forEach(b => allVisible ? b.classList.add('hidden') : b.classList.remove('hidden'));
+  document.querySelectorAll('.rv-req-toggle').forEach(t => allVisible ? t.classList.remove('open') : t.classList.add('open'));
+  btn.textContent = allVisible ? 'Expand All ▼' : 'Collapse All ▲';
+}
+</script>
+</body>
+</html>

@@ -1,1 +1,1622 @@
-[{"r": 1,"s": "1.1.1","p": "Requirement 1 - Network Security Controls/1.1.1/Security policy and operational procedures to implement Network Security Control","n": "Security policy and operational procedures to implement Network Security Control","t": "document","st": "uploaded","d": 1},{"r": 1,"s": "1.1.2","p": "Requirement 1 - Network Security Controls/1.1.2/Roles and responsibilities document to implement and maintain Network Security C","n": "Roles and responsibilities document to implement and maintain Network Security C","t": "document","st": "uploaded","d": 1},{"r": 1,"s": "1.2.1","p": "Requirement 1 - Network Security Controls/1.2.1/Configuration Document for NSC( firewalls, routers and L3 Switches configured wi","n": "Configuration Document for NSC( firewalls, routers and L3 Switches configured wi","t": "config","st": "uploaded","d": 1},{"r": 1,"s": "1.2.1","p": "Requirement 1 - Network Security Controls/1.2.1","n": "IPS/IDS configuration standard document of all IPS/IDS within the environment","t": "config","st": "uploaded","d": 1},{"r": 1,"s": "1.2.2","p": "Requirement 1 - Network Security Controls/1.2.2/Recent Approved Change request form document for making a change on - - Firewall","n": "Recent Approved Change request form/ document for making a change on -  - Firewa","t": "document","st": "uploaded","d": 1},{"r": 1,"s": "1.2.3","p": "Requirement 1 - Network Security Controls/1.2.3/High Level network diagram","n": "High Level network diagram","t": "document","st": "empty","d": 0},{"r": 1,"s": "1.2.3","p": "Requirement 1 - Network Security Controls/1.2.3/Low Level network diagram","n": "Low Level network diagram","t": "document","st": "empty","d": 0},{"r": 1,"s": "1.2.4","p": "Requirement 1 - Network Security Controls/1.2.4/Data flow diagram for all cardholder data flows","n": "Data flow diagram for all cardholder data flows","t": "document","st": "empty","d": 0},{"r": 1,"s": "1.2.5","p": "Requirement 1 - Network Security Controls/1.2.5/Business justification document for the below- a.Router configuration and ACL's","n": "Business justification document for the below-  a.Router configuration and ACL's","t": "document","st": "uploaded","d": 1},{"r": 1,"s": "1.2.7","p": "Requirement 1 - Network Security Controls/1.2.7/Bi-annual configurations review document of NSCs (firewall, Router, Switch, Clou","n": "Bi-annual configurations review document of NSCs (firewall, Router, Switch, Clou","t": "config","st": "uploaded","d": 1},{"r": 1,"s": "1.2.8","p": "Requirement 1 - Network Security Controls/1.2.8","n": "Firewall / Security Group Hardening document of all Firewalls/Cloud SGs, NSGs/ N","t": "config","st": "uploaded","d": 1},{"r": 1,"s": "1.2.8","p": "Requirement 1 - Network Security Controls/1.2.8/Any Wireless Devicecontroller configuration document","n": "Any Wireless Device/controller configuration  document","t": "config","st": "uploaded","d": 1},{"r": 1,"s": "1.3.3","p": "Requirement 1 - Network Security Controls/1.3.3/Network Segmentation Procedure Document","n": "Network Segmentation Procedure Document","t": "document","st": "uploaded","d": 1},{"r": 1,"s": "1.3.3","p": "Requirement 1 - Network Security Controls/1.3.3/Host Discovery Scan report NMAP","n": "Host Discovery Scan report NMAP","t": "document","st": "empty","d": 0},{"r": 1,"s": "1.4.3","p": "Requirement 1 - Network Security Controls/1.4.3/Screenshot of firewall configuration for Anti-spoofing","n": "Screenshot of firewall configuration for Anti-spoofing","t": "screenshot","st": "empty","d": 0},{"r": 1,"s": "1.4.5","p": "Requirement 1 - Network Security Controls/1.4.5/Screenshot of firewall configuration for NATing (for Perimeter NSC's)","n": "Screenshot of firewall configuration for NATing (for Perimeter NSC's)","t": "screenshot","st": "empty","d": 0},{"r": 1,"s": "1.5.1","p": "Requirement 1 - Network Security Controls/1.5.1/Screenshot of configuration of network security control deployed on mobile devic","n": "Screenshot of configuration of network security control deployed on mobile devic","t": "screenshot","st": "uploaded","d": 1},{"r": 2,"s": "2.1.1","p": "Requirement 2 - Secure Configurations/2.1.1/Policies and operational procedures to apply Secure Configurations to all System","n": "Policies and operational procedures to apply Secure Configurations to all System","t": "document","st": "uploaded","d": 1},{"r": 2,"s": "2.1.1","p": "Requirement 2 - Secure Configurations/2.1.1/Roles and responsibilities document to implement and maintain Secure Configurati","n": "Roles and responsibilities document to implement and maintain Secure Configurati","t": "document","st": "uploaded","d": 1},{"r": 2,"s": "2.2.1","p": "Requirement 2 - Secure Configurations/2.2.1/Configuration standard Baseline document of all system components in the PCI DSS","n": "Configuration standard/ Baseline document of all system components in the PCI DS","t": "config","st": "uploaded","d": 1},{"r": 2,"s": "2.3.1","p": "Requirement 2 - Secure Configurations/2.3.1/Wireless Access Policy and Procedure","n": "Wireless Access Policy and Procedure","t": "document","st": "uploaded","d": 1},{"r": 3,"s": "3.1.2","p": "Requirement 3 - Protect Stored Account Data/3.1.2/Roles and Responsibility Documents for protecting stored account data","n": "Roles and Responsibility Documents for protecting stored account data","t": "document","st": "uploaded","d": 1},{"r": 3,"s": "3.2.1","p": "Requirement 3 - Protect Stored Account Data/3.2.1/Card holder Data Matrix including Account Data Storage Locations","n": "Card holder Data Matrix including Account Data Storage Locations","t": "screenshot","st": "uploaded","d": 1},{"r": 3,"s": "3.2.1","p": "Requirement 3 - Protect Stored Account Data/3.2.1/Data Retention Policy document","n": "Data Retention Policy document","t": "screenshot","st": "uploaded","d": 1},{"r": 3,"s": "3.2.1","p": "Requirement 3 - Protect Stored Account Data/3.2.1/Secure Deletion Policy document","n": "Secure Deletion Policy document","t": "screenshot","st": "uploaded","d": 1},{"r": 3,"s": "3.2.1","p": "Requirement 3 - Protect Stored Account Data/3.2.1/Quarterly review report for data deletion process","n": "Quarterly review report for data deletion process","t": "screenshot","st": "uploaded","d": 1},{"r": 3,"s": "3.3.1.1","p": "Requirement 3 - Protect Stored Account Data/3.3.1.1/Screenshot of Database configuration for TableColumnFileCell level encryption","n": "Screenshot of Database configuration for Table/Column/File/Cell level encryption","t": "screenshot","st": "empty","d": 0},{"r": 3,"s": "3.3.3","p": "Requirement 3 - Protect Stored Account Data/3.3.3/If application is encrypting the card number, then screenshot of the source code","n": "If application is encrypting the card number, then screenshot of the source code","t": "screenshot","st": "empty","d": 0},{"r": 3,"s": "3.3.3","p": "Requirement 3 - Protect Stored Account Data/3.3.3/If any other third party software are being used for encrypting the card number,","n": "If any other third party software are being used for encrypting the card number,","t": "screenshot","st": "empty","d": 0},{"r": 3,"s": "3.4.1","p": "Requirement 3 - Protect Stored Account Data/3.4.1/Card finder report - Report of card finder tool run on all the servers (both PCI","n": "Card finder report - Report of card finder tool run on all the servers (both PCI","t": "document","st": "empty","d": 0},{"r": 3,"s": "3.4.1","p": "Requirement 3 - Protect Stored Account Data/3.4.1/List of users who can view the full PAN number (more than the BIN and last four","n": "List of users who can view the full PAN number (more than the BIN and last four ","t": "document","st": "uploaded","d": 1},{"r": 3,"s": "3.4.1.c","p": "Requirement 3 - Protect Stored Account Data/3.4.1.c/If the application is truncating or masking the card number, then screenshot of","n": "If the application is truncating or masking the card number, then screenshot of ","t": "screenshot","st": "empty","d": 0},{"r": 3,"s": "3.4.2","p": "Requirement 3 - Protect Stored Account Data/3.4.2/Vendor documentation for remote access technology","n": "Vendor documentation for remote access technology","t": "document","st": "empty","d": 0},{"r": 3,"s": "3.5.1","p": "Requirement 3 - Protect Stored Account Data/3.5.1/If the application is hashing the card number, then screenshot of the source cod","n": "If the application is hashing the card number, then screenshot of the source cod","t": "screenshot","st": "empty","d": 0},{"r": 3,"s": "3.5.1","p": "Requirement 3 - Protect Stored Account Data/3.5.1/If the application is hashing the card number, then screenshot of the source cod/EP-035","n": "If the application is using tokenization of protecting the card number, then scr","t": "screenshot","st": "empty","d": 0},{"r": 3,"s": "3.5.1","p": "Requirement 3 - Protect Stored Account Data/3.5.1/Document of additional controls implemented for hashed and truncated versions of","n": "Document of additional controls implemented for hashed and truncated versions of","t": "screenshot","st": "uploaded","d": 1},{"r": 3,"s": "3.5.1.1","p": "Requirement 3 - Protect Stored Account Data/3.5.1.1/Keyed cryptographic hash process and procedure document","n": "Keyed cryptographic hash process and procedure document","t": "document","st": "uploaded","d": 1},{"r": 3,"s": "3.5.1.2, 3.5.1.3","p": "Requirement 3 - Protect Stored Account Data/3.5.1.2, 3.5.1.3/If disk-level or partition-level encryption is used to protect PAN data, provide","n": "If disk-level or partition-level encryption is used to protect PAN data, provide","t": "screenshot","st": "uploaded","d": 1},{"r": 3,"s": "3.6.1.1","p": "Requirement 3 - Protect Stored Account Data/3.6.1.1/Key Management Procedure document along with Cryptographic Architecture","n": "Key Management Procedure document along with Cryptographic Architecture","t": "screenshot","st": "uploaded","d": 1},{"r": 3,"s": "3.6.1.1","p": "Requirement 3 - Protect Stored Account Data/3.6.1.1/If HSM is used, then screenshot of HSM configuration for all the deployed HSM in","n": "If HSM is used, then screenshot of HSM configuration for all the deployed HSM in","t": "screenshot","st": "empty","d": 0},{"r": 3,"s": "3.6.1.3","p": "Requirement 3 - Protect Stored Account Data/3.6.1.3/List of Key Custodians having access to cleartext cryptographic key components (","n": "List of Key Custodians having access to cleartext cryptographic key components (","t": "document","st": "uploaded","d": 1},{"r": 3,"s": "3.7.6","p": "Requirement 3 - Protect Stored Account Data/3.7.6/Spilt knowledge and dual control methodology document, if manual key management","n": "Spilt knowledge and dual control methodology document, if manual key management ","t": "document","st": "uploaded","d": 1},{"r": 3,"s": "3.7.8","p": "Requirement 3 - Protect Stored Account Data/3.7.8/Key custodians formally acknowledge (in writing or electronically) for the crypt","n": "Key custodians formally acknowledge (in writing or electronically) for the crypt","t": "document","st": "empty","d": 0},{"r": 3,"s": "3.7.9","p": "Requirement 3 - Protect Stored Account Data/3.7.9/Key Management Document for Key sharing with customers\u2019 (Transmission, store and","n": "Key Management Document for Key sharing with customers\u2019 (Transmission, store and","t": "document","st": "uploaded","d": 1},{"r": 4,"s": "4.1.1","p": "Requirement 4 - Protect Cardholder Data in Transit/4.1.1/Procedure document on how cardholder data can be transmitted over open, publicpr","n": "Procedure document on how cardholder data can be transmitted over open, public/p","t": "document","st": "uploaded","d": 1},{"r": 4,"s": "4.1.2","p": "Requirement 4 - Protect Cardholder Data in Transit/4.1.2/Roles and Responsibility Documents for protecting cardholder data with strong cr","n": "Roles and Responsibility Documents for protecting cardholder data with strong cr","t": "document","st": "uploaded","d": 1},{"r": 4,"s": "4.2.1","p": "Requirement 4 - Protect Cardholder Data in Transit/4.2.1/List of Strong Cryptographic Standards, Security Protocols, and Certificates imp","n": "List of Strong Cryptographic Standards, Security Protocols, and Certificates imp","t": "screenshot","st": "uploaded","d": 1},{"r": 4,"s": "4.2.1.1","p": "Requirement 4 - Protect Cardholder Data in Transit/4.2.1.1/An inventory of the entity\u2019s trusted keys and certificates used to protect accou","n": "An inventory of the entity\u2019s trusted keys and certificates used to protect accou","t": "document","st": "uploaded","d": 1},{"r": 4,"s": "4.2.1.2","p": "Requirement 4 - Protect Cardholder Data in Transit/4.2.1.2/Cryptographic Configuration Screenshot or Document for Wireless Networks Transmi","n": "Cryptographic Configuration Screenshot or Document for Wireless Networks Transmi","t": "config","st": "uploaded","d": 1},{"r": 4,"s": "4.2.2","p": "Requirement 4 - Protect Cardholder Data in Transit/4.2.2/Documentation of measures implemented for transmission of Card numbers over end-","n": "Documentation of measures implemented for transmission of Card numbers over end-","t": "document","st": "uploaded","d": 1},{"r": 5,"s": "5.1.1","p": "Requirement 5 - Protect Against Malicious Software/5.1.1/Anti-Malware Procedural Document","n": "Anti-Malware Procedural Document","t": "document","st": "uploaded","d": 1},{"r": 5,"s": "5.1.2","p": "Requirement 5 - Protect Against Malicious Software/5.1.2/Roles & Responsibilities document - Description of roles and responsibilities fo","n": "Roles & Responsibilities document - Description of roles and responsibilities fo","t": "document","st": "uploaded","d": 1},{"r": 5,"s": "5.2.1","p": "Requirement 5 - Protect Against Malicious Software/5.2.1/Screenshot of anti-malware console configuration - - Configured for all system c","n": "Screenshot of anti-malware console configuration - - Configured for all system c","t": "screenshot","st": "empty","d": 0},{"r": 5,"s": "5.2.2","p": "Requirement 5 - Protect Against Malicious Software/5.2.2/Vendor document and configuration details of the anti-malware solution(s) to ver","n": "Vendor document and configuration details of the anti-malware solution(s) to ver","t": "screenshot","st": "empty","d": 0},{"r": 5,"s": "5.2.3","p": "Requirement 5 - Protect Against Malicious Software/5.2.3/Document of non-malware-risk system components are periodically evaluated assess","n": "Document of non-malware-risk system components are periodically evaluated  asses","t": "document","st": "uploaded","d": 1},{"r": 5,"s": "5.2.3.1","p": "Requirement 5 - Protect Against Malicious Software/5.2.3.1/Targeted Risk Analysis Document defining the frequency of periodic evaluations o","n": "Targeted Risk Analysis Document defining the frequency of periodic evaluations o","t": "document","st": "uploaded","d": 1},{"r": 5,"s": "5.3.1","p": "Requirement 5 - Protect Against Malicious Software/5.3.1/Screenshot of configurations, including any master installation of the software,","n": "Screenshot of configurations, including any master installation of the software,","t": "document","st": "empty","d": 0},{"r": 5,"s": "5.3.2","p": "Requirement 5 - Protect Against Malicious Software/5.3.2/Screenshot of Configurations, Including Any Master Installation of the Software,","n": "Screenshot of Configurations, Including Any Master Installation of the Software,","t": "screenshot","st": "empty","d": 0},{"r": 5,"s": "5.3.2.1","p": "Requirement 5 - Protect Against Malicious Software/5.3.2.1/Targeted Risk Analysis Document defining the frequency of periodic anti-malware","n": "Targeted Risk Analysis Document defining the frequency of periodic anti-malware ","t": "document","st": "uploaded","d": 1},{"r": 5,"s": "5.3.3","p": "Requirement 5 - Protect Against Malicious Software/5.3.3/Configuration details that demonstrate the anti-malware solution is set up to au","n": "Configuration details that demonstrate the anti-malware solution is set up to au","t": "config","st": "uploaded","d": 1},{"r": 5,"s": "5.3.4","p": "Requirement 5 - Protect Against Malicious Software/5.3.4/Screenshot of one year old audit logs for the anti-malware solution.","n": "Screenshot of one year old audit logs for the anti-malware solution.","t": "screenshot","st": "empty","d": 0},{"r": 5,"s": "5.3.5","p": "Requirement 5 - Protect Against Malicious Software/5.3.5/Screenshot showing that the anti-malware agent cannot be disabled or altered wit","n": "Screenshot showing that the anti-malware agent cannot be disabled or altered wit","t": "screenshot","st": "empty","d": 0},{"r": 5,"s": "5.4.1","p": "Requirement 5 - Protect Against Malicious Software/5.4.1/Screenshot of the technology used to detect and protect personnel from phishing","n": "Screenshot of the technology used to detect and protect personnel from phishing ","t": "screenshot","st": "empty","d": 0},{"r": 6,"s": "6.1.1","p": "Requirement 6 - Develop and Maintain Secure Systems/6.1.1/Policy and procedure document define the process and mechanisms for developing a","n": "Policy and procedure document define the process and mechanisms for developing a","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.1.2","p": "Requirement 6 - Develop and Maintain Secure Systems/6.1.2/Roles & Responsibilities document - Description of roles and responsibilities fo","n": "Roles & Responsibilities document - Description of roles and responsibilities fo","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.2.1","p": "Requirement 6 - Develop and Maintain Secure Systems/6.2.1/Secure software development procedural document","n": "Secure software development procedural document","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.2.2","p": "Requirement 6 - Develop and Maintain Secure Systems/6.2.2/Evidence of annual software security training for development personnel, coverin","n": "Evidence of annual software security training for development personnel, coverin","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.2.3","p": "Requirement 6 - Develop and Maintain Secure Systems/6.2.3/Secure code review report for all bespoke and custom software","n": "Secure code review report for all bespoke and custom software","t": "screenshot","st": "uploaded","d": 1},{"r": 6,"s": "6.2.3.1","p": "Requirement 6 - Develop and Maintain Secure Systems/6.2.3.1/Sample Change Request for Addressing Issues Identified in Secure Code Review","n": "Sample Change Request for Addressing Issues Identified in Secure Code Review","t": "config","st": "uploaded","d": 1},{"r": 6,"s": "6.3.1","p": "Requirement 6 - Develop and Maintain Secure Systems/6.3.1/Screenshot of sample alerts received from international and national computer em","n": "Screenshot of sample alerts received from    international and national computer","t": "screenshot","st": "empty","d": 0},{"r": 6,"s": "6.3.2","p": "Requirement 6 - Develop and Maintain Secure Systems/6.3.2/Inventory of bespoke and custom software, and third-party software components in","n": "Inventory of bespoke and custom software, and third-party software components in","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.3.3","p": "Requirement 6 - Develop and Maintain Secure Systems/6.3.3/Patch Management Procedural Document","n": "Patch Management Procedural Document","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.3.3","p": "Requirement 6 - Develop and Maintain Secure Systems/6.3.3/Details on how latest security vulnerabilities are received, and a sample alert","n": "Details on how latest security vulnerabilities are received, and a sample alert ","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.4.1","p": "Requirement 6 - Develop and Maintain Secure Systems/6.4.1/Application Pen test reports for all public facing applications","n": "Application Pen test reports for all public facing applications","t": "screenshot","st": "uploaded","d": 1},{"r": 6,"s": "6.4.2","p": "Requirement 6 - Develop and Maintain Secure Systems/6.4.2/Screenshot of sample alerts from WAF solution","n": "Screenshot of the configuration of the automated technical solution (WAF) deploy","t": "screenshot","st": "empty","d": 0},{"r": 6,"s": "6.4.2","p": "Requirement 6 - Develop and Maintain Secure Systems/6.4.2/Screenshot of sample alerts from WAF solution/EP-076","n": "Screenshot of sample alerts from WAF solution","t": "screenshot","st": "empty","d": 0},{"r": 6,"s": "6.4.3a","p": "Requirement 6 - Develop and Maintain Secure Systems/6.4.3a/Policies and procedures to ensure the secure management of payment page scripts","n": "Policies and procedures to ensure the secure management of payment page scripts ","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.4.3b","p": "Requirement 6 - Develop and Maintain Secure Systems/6.4.3b/Documented process for authorizing scripts executed on the payment page","n": "Documented process for authorizing scripts executed on the payment page","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.4.3c","p": "Requirement 6 - Develop and Maintain Secure Systems/6.4.3c/Screenshot of script integrity verification using techniques like SRI or cryptog","n": "Screenshot of script integrity verification using techniques like SRI or cryptog","t": "screenshot","st": "empty","d": 0},{"r": 6,"s": "6.4.3d","p": "Requirement 6 - Develop and Maintain Secure Systems/6.4.3d/An inventory of payment page scripts with justifications for their use.","n": "An inventory of payment page scripts with justifications for their use.","t": "config","st": "uploaded","d": 1},{"r": 6,"s": "6.5.1a","p": "Requirement 6 - Develop and Maintain Secure Systems/6.5.1a/Change ManagementControl Procedural Document","n": "Change Management/Control Procedural Document","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.5.5","p": "Requirement 6 - Develop and Maintain Secure Systems/6.5.5/Detailed document on how test data especially card number is generated for testi","n": "Detailed document on how test data especially card number is generated for testi","t": "document","st": "uploaded","d": 1},{"r": 6,"s": "6.5.6","p": "Requirement 6 - Develop and Maintain Secure Systems/6.5.6/A screenshot or copy of the system configuration or deployment checklist that in","n": "A screenshot or copy of the system configuration or deployment checklist that in","t": "document","st": "uploaded","d": 1},{"r": 7,"s": "7.1.1","p": "Requirement 7 - Restrict Access by Business Need/7.1.1/Access control policy and procedure document","n": "Access control policy and procedure document","t": "document","st": "uploaded","d": 1},{"r": 7,"s": "7.1.2","p": "Requirement 7 - Restrict Access by Business Need/7.1.2/Roles & Responsibilities document of the people who deal with providing Access t","n": "Roles & Responsibilities document of the people who deal with providing Access t","t": "document","st": "uploaded","d": 1},{"r": 7,"s": "7.2.2b","p": "Requirement 7 - Restrict Access by Business Need/7.2.2b/Inventory or list of users with their roles configured on below- a. SIEM b. FIM","n": "Inventory or list of users with their roles configured on  below-  a. SIEM  b. F","t": "screenshot","st": "uploaded","d": 1},{"r": 7,"s": "7.2.4","p": "Requirement 7 - Restrict Access by Business Need/7.2.4/Bi-Annual User Access review report of all PCI DSS systems for all user accounts","n": "Bi-Annual User Access review report of all PCI DSS systems for all user accounts","t": "document","st": "uploaded","d": 1},{"r": 7,"s": "7.2.4b","p": "Requirement 7 - Restrict Access by Business Need/7.2.4b/List of user roles and users under each role for all applications within the PCI","n": "List of user roles and users under each role for all applications within the PCI","t": "document","st": "uploaded","d": 1},{"r": 7,"s": "7.2.5.1a","p": "Requirement 7 - Restrict Access by Business Need/7.2.5.1a/Inventory of all the application and system accounts within PCI scope along with","n": "Inventory of all the application and system accounts within PCI scope along with","t": "document","st": "uploaded","d": 1},{"r": 7,"s": "7.2.5.1b","p": "Requirement 7 - Restrict Access by Business Need/7.2.5.1b/Targeted Risk Analysis Document defining the frequency of access review of all a","n": "Targeted Risk Analysis Document defining the frequency of access review of all a","t": "document","st": "uploaded","d": 1},{"r": 8,"s": "8.1.1","p": "Requirement 8 - Identify Users and Authenticate Access/8.1.1/Access Control Procedure document including remote access","n": "Access Control Procedure document including remote access","t": "document","st": "uploaded","d": 1},{"r": 8,"s": "8.1.2","p": "Requirement 8 - Identify Users and Authenticate Access/8.1.2/Roles & Responsibilities document - Description of roles and responsibilities fo","n": "Roles & Responsibilities document - Description of roles and responsibilities fo","t": "document","st": "uploaded","d": 1},{"r": 8,"s": "8.2.4","p": "Requirement 8 - Identify Users and Authenticate Access/8.2.4/Change request for Addition, deletion, and modification of user accounts","n": "Change request for Addition, deletion, and modification of user   accounts","t": "config","st": "empty","d": 0},{"r": 8,"s": "8.2.5","p": "Requirement 8 - Identify Users and Authenticate Access/8.2.5/List of terminated users in last 6 months","n": "List of terminated users in last 6 months","t": "document","st": "empty","d": 0},{"r": 8,"s": "8.3.2","p": "Requirement 8 - Identify Users and Authenticate Access/8.3.2/Screenshot on how the user credentials are stored for all system components incl","n": "Screenshot on how the user credentials are stored for all system components incl","t": "screenshot","st": "empty","d": 0},{"r": 8,"s": "8.3.6","p": "Requirement 8 - Identify Users and Authenticate Access/8.3.6/Screenshot of password policy configured in the application, for all application","n": "Screenshot of password policy configured in the application, for all application","t": "screenshot","st": "empty","d": 0},{"r": 8,"s": "8.3.6","p": "Requirement 8 - Identify Users and Authenticate Access/8.3.6/Screenshot of password policy configured in the application, for all application/EP-095","n": "Screenshot of password policy deployed on all servers as below-  a. Windows  b. ","t": "screenshot","st": "uploaded","d": 1},{"r": 8,"s": "8.3.6","p": "Requirement 8 - Identify Users and Authenticate Access/8.3.6/Screenshot of password policy configured in the application, for all application/EP-096","n": "Screenshot of password policy deployed for all local accounts on all the network","t": "screenshot","st": "empty","d": 0},{"r": 8,"s": "8.3.6","p": "Requirement 8 - Identify Users and Authenticate Access/8.3.6/Screenshot of password policy configured in the application, for all application/EP-103","n": "Screenshot of password policy deployed-   1.SIEM  2.FIM  3.Anti-Phishing Solutio","t": "screenshot","st": "uploaded","d": 1},{"r": 8,"s": "8.4.2","p": "Requirement 8 - Identify Users and Authenticate Access/8.4.2/Screenshot of two-factor authentication deployed 1. For all Non console admin ac","n": "Screenshot of two-factor authentication deployed for all non-console   access in","t": "screenshot","st": "empty","d": 0},{"r": 8,"s": "8.4.2","p": "Requirement 8 - Identify Users and Authenticate Access/8.4.2/Screenshot of two-factor authentication deployed 1. For all Non console admin ac/EP-100","n": "Screenshot of two-factor authentication deployed  1. For all Non console admin a","t": "screenshot","st": "uploaded","d": 1},{"r": 8,"s": "8.5.1","p": "Requirement 8 - Identify Users and Authenticate Access/8.5.1/The MFA vendor\u2019s technical documentation or whitepapers detailing the security m","n": "The MFA vendor\u2019s technical documentation or whitepapers detailing the security m","t": "document","st": "uploaded","d": 1},{"r": 8,"s": "8.6.3","p": "Requirement 8 - Identify Users and Authenticate Access/8.6.3/Targeted Risk Analysis Document defining the rotation of all application and sys","n": "Targeted Risk Analysis Document defining the rotation of all application and sys","t": "screenshot","st": "empty","d": 0},{"r": 9,"s": "9.1.1, 9.2.1, 9.3.1","p": "Requirement 9 - Restrict Physical Access/9.1.1, 9.2.1, 9.3.1/Policy and Procedure document of a) Physical security policy and procedure docum","n": "Policy and Procedure document of a) Physical security policy and procedure docum","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.1.2","p": "Requirement 9 - Restrict Physical Access/9.1.2/Roles and responsibility document for Requirement 9 Restrict Physical Access to","n": "Roles and responsibility document for Requirement 9: Restrict Physical Access to","t": "document","st": "empty","d": 0},{"r": 9,"s": "9.2.1.1","p": "Requirement 9 - Restrict Physical Access/9.2.1.1/Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot for pr","n": "Screenshots of sample logs from the Badge access reader installed at the entry a","t": "screenshot","st": "empty","d": 0},{"r": 9,"s": "9.2.1.1","p": "Requirement 9 - Restrict Physical Access/9.2.1.1/Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot for pr/EP-107","n": "Screenshot of CCTV camera, monitoring entry and exit points  1. Screenshot for p","t": "screenshot","st": "empty","d": 0},{"r": 9,"s": "9.2.1.1","p": "Requirement 9 - Restrict Physical Access/9.2.1.1/Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot for pr/EP-108","n": "Screenshot of visitors logs /register for  1) present day  2) 3 months old","t": "screenshot","st": "empty","d": 0},{"r": 9,"s": "9.3.1.1","p": "Requirement 9 - Restrict Physical Access/9.3.1.1/a) One sample Badge Access review reportEmail communication indicating the acces","n": "a) One sample Badge Access review report/Email communication indicating the acce","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.3.2","p": "Requirement 9 - Restrict Physical Access/9.3.2/Visitor Management Policy","n": "Visitor Management Policy","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.4.1","p": "Requirement 9 - Restrict Physical Access/9.4.1/Media Backup Inventory","n": "Media Backup Inventory","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.4.1.1","p": "Requirement 9 - Restrict Physical Access/9.4.1.1/Media back-up document, For physically securing offline media backups with cardh","n": "Media back-up document, For physically securing offline media backups with cardh","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.4.3","p": "Requirement 9 - Restrict Physical Access/9.4.3/a) Sample logs of the Way bills Media Movement approval forms 1) Sample of one m","n": "a) Sample logs of the Way bills /Media Movement approval forms:   1) Sample of o","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.4.5.1","p": "Requirement 9 - Restrict Physical Access/9.4.5.1/Asset Inventory","n": "Asset Inventory","t": "document","st": "empty","d": 0},{"r": 9,"s": "9.4.7","p": "Requirement 9 - Restrict Physical Access/9.4.7/Media destruction policy Document","n": "Media destruction policy Document","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.5.1.2","p": "Requirement 9 - Restrict Physical Access/9.5.1.2/If the entity has POI (Point-Of-Interaction) devices, document on how the POI de","n": "If the entity has POI (Point-Of-Interaction) devices, document on how the POI de","t": "document","st": "empty","d": 0},{"r": 9,"s": "9.5.1.3","p": "Requirement 9 - Restrict Physical Access/9.5.1.3/Training document given to personnel in POI environments","n": "Training document given to personnel in POI environments","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.5.1.3","p": "Requirement 9 - Restrict Physical Access/9.5.1.3/Targeted Risk Analysis Document defining the frequency of periodic POI device in","n": "Targeted Risk Analysis Document defining the frequency\u00a0of periodic POI device in","t": "document","st": "uploaded","d": 1},{"r": 9,"s": "9.5.1.3","p": "Requirement 9 - Restrict Physical Access/9.5.1.3/Review the security of the offline media backup location(s) with cardholder data","n": "Review the\u00a0security of the offline media backup location(s) with cardholder data","t": "document","st": "uploaded","d": 1},{"r": 10,"s": "10.1","p": "Requirement 10 - Log and Monitor All Access/10.1/Log management and review procedure document","n": "Log management and review procedure document","t": "document","st": "empty","d": 0},{"r": 10,"s": "10.1.2","p": "Requirement 10 - Log and Monitor All Access/10.1.2/Roles and responsibility document for Requirement 10 Log and Monitor All Access","n": "Roles and responsibility document for Requirement 10: Log and Monitor All Access","t": "document","st": "uploaded","d": 1},{"r": 10,"s": "10.3","p": "Requirement 10 - Log and Monitor All Access/10.3/Screenshot of user audit trails created by the application, for all applications","n": "Screenshot of user audit trails created by the application, for all applications","t": "document","st": "uploaded","d": 1},{"r": 10,"s": "10.3.1","p": "Requirement 10 - Log and Monitor All Access/10.3.1/a) Extract of the user accounts having access to the Audit log files at 1) OS le","n": "a) Extract of the user accounts having access to the Audit log files at:  1) OS ","t": "document","st": "empty","d": 0},{"r": 10,"s": "10.4.1.1","p": "Requirement 10 - Log and Monitor All Access/10.4.1.1/Screenshot of automated mechanisms to perform audit log reviews","n": "Screenshot of automated\u00a0mechanisms\u00a0to perform audit log reviews","t": "screenshot","st": "uploaded","d": 1},{"r": 10,"s": "10.4.2.1","p": "Requirement 10 - Log and Monitor All Access/10.4.2.1/Targeted risk analysis document for system components that are not reviewed on d","n": "Targeted risk analysis document for system components that are not reviewed on d","t": "document","st": "empty","d": 0},{"r": 10,"s": "10.5","p": "Requirement 10 - Log and Monitor All Access/10.5/Screenshots of the logs from CDE environment, 12 months from the current date.","n": "Screenshots of the logs from CDE environment, 12 months from the current date.","t": "screenshot","st": "uploaded","d": 1},{"r": 10,"s": "10.6","p": "Requirement 10 - Log and Monitor All Access/10.6/NTP Procedure document","n": "NTP Procedure document","t": "document","st": "empty","d": 0},{"r": 10,"s": "10.6","p": "Requirement 10 - Log and Monitor All Access/10.6/Screenshot of NTP server configuration","n": "Screenshot of NTP server configuration","t": "document","st": "empty","d": 0},{"r": 10,"s": "10.7","p": "Requirement 10 - Log and Monitor All Access/10.7/Screenshot of following alerts from application - (for all applications in PCI s","n": "Screenshot of following alerts from firewall, router and L3 Switch","t": "screenshot","st": "empty","d": 0},{"r": 10,"s": "10.7","p": "Requirement 10 - Log and Monitor All Access/10.7/Screenshot of following alerts from application - (for all applications in PCI s/EP-129","n": "Screenshot of following alerts from server - (for all servers in PCI scope)  - A","t": "screenshot","st": "empty","d": 0},{"r": 10,"s": "10.7","p": "Requirement 10 - Log and Monitor All Access/10.7/Screenshot of following alerts from application - (for all applications in PCI s/EP-130","n": "Screenshot of following alerts from database - (for all DB in PCI scope)  - Aler","t": "screenshot","st": "empty","d": 0},{"r": 10,"s": "10.7","p": "Requirement 10 - Log and Monitor All Access/10.7/Screenshot of following alerts from application - (for all applications in PCI s/EP-131","n": "Screenshot of following alerts from application - (for all applications in PCI s","t": "screenshot","st": "uploaded","d": 1},{"r": 10,"s": "10.7","p": "Requirement 10 - Log and Monitor All Access/10.7/Details on how to respond to failure of critical security controls - - Like fail","n": "Details on how to respond to failure of critical security controls -  - Like fai","t": "screenshot","st": "uploaded","d": 1},{"r": 10,"s": "10.7","p": "Requirement 10 - Log and Monitor All Access/10.7/Procedure document explaining on how the IPS IDS and FIM needs to be deployed","n": "Procedure document explaining on how the IPS / IDS and FIM needs to be deployed","t": "screenshot","st": "uploaded","d": 1},{"r": 11,"s": "11.1.1","p": "Requirement 11 - Test Security Regularly/11.1.1/Procedure Document for Vulnerability Assessment and Penetration Testing practice","n": "Procedure Document for Vulnerability Assessment and Penetration Testing practice","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.1.2","p": "Requirement 11 - Test Security Regularly/11.1.2/Roles and responsibility document for Requirement 11 Test Security of Systems an","n": "Roles and responsibility document for Requirement 11: Test Security of Systems a","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.2.1","p": "Requirement 11 - Test Security Regularly/11.2.1/Procedure Document addressing the authorized and unauthorized wireless access po","n": "Procedure Document addressing the authorized and unauthorized wireless access po","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.2.1.c","p": "Requirement 11 - Test Security Regularly/11.2.1.c/Wireless scan reports for 4 Quarters","n": "Wireless scan reports for 4 Quarters","t": "scan","st": "uploaded","d": 1},{"r": 11,"s": "11.2.1.d","p": "Requirement 11 - Test Security Regularly/11.2.1.d/If automated wireless monitoring is used, a Screenshot of configuration settings","n": "If automated wireless monitoring is used, a Screenshot of configuration settings","t": "screenshot","st": "empty","d": 0},{"r": 11,"s": "11.2.2","p": "Requirement 11 - Test Security Regularly/11.2.2/An Inventory of authorized wireless access points along with documented business","n": "An Inventory of authorized wireless access points along with documented business","t": "document","st": "empty","d": 0},{"r": 11,"s": "11.3.1","p": "Requirement 11 - Test Security Regularly/11.3.1/Credential based Internal Vulnerability Scan reports for the recent 4 quarters a","n": "Credential based Internal Vulnerability Scan reports for the recent 4 quarters a","t": "scan","st": "uploaded","d": 1},{"r": 11,"s": "11.3.1.1","p": "Requirement 11 - Test Security Regularly/11.3.1.1/Targeted risk analysis report defining the risk for addressing all other applica","n": "Targeted risk analysis report defining the risk for addressing all other applica","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.3.1.2.d","p": "Requirement 11 - Test Security Regularly/11.3.1.2.d/DocumentEvidence for systems that are unable to accept credentials for authentic","n": "Document/Evidence for systems that are unable to accept credentials for authenti","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.3.2","p": "Requirement 11 - Test Security Regularly/11.3.2/External vulnerability scan (ASV) reports for the recent 4 quarters as per the P","n": "External vulnerability scan (ASV) reports for the recent 4 quarters as per the P","t": "scan","st": "uploaded","d": 1},{"r": 11,"s": "11.4.2","p": "Requirement 11 - Test Security Regularly/11.4.2/Internal penetration testing report","n": "Internal penetration testing report","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.4.3","p": "Requirement 11 - Test Security Regularly/11.4.3/External penetration testing report","n": "External penetration testing report","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.4.6","p": "Requirement 11 - Test Security Regularly/11.4.6/Segmentation penetration testing report , if applicable","n": "Segmentation penetration testing report , if applicable","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.5.1","p": "Requirement 11 - Test Security Regularly/11.5.1/Screenshot of intrusion-detection andor intrusion-prevention configuration to de","n": "Screenshot of intrusion-detection and/or intrusion-prevention configuration to d","t": "screenshot","st": "empty","d": 0},{"r": 11,"s": "11.5.1.1","p": "Requirement 11 - Test Security Regularly/11.5.1.1/Screenshot of alerts received from intrusion-detection andor intrusion-preventio","n": "Screenshot of alerts received from intrusion-detection and/or intrusion-preventi","t": "screenshot","st": "empty","d": 0},{"r": 11,"s": "11.5.2","p": "Requirement 11 - Test Security Regularly/11.5.2/Change-detection mechanism document for system settings, configurations and file","n": "Change-detection mechanism document for system settings, configurations and file","t": "document","st": "uploaded","d": 1},{"r": 11,"s": "11.6.1","p": "Requirement 11 - Test Security Regularly/11.6.1/Screenshot of change- and tamper-detection mechanism HTTP header and payment pag","n": "Screenshot of change- and tamper-detection mechanism HTTP header and payment pag","t": "screenshot","st": "empty","d": 0},{"r": 11,"s": "11.6.1","p": "Requirement 11 - Test Security Regularly/11.6.1/Targeted risk analysis document if change- and tamper-detection mechanism HTTP h","n": "Targeted risk analysis document if change- and tamper-detection mechanism HTTP h","t": "screenshot","st": "uploaded","d": 1},{"r": 12,"s": "12.1.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.1.1/Information security Policy document","n": "Information security Policy document","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.10.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.10.1/Security incident response plan document","n": "Security incident response plan document","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.10.2","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.10.2/Training materials and attendance records for incident response training","n": "Training materials and attendance records for incident response training","t": "document","st": "empty","d": 0},{"r": 12,"s": "12.10.4.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.10.4.1/Targeted risk analysis report for the frequency of training for incident respons","n": "Targeted risk analysis report for the frequency of training for incident respons","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.10.7","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.10.7/Procedures for responding to incidents involving the discovery of stored PAN dat","n": "Procedures for responding to incidents involving the discovery of stored PAN dat","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.2.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.2.1/Acceptable Usage Policy","n": "Acceptable Usage Policy","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.3.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.3.1/Targeted Risk Analysis report for each PCI DSS requirement for identification of","n": "Targeted Risk Analysis report for each PCI DSS requirement for identification of","t": "document","st": "empty","d": 0},{"r": 12,"s": "12.3.2","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.3.2/Targeted risk analysis report for all the PCI DSS Requirements that the entity m","n": "Targeted risk analysis report for all the PCI DSS Requirements that the entity m","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.3.3","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.3.3/Inventory of Cryptographic cipher suites and protocols","n": "Inventory of  Cryptographic cipher suites and protocols","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.3.4","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.3.4/Documented plan for remediating outdated technologies","n": "Documented plan for remediating outdated technologies","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.3.4","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.3.4/Vendor management Procedure document","n": "Vendor management Procedure document","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.4.2","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.4.2/Quarterly security compliance review for personnel involved in PCI DSS scope. PC","n": "Quarterly security compliance review for personnel involved in PCI DSS scope. PC","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.5.2","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.5.2/Filled and Approved PCI DSS Scope Sheet including below- 1. Network Inventory 2.","n": "Filled and Approved PCI DSS Scope Sheet including below-  1. Network Inventory  ","t": "document","st": "empty","d": 0},{"r": 12,"s": "12.6.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.6.1/InfoSec and PCI DSS security awareness program training material","n": "InfoSec and PCI DSS security awareness program training material","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.6.3","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.6.3/Security awareness Program attendance document","n": "Security awareness Program attendance document","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.7.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.7.1/Background screening recordsreports for new joiners","n": "Background screening records/reports for new joiners","t": "screenshot","st": "uploaded","d": 1},{"r": 12,"s": "12.8.1","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.8.1/List of all third-party service providers with which account data is shared.(inc","n": "List of all third-party service providers with which account data is shared.(inc","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.8.2","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.8.2/Screenshot of written agreements maintained with all TPSPs with which account da","n": "Screenshot of written agreements maintained with all TPSPs with which account da","t": "screenshot","st": "uploaded","d": 1},{"r": 12,"s": "12.8.3.b","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.8.3.b/Sample evidence for Due diligence conducted for any TPSP service provider prior","n": "Sample evidence for Due diligence conducted for any TPSP service provider prior ","t": "document","st": "uploaded","d": 1},{"r": 12,"s": "12.8.5","p": "Requirement 12 - Support InfoSec with Policies and Programs/12.8.5/Matrix outlining the roles and responsibilities of Third-Party Service Providers","n": "Matrix outlining the roles and responsibilities of Third-Party Service Providers","t": "document","st": "uploaded","d": 1}]
+[
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/001 - Security policy and operational procedures to implement Network Security C",
+  "n": "001 - Security policy and operational procedures to implement Network Security C",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/002 - Roles and responsibilities document to implement and maintain Network Secu",
+  "n": "002 - Roles and responsibilities document to implement and maintain Network Secu",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/003 - Configuration Document for NSC( firewalls, routers and L3 Switches configu",
+  "n": "003 - Configuration Document for NSC( firewalls, routers and L3 Switches configu",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/004 - IPS IDS configuration standard document of all IPS IDS within the environm",
+  "n": "004 - IPS IDS configuration standard document of all IPS IDS within the environm",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/005 - Recent Approved Change request form document for making a change on - - Fi",
+  "n": "005 - Recent Approved Change request form document for making a change on - - Fi",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/006 - High Level network diagram",
+  "n": "006 - High Level network diagram",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/007 - Low Level network diagram",
+  "n": "007 - Low Level network diagram",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/008 - Data flow diagram for all cardholder data flows",
+  "n": "008 - Data flow diagram for all cardholder data flows",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/009 - Business justification document for the below- a.Router configuration and",
+  "n": "009 - Business justification document for the below- a.Router configuration and",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/010 - Bi-annual configurations review document of NSCs (firewall, Router, Switch",
+  "n": "010 - Bi-annual configurations review document of NSCs (firewall, Router, Switch",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/011 - Firewall Security Group Hardening document of all Firewalls Cloud SGs, NSG",
+  "n": "011 - Firewall Security Group Hardening document of all Firewalls Cloud SGs, NSG",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/012 - Any Wireless Device controller configuration document",
+  "n": "012 - Any Wireless Device controller configuration document",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/013 - Network Segmentation Procedure Document",
+  "n": "013 - Network Segmentation Procedure Document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/014 - Host Discovery Scan report NMAP",
+  "n": "014 - Host Discovery Scan report NMAP",
+  "t": "scan",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/015 - Screenshot of firewall configuration for Anti-spoofing",
+  "n": "015 - Screenshot of firewall configuration for Anti-spoofing",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/016 - Screenshot of firewall configuration for NATing (for Perimeter NSC's)",
+  "n": "016 - Screenshot of firewall configuration for NATing (for Perimeter NSC's)",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 1,
+  "s": "",
+  "p": "Requirement 1 - Network Security Controls/017 - Screenshot of configuration of network security control deployed on mobile",
+  "n": "017 - Screenshot of configuration of network security control deployed on mobile",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/119 - Roles and responsibility document for Requirement 10 Log and Monitor All Access",
+  "n": "119 - Roles and responsibility document for Requirement 10 Log and Monitor All A",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/119 - Roles and responsibility document for Requirement 10: Log an",
+  "n": "119 - Roles and responsibility document for Requirement 10: Log an",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/120 - Screenshot of automated mechanisms to perform audit log reviews",
+  "n": "120 - Screenshot of automated mechanisms to perform audit log reviews",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/121 - Targeted risk analysis document for system components that are not reviewed on a daily basis",
+  "n": "121 - Targeted risk analysis document for system components that are not reviewe",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/122 - a) Extract of the user accounts having access to the Audit log files at 1)",
+  "n": "122 - a) Extract of the user accounts having access to the Audit log files at 1)",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/123 - Screenshot of user audit trails created by the application, for all applications within PCI scope",
+  "n": "123 - Screenshot of user audit trails created by the application, for all applic",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/124 - Log management and review procedure document",
+  "n": "124 - Log management and review procedure document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/125 - Screenshots of the logs from CDE environment, 12 months from the current d",
+  "n": "125 - Screenshots of the logs from CDE environment, 12 months from the current d",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/126 - NTP Procedure document",
+  "n": "126 - NTP Procedure document",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/127 - Screenshot of NTP server configuration",
+  "n": "127 - Screenshot of NTP server configuration",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/128 - Screenshot of following alerts from firewall, router and L3 Switch",
+  "n": "128 - Screenshot of following alerts from firewall, router and L3 Switch",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/129 - Screenshot of following alerts from server - (for all servers in PCI scope",
+  "n": "129 - Screenshot of following alerts from server - (for all servers in PCI scope",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/130 - Screenshot of following alerts from database - (for all DB in PCI scope) -",
+  "n": "130 - Screenshot of following alerts from database - (for all DB in PCI scope) -",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/131 - Screenshot of following alerts from application - (for all applications in",
+  "n": "131 - Screenshot of following alerts from application - (for all applications in",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/132 - Details on how to respond to failure of critical security controls - - Lik",
+  "n": "132 - Details on how to respond to failure of critical security controls - - Lik",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 10,
+  "s": "",
+  "p": "Requirement 10 - Log and Monitor All Access/133 - Procedure document explaining on how the IPS IDS and FIM needs to be deployed and monitored",
+  "n": "133 - Procedure document explaining on how the IPS IDS and FIM needs to be deplo",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/135 - Roles and responsibility document for Requirement 11 Test Security of Systems...",
+  "n": "135 - Roles and responsibility document for Requirement 11 Test Security of Syst",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/136 - Procedure Document for Vulnerability Assessment and Penetration Testing practices",
+  "n": "136 - Procedure Document for Vulnerability Assessment and Penetration Testing pr",
+  "t": "scan",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/137 - Procedure Document addressing the authorized and unauthorized wireless access...",
+  "n": "137 - Procedure Document addressing the authorized and unauthorized wireless acc",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/138 - An Inventory of authorized wireless access points along with documented business justification",
+  "n": "138 - An Inventory of authorized wireless access points along with documented bu",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/139 - Wireless scan reports for 4 Quarters",
+  "n": "139 - Wireless scan reports for 4 Quarters",
+  "t": "scan",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/140 - If automated wireless monitoring is used, a Screenshot of configuration settings of the automated sy",
+  "n": "140 - If automated wireless monitoring is used, a Screenshot of configuration se",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/141 - Credential based Internal Vulnerability Scan reports for the recent 4 quarters and corresponding ris",
+  "n": "141 - Credential based Internal Vulnerability Scan reports for the recent 4 quar",
+  "t": "scan",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/142 - Targeted risk analysis report defining the risk for addressing all other applicable vulnerabilities",
+  "n": "142 - Targeted risk analysis report defining the risk for addressing all other a",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/143 - Document Evidence for systems that are unable to accept credentials for au",
+  "n": "143 - Document Evidence for systems that are unable to accept credentials for au",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/144 - External vulnerability scan (ASV) reports for the recent 4 quarters as per the PCI DSS requirements",
+  "n": "144 - External vulnerability scan (ASV) reports for the recent 4 quarters as per",
+  "t": "scan",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/145 - Internal penetration testing report",
+  "n": "145 - Internal penetration testing report",
+  "t": "scan",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/146 - External penetration testing report",
+  "n": "146 - External penetration testing report",
+  "t": "scan",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/147 - Segmentation penetration testing report , if applicable",
+  "n": "147 - Segmentation penetration testing report , if applicable",
+  "t": "scan",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/148 - Screenshot of intrusion-detection and or intrusion-prevention configuratio",
+  "n": "148 - Screenshot of intrusion-detection and or intrusion-prevention configuratio",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/149 - Screenshot of alerts received from intrusion-detection and or intrusion-pr",
+  "n": "149 - Screenshot of alerts received from intrusion-detection and or intrusion-pr",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/150 - Change-detection mechanism document for system settings, configurations and file changes",
+  "n": "150 - Change-detection mechanism document for system settings, configurations an",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/151 - Screenshot of change- and tamper-detection mechanism HTTP header and payment page contents",
+  "n": "151 - Screenshot of change- and tamper-detection mechanism HTTP header and payme",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 11,
+  "s": "",
+  "p": "Requirement 11 - Test Security Regularly/152 - Targeted risk analysis document if change- and tamper-detection mechanism HTTP header is reviewed at",
+  "n": "152 - Targeted risk analysis document if change- and tamper-detection mechanism ",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/153 - Information security Policy document",
+  "n": "153 - Information security Policy document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/154 - Acceptable Usage Policy",
+  "n": "154 - Acceptable Usage Policy",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/155 - Targeted Risk Analysis report for each PCI DSS requirement for identification...",
+  "n": "155 - Targeted Risk Analysis report for each PCI DSS requirement for identificat",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/156 - Targeted risk analysis report for all the PCI DSS Requirements that the entity met with a customized",
+  "n": "156 - Targeted risk analysis report for all the PCI DSS Requirements that the en",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/157 - Inventory of Cryptographic cipher suites and protocols",
+  "n": "157 - Inventory of Cryptographic cipher suites and protocols",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/158 - Documented plan for remediating outdated technologies",
+  "n": "158 - Documented plan for remediating outdated technologies",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/159 - Quarterly security compliance review for personnel involved in PCI DSS scope....",
+  "n": "159 - Quarterly security compliance review for personnel involved in PCI DSS sco",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/160 - Filled and Approved PCI DSS Scope Sheet including below-  1.",
+  "n": "160 - Filled and Approved PCI DSS Scope Sheet including below-  1.",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/160 - Filled and Approved PCI DSS Scope Sheet including below- 1. Network Invent",
+  "n": "160 - Filled and Approved PCI DSS Scope Sheet including below- 1. Network Invent",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/161 - InfoSec and PCI DSS security awareness program training material",
+  "n": "161 - InfoSec and PCI DSS security awareness program training material",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/162 - Security awareness Program attendance document",
+  "n": "162 - Security awareness Program attendance document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/163 - Background screening records reports for new joiners",
+  "n": "163 - Background screening records reports for new joiners",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/164 - List of all third-party service providers with which account data is shared.(...",
+  "n": "164 - List of all third-party service providers with which account data is share",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/165 - Screenshot of written agreements maintained with all TPSPs with which account...",
+  "n": "165 - Screenshot of written agreements maintained with all TPSPs with which acco",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/166 - Sample evidence for Due diligence conducted for any TPSP service provider prior to engagement",
+  "n": "166 - Sample evidence for Due diligence conducted for any TPSP service provider ",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/167 - Vendor management Procedure document",
+  "n": "167 - Vendor management Procedure document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/168 - Matrix outlining the roles and responsibilities of Third-Party Service Providers (TPSP)",
+  "n": "168 - Matrix outlining the roles and responsibilities of Third-Party Service Pro",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/169 - Security incident response plan document",
+  "n": "169 - Security incident response plan document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/170 - Training materials and attendance records for incident response training",
+  "n": "170 - Training materials and attendance records for incident response training",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/171 - Targeted risk analysis report for the frequency of training for incident response personnel",
+  "n": "171 - Targeted risk analysis report for the frequency of training for incident r",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 12,
+  "s": "",
+  "p": "Requirement 12 - Support InfoSec with Policies and Programs/172 - Procedures for responding to incidents involving the discovery of stored PAN data in unexpected loca",
+  "n": "172 - Procedures for responding to incidents involving the discovery of stored P",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 2,
+  "s": "",
+  "p": "Requirement 2 - Secure Configurations/018 - Policies and operational procedures to apply Secure Configurations to all",
+  "n": "018 - Policies and operational procedures to apply Secure Configurations to all",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 2,
+  "s": "",
+  "p": "Requirement 2 - Secure Configurations/019 - Roles and responsibilities document to implement and maintain Secure Confi",
+  "n": "019 - Roles and responsibilities document to implement and maintain Secure Confi",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 2,
+  "s": "",
+  "p": "Requirement 2 - Secure Configurations/020 - Configuration standard Baseline document of all system components in the P",
+  "n": "020 - Configuration standard Baseline document of all system components in the P",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 2,
+  "s": "",
+  "p": "Requirement 2 - Secure Configurations/021 - Wireless Access Policy and Procedure",
+  "n": "021 - Wireless Access Policy and Procedure",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/022 - Roles and Responsibility Documents for protecting stored account data",
+  "n": "022 - Roles and Responsibility Documents for protecting stored account data",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/023 - Card holder Data Matrix including Account Data Storage Locations",
+  "n": "023 - Card holder Data Matrix including Account Data Storage Locations",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/024 - Data Retention Policy document",
+  "n": "024 - Data Retention Policy document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/025 - Secure Deletion Policy document",
+  "n": "025 - Secure Deletion Policy document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/026 - Quarterly review report for data deletion process",
+  "n": "026 - Quarterly review report for data deletion process",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/027 - If application is encrypting the card number, then screenshot of the sourc",
+  "n": "027 - If application is encrypting the card number, then screenshot of the sourc",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/028 - Screenshot of Database configuration for Table Column File Cell level encr",
+  "n": "028 - Screenshot of Database configuration for Table Column File Cell level encr",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/029 - If any other third party software are being used for encrypting the card n",
+  "n": "029 - If any other third party software are being used for encrypting the card n",
+  "t": "document",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/030 - Card finder report - Report of card finder tool run on all the servers (bo",
+  "n": "030 - Card finder report - Report of card finder tool run on all the servers (bo",
+  "t": "scan",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/031 - List of users who can view the full PAN number (more than the BIN and last",
+  "n": "031 - List of users who can view the full PAN number (more than the BIN and last",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/032 - If the application is truncating or masking the card number, then screensh",
+  "n": "032 - If the application is truncating or masking the card number, then screensh",
+  "t": "document",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/033 - Vendor documentation for remote access technology",
+  "n": "033 - Vendor documentation for remote access technology",
+  "t": "document",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/034 - If the application is hashing the card number, then screenshot of the sour",
+  "n": "034 - If the application is hashing the card number, then screenshot of the sour",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/035 - If the application is using tokenization of protecting the card number, th",
+  "n": "035 - If the application is using tokenization of protecting the card number, th",
+  "t": "document",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/036 - Document of additional controls implemented for hashed and truncated versi",
+  "n": "036 - Document of additional controls implemented for hashed and truncated versi",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/037 - Keyed cryptographic hash process and procedure document",
+  "n": "037 - Keyed cryptographic hash process and procedure document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/038 - If disk-level or partition-level encryption is used to protect PAN data, p",
+  "n": "038 - If disk-level or partition-level encryption is used to protect PAN data, p",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/039 - Key Management Procedure document along with Cryptographic Architecture",
+  "n": "039 - Key Management Procedure document along with Cryptographic Architecture",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/040 - If HSM is used, then screenshot of HSM configuration for all the deployed",
+  "n": "040 - If HSM is used, then screenshot of HSM configuration for all the deployed",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/041 - List of Key Custodians having access to cleartext cryptographic key compon",
+  "n": "041 - List of Key Custodians having access to cleartext cryptographic key compon",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/042 - Spilt knowledge and dual control methodology document, if manual key manag",
+  "n": "042 - Spilt knowledge and dual control methodology document, if manual key manag",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/043 - Key custodians formally acknowledge (in writing or electronically) for the",
+  "n": "043 - Key custodians formally acknowledge (in writing or electronically) for the",
+  "t": "document",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 3,
+  "s": "",
+  "p": "Requirement 3 - Protect Stored Account Data/044 - Key Management Document for Key sharing with customers\u2019 (Transmission, sto",
+  "n": "044 - Key Management Document for Key sharing with customers\u2019 (Transmission, sto",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 4,
+  "s": "",
+  "p": "Requirement 4 - Protect Cardholder Data in Transit/045 - Roles and Responsibility Documents for protecting cardholder data with str",
+  "n": "045 - Roles and Responsibility Documents for protecting cardholder data with str",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 4,
+  "s": "",
+  "p": "Requirement 4 - Protect Cardholder Data in Transit/046 - Procedure document on how cardholder data can be transmitted over open, pu",
+  "n": "046 - Procedure document on how cardholder data can be transmitted over open, pu",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 4,
+  "s": "",
+  "p": "Requirement 4 - Protect Cardholder Data in Transit/047 - List of Strong Cryptographic Standards, Security Protocols, and Certificat",
+  "n": "047 - List of Strong Cryptographic Standards, Security Protocols, and Certificat",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 4,
+  "s": "",
+  "p": "Requirement 4 - Protect Cardholder Data in Transit/048 - An inventory of the entity\u2019s trusted keys and certificates used to protect",
+  "n": "048 - An inventory of the entity\u2019s trusted keys and certificates used to protect",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 4,
+  "s": "",
+  "p": "Requirement 4 - Protect Cardholder Data in Transit/049 - Cryptographic Configuration Screenshot or Document for Wireless Networks T",
+  "n": "049 - Cryptographic Configuration Screenshot or Document for Wireless Networks T",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 4,
+  "s": "",
+  "p": "Requirement 4 - Protect Cardholder Data in Transit/050 - Documentation of measures implemented for transmission of Card numbers ove",
+  "n": "050 - Documentation of measures implemented for transmission of Card numbers ove",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/051 - Anti-Malware Procedural Document",
+  "n": "051 - Anti-Malware Procedural Document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/052 - Roles & Responsibilities document - Description of roles and responsibilit",
+  "n": "052 - Roles & Responsibilities document - Description of roles and responsibilit",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/053 - Screenshot of anti-malware console configuration",
+  "n": "053 - Screenshot of anti-malware console configuration",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/053 - Screenshot of anti-malware console configuration - - Configured for all sy",
+  "n": "053 - Screenshot of anti-malware console configuration - - Configured for all sy",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/054 - Vendor document and configuration details",
+  "n": "054 - Vendor document and configuration details",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/054 - Vendor document and configuration details of the anti-malware solution(s)",
+  "n": "054 - Vendor document and configuration details of the anti-malware solution(s)",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/055 - Document of non-malware-risk system components are periodically evaluated",
+  "n": "055 - Document of non-malware-risk system components are periodically evaluated",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/056 - Targeted Risk Analysis Document defining the frequency of periodic evaluat",
+  "n": "056 - Targeted Risk Analysis Document defining the frequency of periodic evaluat",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/057 - Screenshot of configurations, including any master installation",
+  "n": "057 - Screenshot of configurations, including any master installation",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/057 - Screenshot of configurations, including any master installation of the sof",
+  "n": "057 - Screenshot of configurations, including any master installation of the sof",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/058 - Screenshot of Configurations, Including Any Master Installation",
+  "n": "058 - Screenshot of Configurations, Including Any Master Installation",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/058 - Screenshot of Configurations, Including Any Master Installation of the Sof",
+  "n": "058 - Screenshot of Configurations, Including Any Master Installation of the Sof",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/059 - Targeted Risk Analysis Document defining the frequency of periodic anti-ma",
+  "n": "059 - Targeted Risk Analysis Document defining the frequency of periodic anti-ma",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/060 - Configuration details that demonstrate the anti-malware solution is set up",
+  "n": "060 - Configuration details that demonstrate the anti-malware solution is set up",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/061 - Screenshot of one year old audit logs",
+  "n": "061 - Screenshot of one year old audit logs",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/061 - Screenshot of one year old audit logs for the anti-malware solution.",
+  "n": "061 - Screenshot of one year old audit logs for the anti-malware solution.",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/062 - Screenshot showing that the anti-malware agent cannot be disabled",
+  "n": "062 - Screenshot showing that the anti-malware agent cannot be disabled",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/062 - Screenshot showing that the anti-malware agent cannot be disabled or alter",
+  "n": "062 - Screenshot showing that the anti-malware agent cannot be disabled or alter",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 5,
+  "s": "",
+  "p": "Requirement 5 - Protect Against Malicious Software/063 - Screenshot of the technology used to detect and protect personnel from phi",
+  "n": "063 - Screenshot of the technology used to detect and protect personnel from phi",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/064 - Policy and procedure document define the process and mechanisms for develo",
+  "n": "064 - Policy and procedure document define the process and mechanisms for develo",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/065 - Roles & Responsibilities document - Description of roles and responsibilit",
+  "n": "065 - Roles & Responsibilities document - Description of roles and responsibilit",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/066 - Secure software development procedural document",
+  "n": "066 - Secure software development procedural document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/067 - Evidence of annual software security training for development personnel, c",
+  "n": "067 - Evidence of annual software security training for development personnel, c",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/068 - Secure code review report for all bespoke and custom software",
+  "n": "068 - Secure code review report for all bespoke and custom software",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/069 - Sample Change Request for Addressing Issues Identified in Secure Code Revi",
+  "n": "069 - Sample Change Request for Addressing Issues Identified in Secure Code Revi",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/070 - Screenshot of sample alerts received from international and national compu",
+  "n": "070 - Screenshot of sample alerts received from international and national compu",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/071 - Inventory of bespoke and custom software, and third-party software compone",
+  "n": "071 - Inventory of bespoke and custom software, and third-party software compone",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/072 - Patch Management Procedural Document",
+  "n": "072 - Patch Management Procedural Document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/073 - Details on how latest security vulnerabilities are received, and a sample",
+  "n": "073 - Details on how latest security vulnerabilities are received, and a sample",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/074 - Application Pen test reports for all public facing applications",
+  "n": "074 - Application Pen test reports for all public facing applications",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/075 - Screenshot of the configuration of the automated technical solution (WAF)",
+  "n": "075 - Screenshot of the configuration of the automated technical solution (WAF)",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/076 - Screenshot of sample alerts from WAF solution",
+  "n": "076 - Screenshot of sample alerts from WAF solution",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/077 - Policies and procedures to ensure the secure management of payment page sc",
+  "n": "077 - Policies and procedures to ensure the secure management of payment page sc",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/078 - Documented process for authorizing scripts executed on the payment page",
+  "n": "078 - Documented process for authorizing scripts executed on the payment page",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/079 - Screenshot of script integrity verification using techniques like SRI or c",
+  "n": "079 - Screenshot of script integrity verification using techniques like SRI or c",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/080 - An inventory of payment page scripts with justifications for their use.",
+  "n": "080 - An inventory of payment page scripts with justifications for their use.",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/081 - Change Management Control Procedural Document",
+  "n": "081 - Change Management Control Procedural Document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/082 - Detailed document on how test data especially card number is generated for",
+  "n": "082 - Detailed document on how test data especially card number is generated for",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 6,
+  "s": "",
+  "p": "Requirement 6 - Develop and Maintain Secure Systems/083 - A screenshot or copy of the system configuration or deployment checklist t",
+  "n": "083 - A screenshot or copy of the system configuration or deployment checklist t",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 7,
+  "s": "",
+  "p": "Requirement 7 - Restrict Access by Business Need/084 - Access control policy and procedure document",
+  "n": "084 - Access control policy and procedure document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 7,
+  "s": "",
+  "p": "Requirement 7 - Restrict Access by Business Need/085 - Roles & Responsibilities document of the people who deal with providing Ac",
+  "n": "085 - Roles & Responsibilities document of the people who deal with providing Ac",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 7,
+  "s": "",
+  "p": "Requirement 7 - Restrict Access by Business Need/086 - Inventory or list of users with their roles configured on below- a. SIEM b",
+  "n": "086 - Inventory or list of users with their roles configured on below- a. SIEM b",
+  "t": "config",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 7,
+  "s": "",
+  "p": "Requirement 7 - Restrict Access by Business Need/087 - Bi-Annual User Access review report of all PCI DSS systems for all user ac",
+  "n": "087 - Bi-Annual User Access review report of all PCI DSS systems for all user ac",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 7,
+  "s": "",
+  "p": "Requirement 7 - Restrict Access by Business Need/088 - Inventory of all the application and system accounts within PCI scope alon",
+  "n": "088 - Inventory of all the application and system accounts within PCI scope alon",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 7,
+  "s": "",
+  "p": "Requirement 7 - Restrict Access by Business Need/089 - Targeted Risk Analysis Document defining the frequency of access review of",
+  "n": "089 - Targeted Risk Analysis Document defining the frequency of access review of",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 7,
+  "s": "",
+  "p": "Requirement 7 - Restrict Access by Business Need/090 - List of user roles and users under each role for all applications within t",
+  "n": "090 - List of user roles and users under each role for all applications within t",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/091 - Roles & Responsibilities document - Description of roles and responsibilit",
+  "n": "091 - Roles & Responsibilities document - Description of roles and responsibilit",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/092 - Change request for Addition, deletion, and modification of user accounts",
+  "n": "092 - Change request for Addition, deletion, and modification of user accounts",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/093 - Screenshot of two-factor authentication deployed for all non-console acces",
+  "n": "093 - Screenshot of two-factor authentication deployed for all non-console acces",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/094 - Screenshot of password policy configured in the application, for all appli",
+  "n": "094 - Screenshot of password policy configured in the application, for all appli",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/095 - Screenshot of password policy deployed on all servers as below- a. Windows",
+  "n": "095 - Screenshot of password policy deployed on all servers as below- a. Windows",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/096 - Screenshot of password policy deployed for all local accounts on all the n",
+  "n": "096 - Screenshot of password policy deployed for all local accounts on all the n",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/097 - List of terminated users in last 6 months",
+  "n": "097 - List of terminated users in last 6 months",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/098 - Screenshot on how the user credentials are stored for all system component",
+  "n": "098 - Screenshot on how the user credentials are stored for all system component",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/099 - Access Control Procedure document including remote access",
+  "n": "099 - Access Control Procedure document including remote access",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/100 - Screenshot of two-factor authentication deployed 1. For all Non console admin...",
+  "n": "100 - Screenshot of two-factor authentication deployed 1. For all Non console ad",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/101 - The MFA vendor's technical documentation or whitepapers detailing the secu",
+  "n": "101 - The MFA vendor's technical documentation or whitepapers detailing the secu",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/102 - Targeted Risk Analysis Document defining the rotation of all application a",
+  "n": "102 - Targeted Risk Analysis Document defining the rotation of all application a",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 8,
+  "s": "",
+  "p": "Requirement 8 - Identify Users and Authenticate Access/103 - Screenshot of password policy deployed- 1.SIEM 2.FIM 3.Anti-Phishing Solution...",
+  "n": "103 - Screenshot of password policy deployed- 1.SIEM 2.FIM 3.Anti-Phishing Solut",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/104 - Policy and Procedure document of a) Physical security policy and procedure do...",
+  "n": "104 - Policy and Procedure document of a) Physical security policy and procedure",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/105 - Screenshots of sample logs from the Badge access reader installed at the e",
+  "n": "105 - Screenshots of sample logs from the Badge access reader installed at the e",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/106 - a) One sample Badge Access review report Email communication indicating th",
+  "n": "106 - a) One sample Badge Access review report Email communication indicating th",
+  "t": "document",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/107 - Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot for...",
+  "n": "107 - Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot ",
+  "t": "screenshot",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/108 - Screenshot of visitors logs register for 1) present day 2) 3 months old",
+  "n": "108 - Screenshot of visitors logs register for 1) present day 2) 3 months old",
+  "t": "screenshot",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/109 - Roles and responsibility document for Requirement 9 Restrict Physical Access to Cardholder Data",
+  "n": "109 - Roles and responsibility document for Requirement 9 Restrict Physical Acce",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/110 - Visitor Management Policy",
+  "n": "110 - Visitor Management Policy",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/111 - Media back-up document, For physically securing offline media backups with cardholder data",
+  "n": "111 - Media back-up document, For physically securing offline media backups with",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/112 - a) Sample logs of the Way bills Media Movement approval forms 1) Sample of",
+  "n": "112 - a) Sample logs of the Way bills Media Movement approval forms 1) Sample of",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/113 - Media destruction policy Document",
+  "n": "113 - Media destruction policy Document",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/114 - If the entity has POI (Point-Of-Interaction) devices, document on how the POI...",
+  "n": "114 - If the entity has POI (Point-Of-Interaction) devices, document on how the ",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/115 - Asset Inventory",
+  "n": "115 - Asset Inventory",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/116 - Training document given to personnel in POI environments",
+  "n": "116 - Training document given to personnel in POI environments",
+  "t": "document",
+  "st": "empty",
+  "d": 0
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/117 - Targeted Risk Analysis Document defining the frequency of periodic POI device...",
+  "n": "117 - Targeted Risk Analysis Document defining the frequency of periodic POI dev",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/118 - Review the security of the offline media backup location(s) with cardholde",
+  "n": "118 - Review the security of the offline media backup location(s) with cardholde",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ },
+ {
+  "r": 9,
+  "s": "",
+  "p": "Requirement 9 - Restrict Physical Access/134 - Media Backup Inventory",
+  "n": "134 - Media Backup Inventory",
+  "t": "document",
+  "st": "uploaded",
+  "d": 1
+ }
+]
