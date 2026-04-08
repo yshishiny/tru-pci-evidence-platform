@@ -2,9 +2,11 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const fs = require('fs');
+const cookieParser = require('cookie-parser');
 const { initDbAsync, getDb } = require('./src/db');
 const { scanFolders, syncToDb } = require('./src/scanner');
-const { hashPassword } = require('./src/auth');
+const { hashPassword, verifyPassword, generateToken, verifyToken } = require('./src/auth');
+const { portalAuth, portalAuthAPI } = require('./src/middleware/portalAuth');
 
 // Import routes
 const authRoutes = require('./src/routes/auth');
@@ -21,9 +23,111 @@ const commandCenterRoutes = require('./src/routes/command-center');
 const app = express();
 const PORT = process.env.PORT || 4500;
 
-// Middleware
+// ---------- Security Middleware ----------
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
+app.use(cookieParser());
+
+// Security headers
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  next();
+});
+
+// Rate limiting for login endpoint (simple in-memory)
+const loginAttempts = new Map();
+function loginRateLimit(req, res, next) {
+  const ip = req.ip || req.connection.remoteAddress;
+  const now = Date.now();
+  const windowMs = 15 * 60 * 1000; // 15 min
+  const maxAttempts = 10;
+
+  const record = loginAttempts.get(ip) || { count: 0, firstAttempt: now };
+  if (now - record.firstAttempt > windowMs) {
+    record.count = 0;
+    record.firstAttempt = now;
+  }
+  record.count++;
+  loginAttempts.set(ip, record);
+
+  if (record.count > maxAttempts) {
+    return res.status(429).json({ error: 'Too many login attempts. Please try again in 15 minutes.' });
+  }
+  next();
+}
+
+// Serve login page (public — no auth required)
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'login.html'));
+});
+
+// Portal login API — authenticates and sets HTTP-only cookie
+app.post('/api/portal/login', loginRateLimit, async (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ error: 'Username and password required' });
+    }
+    const db = getDb();
+    const user = db.prepare('SELECT * FROM users WHERE username = ? AND is_active = 1').get(username);
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    const passwordMatch = await verifyPassword(password, user.password_hash);
+    if (!passwordMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+    const token = generateToken(user);
+
+    // Log audit entry
+    db.prepare(`
+      INSERT INTO audit_log (user_id, username, action, target, details)
+      VALUES (?, ?, 'portal_login', 'auth', 'Portal login')
+    `).run(user.id, user.username);
+
+    // Set HTTP-only secure cookie (7 days)
+    res.cookie('tru_portal_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
+      path: '/'
+    });
+
+    res.json({
+      success: true,
+      user: {
+        username: user.username,
+        display_name: user.display_name,
+        role: user.role
+      }
+    });
+  } catch (err) {
+    console.error('Portal login error:', err);
+    res.status(500).json({ error: 'Login failed' });
+  }
+});
+
+// Verify portal session (check if cookie is valid)
+app.get('/api/portal/verify', (req, res) => {
+  const token = req.cookies && req.cookies['tru_portal_token'];
+  if (!token) return res.json({ authenticated: false });
+  const decoded = verifyToken(token);
+  if (!decoded) return res.json({ authenticated: false });
+  res.json({ authenticated: true, user: { username: decoded.username, display_name: decoded.display_name, role: decoded.role } });
+});
+
+// Logout — clear cookie
+app.post('/api/portal/logout', (req, res) => {
+  res.clearCookie('tru_portal_token', { path: '/' });
+  res.json({ success: true });
+});
+
+// Static files (CSS, JS, assets) — public
 app.use(express.static('public'));
 
 // Health check
@@ -41,15 +145,19 @@ app.use('/api/cloud-sync', cloudSyncRoutes);
 app.use('/api/reports', reportsRoutes);
 app.use('/api/review', reviewRoutes);
 app.use('/api/alerts', alertsRoutes);
-// Command Center - public, no auth required, shareable URL
-app.use('/command-center', commandCenterRoutes);
+// Command Center — protected by portal auth
+app.use('/command-center', portalAuth, commandCenterRoutes);
 
-// IExperts Audit Portal - public, interactive review
+// IExperts Audit Portal — protected by portal auth
 const iexpertsRoutes = require('./iexperts-route');
+// Protect the HTML portal page
+app.get('/iexperts', portalAuth);
+// Protect the review API endpoints
+app.post('/api/iexperts/review', portalAuthAPI);
 app.use(iexpertsRoutes);
 
-// Evidence Reviewer - public, same live data as command center
-app.get('/reviewer', (req, res) => {
+// Evidence Reviewer — protected by portal auth
+app.get('/reviewer', portalAuth, (req, res) => {
   try {
     const templatePath = path.join(__dirname, 'public', 'evidence-reviewer.html');
     if (fs.existsSync(templatePath)) {
@@ -163,8 +271,8 @@ app.get('/reviewer', (req, res) => {
   }
 });
 
-// Public rescan endpoint - rebuilds DB from seed-172.json
-app.post('/api/rescan', (req, res) => {
+// Rescan endpoint — protected (rebuilds DB from seed-172.json)
+app.post('/api/rescan', portalAuthAPI, (req, res) => {
   try {
     const db = getDb();
     const seedPath = path.join(__dirname, 'data', 'seed-172.json');
@@ -248,8 +356,8 @@ app.post('/api/remote-seed', (req, res) => {
   }
 });
 
-// CEO Dashboard - public, read-only, no auth required
-app.get('/ceo', (req, res) => {
+// CEO Dashboard — protected by portal auth
+app.get('/ceo', portalAuth, (req, res) => {
   try {
     const templatePath = path.join(__dirname, 'public', 'ceo-dashboard.html');
     if (fs.existsSync(templatePath)) {
@@ -332,9 +440,11 @@ app.get('/ceo', (req, res) => {
   }
 });
 
-// SPA fallback (skip command-center, ceo, and API routes)
+// SPA fallback (skip portal routes, login, and API routes)
 app.get('*', (req, res) => {
-  if (req.path.startsWith('/command-center') || req.path.startsWith('/api/') || req.path === '/ceo') return;
+  if (req.path.startsWith('/command-center') || req.path.startsWith('/api/') ||
+      req.path === '/ceo' || req.path === '/login' || req.path === '/iexperts' ||
+      req.path === '/reviewer') return;
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 

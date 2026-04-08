@@ -56,7 +56,7 @@ const DRIVE_FOLDERS = {
 router.get('/iexperts', (req, res) => {
   try {
     const __dirname = path.resolve('.');
-    const templatePath = path.join(__dirname, 'iexperts-review.html');
+    const templatePath = path.join(__dirname, 'public', 'iexperts-review.html');
 
     if (!fs.existsSync(templatePath)) {
       return res.status(404).send('IExperts review template not found at ' + templatePath);
