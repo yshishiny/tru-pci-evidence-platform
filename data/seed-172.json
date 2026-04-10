@@ -51,7 +51,7 @@
     "n": "High Level network diagram",
     "t": "document",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 1,
@@ -60,7 +60,7 @@
     "n": "Low Level network diagram",
     "t": "document",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 1,
@@ -69,7 +69,7 @@
     "n": "Data flow diagram for all cardholder data flows",
     "t": "document",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 1,
@@ -104,7 +104,7 @@
     "p": "Requirement 1 - Network Security Controls/1.2.8/Any Wireless Devicecontroller configuration document",
     "n": "Any Wireless Device/controller configuration  document",
     "t": "config",
-    "st": "uploaded",
+    "st": "na_huawei",
     "d": 1
   },
   {
@@ -123,7 +123,7 @@
     "n": "Host Discovery Scan report NMAP",
     "t": "document",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 1,
@@ -132,7 +132,7 @@
     "n": "Screenshot of firewall configuration for Anti-spoofing",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 1,
@@ -141,7 +141,7 @@
     "n": "Screenshot of firewall configuration for NATing (for Perimeter NSC's)",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 1,
@@ -185,7 +185,7 @@
     "p": "Requirement 2 - Secure Configurations/2.3.1/Wireless Access Policy and Procedure",
     "n": "Wireless Access Policy and Procedure",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_huawei",
     "d": 1
   },
   {
@@ -203,7 +203,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.2.1/Card holder Data Matrix including Account Data Storage Locations",
     "n": "Card holder Data Matrix including Account Data Storage Locations",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -212,7 +212,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.2.1/Data Retention Policy document",
     "n": "Data Retention Policy document",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -230,7 +230,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.2.1/Quarterly review report for data deletion process",
     "n": "Quarterly review report for data deletion process",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -239,8 +239,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.3.1.1/Screenshot of Database configuration for TableColumnFileCell level encryption",
     "n": "Screenshot of Database configuration for Table/Column/File/Cell level encryption",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_modpay",
+    "d": 1
   },
   {
     "r": 3,
@@ -248,8 +248,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.3.3/If application is encrypting the card number, then screenshot of the source code",
     "n": "If application is encrypting the card number, then screenshot of the source code",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "uploaded",
+    "d": 1
   },
   {
     "r": 3,
@@ -257,8 +257,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.3.3/If any other third party software are being used for encrypting the card number,",
     "n": "If any other third party software are being used for encrypting the card number,",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_modpay",
+    "d": 1
   },
   {
     "r": 3,
@@ -275,7 +275,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.4.1/List of users who can view the full PAN number (more than the BIN and last four",
     "n": "List of users who can view the full PAN number (more than the BIN and last four ",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -284,8 +284,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.4.1.c/If the application is truncating or masking the card number, then screenshot of",
     "n": "If the application is truncating or masking the card number, then screenshot of ",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_modpay",
+    "d": 1
   },
   {
     "r": 3,
@@ -293,8 +293,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.4.2/Vendor documentation for remote access technology",
     "n": "Vendor documentation for remote access technology",
     "t": "document",
-    "st": "empty",
-    "d": 0
+    "st": "uploaded",
+    "d": 1
   },
   {
     "r": 3,
@@ -302,8 +302,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.5.1/If the application is hashing the card number, then screenshot of the source cod",
     "n": "If the application is hashing the card number, then screenshot of the source cod",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_modpay",
+    "d": 1
   },
   {
     "r": 3,
@@ -311,8 +311,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.5.1/If the application is hashing the card number, then screenshot of the source cod/EP-035",
     "n": "If the application is using tokenization of protecting the card number, then scr",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_modpay",
+    "d": 1
   },
   {
     "r": 3,
@@ -329,7 +329,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.5.1.1/Keyed cryptographic hash process and procedure document",
     "n": "Keyed cryptographic hash process and procedure document",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -338,7 +338,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.5.1.2, 3.5.1.3/If disk-level or partition-level encryption is used to protect PAN data, provide",
     "n": "If disk-level or partition-level encryption is used to protect PAN data, provide",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -347,7 +347,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.6.1.1/Key Management Procedure document along with Cryptographic Architecture",
     "n": "Key Management Procedure document along with Cryptographic Architecture",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -356,8 +356,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.6.1.1/If HSM is used, then screenshot of HSM configuration for all the deployed HSM in",
     "n": "If HSM is used, then screenshot of HSM configuration for all the deployed HSM in",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_modpay",
+    "d": 1
   },
   {
     "r": 3,
@@ -365,7 +365,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.6.1.3/List of Key Custodians having access to cleartext cryptographic key components (",
     "n": "List of Key Custodians having access to cleartext cryptographic key components (",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -374,7 +374,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.7.6/Spilt knowledge and dual control methodology document, if manual key management",
     "n": "Spilt knowledge and dual control methodology document, if manual key management ",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -383,8 +383,8 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.7.8/Key custodians formally acknowledge (in writing or electronically) for the crypt",
     "n": "Key custodians formally acknowledge (in writing or electronically) for the crypt",
     "t": "document",
-    "st": "empty",
-    "d": 0
+    "st": "na_modpay",
+    "d": 1
   },
   {
     "r": 3,
@@ -392,7 +392,7 @@
     "p": "Requirement 3 - Protect Stored Account Data/3.7.9/Key Management Document for Key sharing with customers\u2019 (Transmission, store and",
     "n": "Key Management Document for Key sharing with customers\u2019 (Transmission, store and",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -401,7 +401,7 @@
     "p": "Requirement 4 - Protect Cardholder Data in Transit/4.1.1/Procedure document on how cardholder data can be transmitted over open, publicpr",
     "n": "Procedure document on how cardholder data can be transmitted over open, public/p",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -437,7 +437,7 @@
     "p": "Requirement 4 - Protect Cardholder Data in Transit/4.2.1.2/Cryptographic Configuration Screenshot or Document for Wireless Networks Transmi",
     "n": "Cryptographic Configuration Screenshot or Document for Wireless Networks Transmi",
     "t": "config",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -446,7 +446,7 @@
     "p": "Requirement 4 - Protect Cardholder Data in Transit/4.2.2/Documentation of measures implemented for transmission of Card numbers over end-",
     "n": "Documentation of measures implemented for transmission of Card numbers over end-",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_modpay",
     "d": 1
   },
   {
@@ -474,7 +474,7 @@
     "n": "Screenshot of anti-malware console configuration - - Configured for all system c",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 5,
@@ -483,7 +483,7 @@
     "n": "Vendor document and configuration details of the anti-malware solution(s) to ver",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 5,
@@ -510,7 +510,7 @@
     "n": "Screenshot of configurations, including any master installation of the software,",
     "t": "document",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 5,
@@ -519,7 +519,7 @@
     "n": "Screenshot of Configurations, Including Any Master Installation of the Software,",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 5,
@@ -546,7 +546,7 @@
     "n": "Screenshot of one year old audit logs for the anti-malware solution.",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 5,
@@ -555,7 +555,7 @@
     "n": "Screenshot showing that the anti-malware agent cannot be disabled or altered wit",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 5,
@@ -564,7 +564,7 @@
     "n": "Screenshot of the technology used to detect and protect personnel from phishing ",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 6,
@@ -627,7 +627,7 @@
     "n": "Screenshot of sample alerts received from    international and national computer",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 6,
@@ -672,7 +672,7 @@
     "n": "Screenshot of the configuration of the automated technical solution (WAF) deploy",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 6,
@@ -681,7 +681,7 @@
     "n": "Screenshot of sample alerts from WAF solution",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 6,
@@ -833,8 +833,8 @@
     "p": "Requirement 8 - Identify Users and Authenticate Access/8.2.4/Change request for Addition, deletion, and modification of user accounts",
     "n": "Change request for Addition, deletion, and modification of user   accounts",
     "t": "config",
-    "st": "empty",
-    "d": 0
+    "st": "uploaded",
+    "d": 1
   },
   {
     "r": 8,
@@ -842,8 +842,8 @@
     "p": "Requirement 8 - Identify Users and Authenticate Access/8.2.5/List of terminated users in last 6 months",
     "n": "List of terminated users in last 6 months",
     "t": "document",
-    "st": "empty",
-    "d": 0
+    "st": "uploaded",
+    "d": 1
   },
   {
     "r": 8,
@@ -851,8 +851,8 @@
     "p": "Requirement 8 - Identify Users and Authenticate Access/8.3.2/Screenshot on how the user credentials are stored for all system components incl",
     "n": "Screenshot on how the user credentials are stored for all system components incl",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "uploaded",
+    "d": 1
   },
   {
     "r": 8,
@@ -896,8 +896,8 @@
     "p": "Requirement 8 - Identify Users and Authenticate Access/8.4.2/Screenshot of two-factor authentication deployed 1. For all Non console admin ac",
     "n": "Screenshot of two-factor authentication deployed for all non-console   access in",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "uploaded",
+    "d": 1
   },
   {
     "r": 8,
@@ -941,8 +941,8 @@
     "p": "Requirement 9 - Restrict Physical Access/9.1.2/Roles and responsibility document for Requirement 9 Restrict Physical Access to",
     "n": "Roles and responsibility document for Requirement 9: Restrict Physical Access to",
     "t": "document",
-    "st": "empty",
-    "d": 0
+    "st": "na_huawei",
+    "d": 1
   },
   {
     "r": 9,
@@ -950,8 +950,8 @@
     "p": "Requirement 9 - Restrict Physical Access/9.2.1.1/Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot for pr",
     "n": "Screenshots of sample logs from the Badge access reader installed at the entry a",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_huawei",
+    "d": 1
   },
   {
     "r": 9,
@@ -959,8 +959,8 @@
     "p": "Requirement 9 - Restrict Physical Access/9.2.1.1/Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot for pr/EP-107",
     "n": "Screenshot of CCTV camera, monitoring entry and exit points  1. Screenshot for p",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_huawei",
+    "d": 1
   },
   {
     "r": 9,
@@ -968,8 +968,8 @@
     "p": "Requirement 9 - Restrict Physical Access/9.2.1.1/Screenshot of CCTV camera, monitoring entry and exit points 1. Screenshot for pr/EP-108",
     "n": "Screenshot of visitors logs /register for  1) present day  2) 3 months old",
     "t": "screenshot",
-    "st": "empty",
-    "d": 0
+    "st": "na_huawei",
+    "d": 1
   },
   {
     "r": 9,
@@ -1013,7 +1013,7 @@
     "p": "Requirement 9 - Restrict Physical Access/9.4.3/a) Sample logs of the Way bills Media Movement approval forms 1) Sample of one m",
     "n": "a) Sample logs of the Way bills /Media Movement approval forms:   1) Sample of o",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_huawei",
     "d": 1
   },
   {
@@ -1022,8 +1022,8 @@
     "p": "Requirement 9 - Restrict Physical Access/9.4.5.1/Asset Inventory",
     "n": "Asset Inventory",
     "t": "document",
-    "st": "empty",
-    "d": 0
+    "st": "uploaded",
+    "d": 1
   },
   {
     "r": 9,
@@ -1031,7 +1031,7 @@
     "p": "Requirement 9 - Restrict Physical Access/9.4.7/Media destruction policy Document",
     "n": "Media destruction policy Document",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_huawei",
     "d": 1
   },
   {
@@ -1040,8 +1040,8 @@
     "p": "Requirement 9 - Restrict Physical Access/9.5.1.2/If the entity has POI (Point-Of-Interaction) devices, document on how the POI de",
     "n": "If the entity has POI (Point-Of-Interaction) devices, document on how the POI de",
     "t": "document",
-    "st": "empty",
-    "d": 0
+    "st": "na_huawei",
+    "d": 1
   },
   {
     "r": 9,
@@ -1076,8 +1076,8 @@
     "p": "Requirement 10 - Log and Monitor All Access/10.1/Log management and review procedure document",
     "n": "Log management and review procedure document",
     "t": "document",
-    "st": "uploaded",
-    "d": 0
+    "st": "created",
+    "d": 1
   },
   {
     "r": 10,
@@ -1094,8 +1094,8 @@
     "p": "Requirement 10 - Log and Monitor All Access/10.3/Screenshot of user audit trails created by the application, for all applications",
     "n": "Screenshot of user audit trails created by the application, for all applications",
     "t": "document",
-    "st": "uploaded",
-    "d": 1
+    "st": "empty",
+    "d": 0
   },
   {
     "r": 10,
@@ -1103,7 +1103,7 @@
     "p": "Requirement 10 - Log and Monitor All Access/10.3.1/a) Extract of the user accounts having access to the Audit log files at 1) OS le",
     "n": "a) Extract of the user accounts having access to the Audit log files at:  1) OS ",
     "t": "document",
-    "st": "uploaded",
+    "st": "empty",
     "d": 0
   },
   {
@@ -1121,8 +1121,8 @@
     "p": "Requirement 10 - Log and Monitor All Access/10.4.2.1/Targeted risk analysis document for system components that are not reviewed on d",
     "n": "Targeted risk analysis document for system components that are not reviewed on d",
     "t": "document",
-    "st": "uploaded",
-    "d": 0
+    "st": "existing",
+    "d": 1
   },
   {
     "r": 10,
@@ -1139,8 +1139,8 @@
     "p": "Requirement 10 - Log and Monitor All Access/10.6/NTP Procedure document",
     "n": "NTP Procedure document",
     "t": "document",
-    "st": "uploaded",
-    "d": 0
+    "st": "created",
+    "d": 1
   },
   {
     "r": 10,
@@ -1148,7 +1148,7 @@
     "p": "Requirement 10 - Log and Monitor All Access/10.6/Screenshot of NTP server configuration",
     "n": "Screenshot of NTP server configuration",
     "t": "document",
-    "st": "uploaded",
+    "st": "empty",
     "d": 0
   },
   {
@@ -1157,7 +1157,7 @@
     "p": "Requirement 10 - Log and Monitor All Access/10.7/Screenshot of following alerts from application - (for all applications in PCI s",
     "n": "Screenshot of following alerts from firewall, router and L3 Switch",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "empty",
     "d": 0
   },
   {
@@ -1167,7 +1167,7 @@
     "n": "Screenshot of following alerts from server - (for all servers in PCI scope)  - A",
     "t": "screenshot",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 10,
@@ -1229,7 +1229,7 @@
     "p": "Requirement 11 - Test Security Regularly/11.2.1/Procedure Document addressing the authorized and unauthorized wireless access po",
     "n": "Procedure Document addressing the authorized and unauthorized wireless access po",
     "t": "document",
-    "st": "uploaded",
+    "st": "na_huawei",
     "d": 1
   },
   {
@@ -1247,8 +1247,8 @@
     "p": "Requirement 11 - Test Security Regularly/11.2.1.d/If automated wireless monitoring is used, a Screenshot of configuration settings",
     "n": "If automated wireless monitoring is used, a Screenshot of configuration settings",
     "t": "screenshot",
-    "st": "uploaded",
-    "d": 0
+    "st": "na_huawei",
+    "d": 1
   },
   {
     "r": 11,
@@ -1256,8 +1256,8 @@
     "p": "Requirement 11 - Test Security Regularly/11.2.2/An Inventory of authorized wireless access points along with documented business",
     "n": "An Inventory of authorized wireless access points along with documented business",
     "t": "document",
-    "st": "uploaded",
-    "d": 0
+    "st": "na_huawei",
+    "d": 1
   },
   {
     "r": 11,
@@ -1265,8 +1265,8 @@
     "p": "Requirement 11 - Test Security Regularly/11.3.1/Credential based Internal Vulnerability Scan reports for the recent 4 quarters a",
     "n": "Credential based Internal Vulnerability Scan reports for the recent 4 quarters a",
     "t": "scan",
-    "st": "uploaded",
-    "d": 1
+    "st": "empty",
+    "d": 0
   },
   {
     "r": 11,
@@ -1292,8 +1292,8 @@
     "p": "Requirement 11 - Test Security Regularly/11.3.2/External vulnerability scan (ASV) reports for the recent 4 quarters as per the P",
     "n": "External vulnerability scan (ASV) reports for the recent 4 quarters as per the P",
     "t": "scan",
-    "st": "uploaded",
-    "d": 1
+    "st": "empty",
+    "d": 0
   },
   {
     "r": 11,
@@ -1310,8 +1310,8 @@
     "p": "Requirement 11 - Test Security Regularly/11.4.3/External penetration testing report",
     "n": "External penetration testing report",
     "t": "document",
-    "st": "uploaded",
-    "d": 1
+    "st": "empty",
+    "d": 0
   },
   {
     "r": 11,
@@ -1328,7 +1328,7 @@
     "p": "Requirement 11 - Test Security Regularly/11.5.1/Screenshot of intrusion-detection andor intrusion-prevention configuration to de",
     "n": "Screenshot of intrusion-detection and/or intrusion-prevention configuration to d",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "empty",
     "d": 0
   },
   {
@@ -1337,7 +1337,7 @@
     "p": "Requirement 11 - Test Security Regularly/11.5.1.1/Screenshot of alerts received from intrusion-detection andor intrusion-preventio",
     "n": "Screenshot of alerts received from intrusion-detection and/or intrusion-preventi",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "empty",
     "d": 0
   },
   {
@@ -1355,7 +1355,7 @@
     "p": "Requirement 11 - Test Security Regularly/11.6.1/Screenshot of change- and tamper-detection mechanism HTTP header and payment pag",
     "n": "Screenshot of change- and tamper-detection mechanism HTTP header and payment pag",
     "t": "screenshot",
-    "st": "uploaded",
+    "st": "empty",
     "d": 0
   },
   {
@@ -1392,7 +1392,7 @@
     "n": "Training materials and attendance records for incident response training",
     "t": "document",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 12,
@@ -1428,7 +1428,7 @@
     "n": "Targeted Risk Analysis report for each PCI DSS requirement for identification of",
     "t": "document",
     "st": "uploaded",
-    "d": 0
+    "d": 1
   },
   {
     "r": 12,
@@ -1481,8 +1481,8 @@
     "p": "Requirement 12 - Support InfoSec with Policies and Programs/12.5.2/Filled and Approved PCI DSS Scope Sheet including below- 1. Network Inventory 2.",
     "n": "Filled and Approved PCI DSS Scope Sheet including below-  1. Network Inventory  ",
     "t": "document",
-    "st": "uploaded",
-    "d": 0
+    "st": "created",
+    "d": 1
   },
   {
     "r": 12,
