@@ -323,4 +323,132 @@ router.post('/seed-evidence', requireAuth, requireRole('admin'), (req, res) => {
   }
 });
 
+// POST /reseed - Smart reseed: update statuses from seed-172.json without losing reviews
+// This is the "Update" button endpoint — safe to call repeatedly
+router.post('/reseed', requireAuth, requireRole('admin'), (req, res) => {
+  try {
+    const db = getDb();
+    const fs = require('fs');
+    const seedPath = path.join(__dirname, '../../data/seed-172.json');
+
+    let seedData;
+    if (req.body && req.body.evidence_points && Array.isArray(req.body.evidence_points)) {
+      seedData = req.body.evidence_points;
+    } else if (fs.existsSync(seedPath)) {
+      seedData = JSON.parse(fs.readFileSync(seedPath, 'utf-8'));
+    } else {
+      return res.status(400).json({ error: 'No seed data found' });
+    }
+
+    // Get current DB state
+    const currentEPs = db.prepare('SELECT * FROM evidence_points ORDER BY requirement_id, sub_requirement').all();
+
+    let updated = 0, inserted = 0, unchanged = 0;
+
+    const tx = db.transaction(() => {
+      if (currentEPs.length === 0) {
+        // Fresh DB — insert all
+        const insertStmt = db.prepare(`
+          INSERT INTO evidence_points (
+            requirement_id, sub_requirement, folder_path, folder_name,
+            evidence_type, status, has_original_doc, updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+        `);
+        for (const ep of seedData) {
+          const status = (ep.st || 'empty');
+          // Map custom statuses to DB-compatible ones
+          const dbStatus = (status === 'na_modpay' || status === 'na_huawei' || status === 'created' || status === 'existing')
+            ? 'uploaded' : status;
+          insertStmt.run(
+            ep.r, ep.s || '', ep.p || '', ep.n || '',
+            ep.t || 'document', dbStatus,
+            ep.d !== undefined ? ep.d : 0
+          );
+          inserted++;
+        }
+      } else {
+        // Existing DB — match by requirement + sub_requirement + name and update status
+        // Build lookup: group current EPs by req+sub
+        const lookup = {};
+        for (const ep of currentEPs) {
+          const key = ep.requirement_id + '|' + (ep.sub_requirement || '');
+          if (!lookup[key]) lookup[key] = [];
+          lookup[key].push(ep);
+        }
+
+        const updateStmt = db.prepare(`
+          UPDATE evidence_points SET status = ?, has_original_doc = ?, updated_at = datetime('now')
+          WHERE id = ?
+        `);
+        const insertStmt = db.prepare(`
+          INSERT INTO evidence_points (
+            requirement_id, sub_requirement, folder_path, folder_name,
+            evidence_type, status, has_original_doc, updated_at
+          ) VALUES (?, ?, ?, ?, ?, ?, ?, datetime('now'))
+        `);
+
+        // Track which seed entries map to which DB entries (by order within same req+sub)
+        const seedGroups = {};
+        for (const ep of seedData) {
+          const key = ep.r + '|' + (ep.s || '');
+          if (!seedGroups[key]) seedGroups[key] = [];
+          seedGroups[key].push(ep);
+        }
+
+        for (const [key, seedEps] of Object.entries(seedGroups)) {
+          const dbEps = lookup[key] || [];
+
+          for (let i = 0; i < seedEps.length; i++) {
+            const seed = seedEps[i];
+            const seedStatus = seed.st || 'empty';
+            const dbStatus = (seedStatus === 'na_modpay' || seedStatus === 'na_huawei' || seedStatus === 'created' || seedStatus === 'existing')
+              ? 'uploaded' : seedStatus;
+
+            if (i < dbEps.length) {
+              // Update existing
+              const dbEp = dbEps[i];
+              if (dbEp.status !== dbStatus || dbEp.has_original_doc !== (seed.d || 0)) {
+                updateStmt.run(dbStatus, seed.d || 0, dbEp.id);
+                updated++;
+              } else {
+                unchanged++;
+              }
+            } else {
+              // Insert new
+              insertStmt.run(
+                seed.r, seed.s || '', seed.p || '', seed.n || '',
+                seed.t || 'document', dbStatus, seed.d || 0
+              );
+              inserted++;
+            }
+          }
+        }
+      }
+    });
+    tx();
+
+    // Get final stats
+    const total = db.prepare('SELECT COUNT(*) as c FROM evidence_points').get().c;
+    const filled = db.prepare("SELECT COUNT(*) as c FROM evidence_points WHERE status != 'empty'").get().c;
+    const empty = total - filled;
+    const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
+
+    // Audit log
+    db.prepare(`
+      INSERT INTO audit_log (user_id, username, action, target, details)
+      VALUES (?, ?, 'reseed', 'evidence', ?)
+    `).run(req.user.id, req.user.username,
+      `Reseed: ${updated} updated, ${inserted} inserted, ${unchanged} unchanged. Now ${filled}/${total} = ${pct}%`);
+
+    res.json({
+      success: true,
+      updated, inserted, unchanged,
+      stats: { total, filled, empty, percentage: pct }
+    });
+  } catch (err) {
+    console.error('Reseed error:', err);
+    res.status(500).json({ error: 'Reseed failed: ' + err.message });
+  }
+});
+
 module.exports = router;
