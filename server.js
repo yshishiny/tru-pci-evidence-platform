@@ -135,6 +135,26 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
 });
 
+// Public portal stats (no auth — read-only summary for portal hub)
+app.get('/api/portal/stats', (req, res) => {
+  try {
+    const db = getDb();
+    const total = db.prepare('SELECT COUNT(*) as c FROM evidence_points').get().c;
+    const filled = db.prepare("SELECT COUNT(*) as c FROM evidence_points WHERE status != 'empty'").get().c;
+    const empty = total - filled;
+    const pct = total > 0 ? Math.round((filled / total) * 100) : 0;
+    const reqs = [];
+    for (let r = 1; r <= 12; r++) {
+      const rt = db.prepare('SELECT COUNT(*) as c FROM evidence_points WHERE requirement_id = ?').get(r).c;
+      const rf = db.prepare("SELECT COUNT(*) as c FROM evidence_points WHERE requirement_id = ? AND status != 'empty'").get(r).c;
+      reqs.push({ id: r, total: rt, filled: rf, pct: rt > 0 ? Math.round((rf/rt)*100) : 0 });
+    }
+    res.json({ total, filled, empty, percentage: pct, reqsAt100: reqs.filter(r => r.pct === 100).length, requirements: reqs });
+  } catch(err) {
+    res.status(500).json({ error: 'Stats unavailable' });
+  }
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/dashboard', dashboardRoutes);
