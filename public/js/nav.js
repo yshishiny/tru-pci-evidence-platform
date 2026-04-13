@@ -20,6 +20,7 @@ window.Nav = {
       { id: 'review', label: 'Review', hash: '#/review', roles: ['admin', 'iexpert_pm', 'iexpert_grc', 'assessor'] },
       { id: 'reports', label: 'Reports', hash: '#/reports', roles: ['admin', 'tru_team', 'iexpert_pm', 'iexpert_grc', 'assessor'] },
       { id: 'cloud-storage', label: 'Cloud Storage', hash: '#/cloud-storage', roles: ['admin', 'tru_team', 'iexpert_pm', 'iexpert_grc', 'assessor'] },
+      { id: 'scope', label: 'Scope & Assets', hash: '/scope', roles: ['admin', 'tru_team', 'iexpert_pm', 'iexpert_grc', 'assessor'], external: true },
       { id: 'alerts', label: 'Alerts', hash: '#/alerts', roles: ['admin'] },
       { id: 'admin', label: 'Admin', hash: '#/admin', roles: ['admin'] }
     ];
@@ -44,7 +45,7 @@ window.Nav = {
           </div>
           <nav class="nav-links">
             ${visibleItems.map(item => `
-              <a href="${item.hash}" class="nav-link ${activePage === item.id ? 'active' : ''}">${item.label}</a>
+              <a href="${item.hash}" class="nav-link ${activePage === item.id ? 'active' : ''}"${item.external ? ' data-external="true"' : ''}>${item.label}</a>
             `).join('')}
           </nav>
         </div>
