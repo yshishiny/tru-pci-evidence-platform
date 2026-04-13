@@ -291,6 +291,11 @@ app.get('/reviewer', portalAuth, (req, res) => {
   }
 });
 
+// Scope & Assets Portal — protected by portal auth
+app.get('/scope', portalAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'scope-portal.html'));
+});
+
 // Rescan endpoint — protected (rebuilds DB from seed-172.json)
 app.post('/api/rescan', portalAuthAPI, (req, res) => {
   try {

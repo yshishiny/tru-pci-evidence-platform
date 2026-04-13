@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TRU PCI DSS - Evidence Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0e1a;
+            color: #e0e6f2;
+            line-height: 1.6;
+        }
+
+        /* Topbar */
+        .topbar {
+            background: linear-gradient(135deg, #0f1b33, #162040, #1a1040);
+            border-bottom: 1px solid #2a3550;
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo-box {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-gradient {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d9ff, #0099ff);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #0a0e1a;
+            font-size: 20px;
+        }
+
+        .logo-text h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #e0e6f2;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: #8892b0;
+            letter-spacing: 0.5px;
+        }
+
+        .date-display {
+            font-size: 12px;
+            color: #8892b0;
+        }
+
+        /* Main container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Tab navigation */
+        .tab-nav {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 1px solid #2a3550;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            color: #8892b0;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: #00d9ff;
+        }
+
+        .tab-btn.active {
+            color: #00d9ff;
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #00d9ff, #0099ff);
+            border-radius: 2px;
+        }
+
+        /* Tab content */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* KPI Cards */
+        .kpi-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .kpi-card {
+            background: #1a2236;
+            border: 1px solid #2a3550;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .kpi-card:hover {
+            border-color: #3a4560;
+            transform: translateY(-2px);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            color: #8892b0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: #00d9ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-detail {
+            font-size: 12px;
+            color: #6a7a90;
+        }
+
+        /* Badge styles */
+        .badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-success {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .badge-warning {
+            background: rgba(234, 179, 8, 0.15);
+            color: #eab308;
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .badge-info {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        /* Data table */
+        .data-section {
+            background: #1a2236;
+            border: 1px solid #2a3550;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .data-section h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #e0e6f2;
+            margin-bottom: 1rem;
+        }
+
+        .search-filter {
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            background: #0f1520;
+            border: 1px solid #2a3550;
+            border-radius: 6px;
+            padding: 0.75rem 1rem;
+            color: #e0e6f2;
+            font-size: 14px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-input::placeholder {
+            color: #6a7a90;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #00d9ff;
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        th {
+            background: #0f1520;
+            color: #8892b0;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #2a3550;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 0.875rem 1rem;
+            border-bottom: 1px solid #1f2a3a;
+            color: #c9d1e0;
+        }
+
+        tr:nth-child(even) {
+            background: rgba(26, 34, 54, 0.5);
+        }
+
+        tr:hover {
+            background: rgba(0, 217, 255, 0.05);
+        }
+
+        /* Risk matrix */
+        .risk-matrix {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .risk-cell {
+            background: #1a2236;
+            border: 1px solid #2a3550;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .risk-cell.critical {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .risk-cell.high {
+            border-color: #eab308;
+            background: rgba(234, 179, 8, 0.1);
+        }
+
+        .risk-cell.medium {
+            border-color: #f97316;
+            background: rgba(249, 115, 22, 0.1);
+        }
+
+        .risk-cell.low {
+            border-color: #22c55e;
+            background: rgba(34, 197, 94, 0.1);
+        }
+
+        .risk-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #e0e6f2;
+        }
+
+        .risk-count {
+            font-size: 24px;
+            font-weight: 700;
+            color: #00d9ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .risk-description {
+            font-size: 12px;
+            color: #8892b0;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-marker {
+            width: 20px;
+            height: 20px;
+            background: #00d9ff;
+            border: 3px solid #0a0e1a;
+            border-radius: 50%;
+            flex-shrink: 0;
+            position: relative;
+            top: 2px;
+        }
+
+        .timeline-item.completed .timeline-marker {
+            background: #22c55e;
+        }
+
+        .timeline-item.pending .timeline-marker {
+            background: #eab308;
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: #1a2236;
+            border: 1px solid #2a3550;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .timeline-content h4 {
+            color: #e0e6f2;
+            font-size: 14px;
+            margin-bottom: 0.25rem;
+        }
+
+        .timeline-content p {
+            color: #8892b0;
+            font-size: 13px;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Heatmap style */
+        .heatmap-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .heatmap-item {
+            flex: 1;
+            min-width: 150px;
+            background: #1a2236;
+            border: 1px solid #2a3550;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .heatmap-score {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #e0e6f2;
+        }
+
+        .heatmap-label {
+            font-size: 12px;
+            color: #8892b0;
+        }
+
+        .score-critical { color: #ef4444; }
+        .score-high { color: #eab308; }
+        .score-medium { color: #f97316; }
+        .score-low { color: #22c55e; }
+
+        /* List items */
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #1f2a3a;
+        }
+
+        .list-item:last-child {
+            border-bottom: none;
+        }
+
+        .list-icon {
+            flex-shrink: 0;
+            margin-top: 2px;
+            color: #00d9ff;
+        }
+
+        .list-content {
+            flex: 1;
+        }
+
+        .list-title {
+            color: #e0e6f2;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .list-description {
+            color: #8892b0;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .topbar {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .tab-nav {
+                margin-bottom: 1.5rem;
+            }
+
+            .kpi-section {
+                grid-template-columns: 1fr;
+            }
+
+            table {
+                font-size: 12px;
+            }
+
+            th, td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="logo-box">
+            <div class="logo-gradient">TRU</div>
+            <div class="logo-text">
+                <h1>TRU PCI DSS</h1>
+                <p>EVIDENCE PORTAL</p>
+            </div>
+        </div>
+        <div class="date-display">Last Updated: April 13, 2026</div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Tab Navigation -->
+        <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab('asset-registrar')">Asset Registrar</button>
+            <button class="tab-btn" onclick="switchTab('risk-assets')">Risk Asset Sheet</button>
+            <button class="tab-btn" onclick="switchTab('vulnerability')">Vulnerability Assessment</button>
+            <button class="tab-btn" onclick="switchTab('pci-scope')">PCI DSS Scope</button>
+        </div>
+
+        <!-- Tab 1: Asset Registrar -->
+        <div id="asset-registrar" class="tab-content active">
+            <!-- KPI Summary -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total ECS Servers</div>
+                    <div class="kpi-value">19</div>
+                    <div class="kpi-detail">Across 4 environments</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Network Resources</div>
+                    <div class="kpi-value">44</div>
+                    <div class="kpi-detail">VPCs, Subnets, Security Groups, etc.</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Infrastructure Location</div>
+                    <div class="kpi-value">Huawei Cloud</div>
+                    <div class="kpi-detail">AF-Cairo Region</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Key Security Tools</div>
+                    <div class="kpi-value">3</div>
+                    <div class="kpi-detail">Qualys, Kali, Monitoring</div>
+                </div>
+            </div>
+
+            <!-- ECS Servers Table -->
+            <div class="data-section">
+                <h3>ECS Servers by Environment</h3>
+                <div class="search-filter">
+                    <input type="text" class="search-input" id="serverSearch" placeholder="Search servers..." onkeyup="filterTable('serverTable', 'serverSearch')">
+                </div>
+                <table id="serverTable">
+                    <thead>
+                        <tr>
+                            <th>Environment</th>
+                            <th>Count</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Production</td>
+                            <td style="color: #00d9ff; font-weight: 600;">11</td>
+                            <td>Docker Swarm Managers & Workers</td>
+                            <td><span class="badge badge-success">Active</span></td>
+                            <td>CDE-related services, payment processing</td>
+                        </tr>
+                        <tr>
+                            <td>Staging</td>
+                            <td style="color: #00d9ff; font-weight: 600;">7</td>
+                            <td>Docker Swarm, Testing</td>
+                            <td><span class="badge badge-success">Active</span></td>
+                            <td>Pre-production validation environment</td>
+                        </tr>
+                        <tr>
+                            <td>Security</td>
+                            <td style="color: #00d9ff; font-weight: 600;">2</td>
+                            <td>Qualys Scanner, Kali Pentest</td>
+                            <td><span class="badge badge-info">Operational</span></td>
+                            <td>172.16.0.127, 172.16.0.245</td>
+                        </tr>
+                        <tr>
+                            <td>Bleed Test</td>
+                            <td style="color: #00d9ff; font-weight: 600;">1</td>
+                            <td>Development & Testing</td>
+                            <td><span class="badge badge-warning">Out-of-Scope</span></td>
+                            <td>10.2.0.0/16 - Not PCI DSS compliant</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Network Infrastructure Table -->
+            <div class="data-section">
+                <h3>Network Infrastructure</h3>
+                <div class="search-filter">
+                    <input type="text" class="search-input" id="networkSearch" placeholder="Search resources..." onkeyup="filterTable('networkTable', 'networkSearch')">
+                </div>
+                <table id="networkTable">
+                    <thead>
+                        <tr>
+                            <th>Resource Type</th>
+                            <th>Count</th>
+                            <th>Purpose</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>VPCs</td>
+                            <td style="color: #00d9ff; font-weight: 600;">5</td>
+                            <td>Virtual Private Clouds</td>
+                            <td><span class="badge badge-success">Deployed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Subnets</td>
+                            <td style="color: #00d9ff; font-weight: 600;">17</td>
+                            <td>Network Segmentation</td>
+                            <td><span class="badge badge-success">Deployed</span></td>
+                        </tr>
+                        <tr>
+                            <td>Security Groups</td>
+                            <td style="color: #00d9ff; font-weight: 600;">10</td>
+                            <td>Firewall Rules</td>
+                            <td><span class="badge badge-success">Configured</span></td>
+                        </tr>
+                        <tr>
+                            <td>Elastic IPs</td>
+                            <td style="color: #00d9ff; font-weight: 600;">8</td>
+                            <td>Static IP Addresses</td>
+                            <td><span class="badge badge-success">Allocated</span></td>
+                        </tr>
+                        <tr>
+                            <td>Load Balancers</td>
+                            <td style="color: #00d9ff; font-weight: 600;">2</td>
+                            <td>Traffic Distribution</td>
+                            <td><span class="badge badge-success">Active</span></td>
+                        </tr>
+                        <tr>
+                            <td>NAT Gateways</td>
+                            <td style="color: #00d9ff; font-weight: 600;">2</td>
+                            <td>Outbound Connectivity</td>
+                            <td><span class="badge badge-success">Deployed</span></td>
+                        </tr>
+                        <tr>
+                            <td>RDS Databases</td>
+                            <td style="color: #00d9ff; font-weight: 600;">2</td>
+                            <td>CHD Storage (Encrypted)</td>
+                            <td><span class="badge badge-success">Encrypted</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Key Assets Table -->
+            <div class="data-section">
+                <h3>Critical Assets & Services</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset Name</th>
+                            <th>IP/Endpoint</th>
+                            <th>Function</th>
+                            <th>Criticality</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Qualys Scanner</td>
+                            <td>172.16.0.127</td>
+                            <td>Vulnerability Scanning</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>PCI scanning tool</td>
+                        </tr>
+                        <tr>
+                            <td>Kali Pentest</td>
+                            <td>172.16.0.245</td>
+                            <td>Penetration Testing</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>Security assessment</td>
+                        </tr>
+                        <tr>
+                            <td>Production Docker Swarm</td>
+                            <td>10.0.x.x</td>
+                            <td>CDE Services</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>Managers & workers</td>
+                        </tr>
+                        <tr>
+                            <td>Staging Docker Swarm</td>
+                            <td>10.1.x.x</td>
+                            <td>Pre-prod Testing</td>
+                            <td><span class="badge badge-info">High</span></td>
+                            <td>Non-production environment</td>
+                        </tr>
+                        <tr>
+                            <td>Modupay VPN Tunnel</td>
+                            <td>10.5.0.0/16</td>
+                            <td>DR Connectivity</td>
+                            <td><span class="badge badge-info">High</span></td>
+                            <td>Disaster recovery link</td>
+                        </tr>
+                        <tr>
+                            <td>Shahry VPN Tunnel</td>
+                            <td>10.7.0.0/16</td>
+                            <td>App Connectivity</td>
+                            <td><span class="badge badge-info">High</span></td>
+                            <td>Service provider link</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Tab 2: Risk Asset Sheet -->
+        <div id="risk-assets" class="tab-content">
+            <!-- KPI Summary -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-label">Critical Assets</div>
+                    <div class="kpi-value">8</div>
+                    <div class="kpi-detail">Immediate compliance focus</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">High Risk Assets</div>
+                    <div class="kpi-value">12</div>
+                    <div class="kpi-detail">Supporting infrastructure</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Overall Risk Score</div>
+                    <div class="kpi-value">7.2</div>
+                    <div class="kpi-detail">Out of 10 (Elevated)</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Data Exposure</div>
+                    <div class="kpi-value">8</div>
+                    <div class="kpi-detail">CHD assets encrypted</div>
+                </div>
+            </div>
+
+            <!-- Risk Matrix Heatmap -->
+            <div class="data-section">
+                <h3>Risk Classification Matrix</h3>
+                <div class="risk-matrix">
+                    <div class="risk-cell critical">
+                        <div class="risk-title">Critical</div>
+                        <div class="risk-count">8</div>
+                        <div class="risk-description">CDE-touching, high exposure</div>
+                    </div>
+                    <div class="risk-cell high">
+                        <div class="risk-title">High</div>
+                        <div class="risk-count">12</div>
+                        <div class="risk-description">Supporting infrastructure</div>
+                    </div>
+                    <div class="risk-cell medium">
+                        <div class="risk-title">Medium</div>
+                        <div class="risk-count">6</div>
+                        <div class="risk-description">Management & connectors</div>
+                    </div>
+                    <div class="risk-cell low">
+                        <div class="risk-title">Low</div>
+                        <div class="risk-count">2</div>
+                        <div class="risk-description">Test & development</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Risk Assessment -->
+            <div class="data-section">
+                <h3>Asset Risk Details</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Criticality</th>
+                            <th>Data Exposure</th>
+                            <th>Network Exposure</th>
+                            <th>Compliance Impact</th>
+                            <th>Risk Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Production Database</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>CHD (AES-256)</td>
+                            <td>Private VPC</td>
+                            <td>Requirement 3, 4</td>
+                            <td style="color: #ef4444; font-weight: 600;">9.1</td>
+                        </tr>
+                        <tr>
+                            <td>App Servers (Prod)</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>CHD Transit</td>
+                            <td>Private + LB</td>
+                            <td>Requirement 2, 6</td>
+                            <td style="color: #eab308; font-weight: 600;">8.7</td>
+                        </tr>
+                        <tr>
+                            <td>Load Balancers</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>Encrypted Traffic</td>
+                            <td>Public IP</td>
+                            <td>Requirement 2, 7</td>
+                            <td style="color: #eab308; font-weight: 600;">8.3</td>
+                        </tr>
+                        <tr>
+                            <td>Production DB Replica</td>
+                            <td><span class="badge badge-danger">Critical</span></td>
+                            <td>CHD (AES-256)</td>
+                            <td>Private VPC</td>
+                            <td>Requirement 3, 4</td>
+                            <td style="color: #ef4444; font-weight: 600;">8.9</td>
+                        </tr>
+                        <tr>
+                            <td>Staging Environment</td>
+                            <td><span class="badge badge-info">High</span></td>
+                            <td>Non-prod Data</td>
+                            <td>Private VPC</td>
+                            <td>Requirement 2</td>
+                            <td style="color: #eab308; font-weight: 600;">6.5</td>
+                        </tr>
+                        <tr>
+                            <td>Security Tools (Qualys)</td>
+                            <td><span class="badge badge-info">High</span></td>
+                            <td>No CHD</td>
+                            <td>Isolated Segment</td>
+                            <td>Requirement 11</td>
+                            <td style="color: #eab308; font-weight: 600;">6.2</td>
+                        </tr>
+                        <tr>
+                            <td>VPN Tunnels</td>
+                            <td><span class="badge badge-info">High</span></td>
+                            <td>Encrypted</td>
+                            <td>Encrypted Channels</td>
+                            <td>Requirement 4</td>
+                            <td style="color: #f97316; font-weight: 600;">5.8</td>
+                        </tr>
+                        <tr>
+                            <td>Bleed Test Environment</td>
+                            <td><span class="badge badge-warning">Low</span></td>
+                            <td>No CHD</td>
+                            <td>Out-of-scope</td>
+                            <td>None</td>
+                            <td style="color: #22c55e; font-weight: 600;">2.1</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Risk Factors -->
+            <div class="data-section">
+                <h3>Risk Factor Analysis</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: #e0e6f2; margin-bottom: 1rem; font-size: 14px;">Data Exposure Factors</h4>
+                        <div class="list-item">
+                            <div class="list-icon">✓</div>
+                            <div class="list-content">
+                                <div class="list-title">CHD Encryption</div>
+                                <div class="list-description">AES-256 encryption at rest</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">✓</div>
+                            <div class="list-content">
+                                <div class="list-title">TLS in Transit</div>
+                                <div class="list-description">All traffic encrypted</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">!</div>
+                            <div class="list-content">
+                                <div class="list-title">Database Access</div>
+                                <div class="list-description">Limited to CDE resources</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: #e0e6f2; margin-bottom: 1rem; font-size: 14px;">Network Exposure Factors</h4>
+                        <div class="list-item">
+                            <div class="list-icon">✓</div>
+                            <div class="list-content">
+                                <div class="list-title">VPC Isolation</div>
+                                <div class="list-description">Separate environments</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">✓</div>
+                            <div class="list-content">
+                                <div class="list-title">Security Groups</div>
+                                <div class="list-description">10 firewall policies</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">!</div>
+                            <div class="list-content">
+                                <div class="list-title">Public IPs</div>
+                                <div class="list-description">LBs & NAT exposed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: #e0e6f2; margin-bottom: 1rem; font-size: 14px;">Compliance Impact</h4>
+                        <div class="list-item">
+                            <div class="list-icon">✓</div>
+                            <div class="list-content">
+                                <div class="list-title">Requirement Coverage</div>
+                                <div class="list-description">2, 3, 4, 6, 7, 11</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">✓</div>
+                            <div class="list-content">
+                                <div class="list-title">Security Controls</div>
+                                <div class="list-description">Documented & deployed</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">!</div>
+                            <div class="list-content">
+                                <div class="list-title">Audit Trail</div>
+                                <div class="list-description">SIEM monitoring active</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 3: Vulnerability Assessment -->
+        <div id="vulnerability" class="tab-content">
+            <!-- KPI Summary -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-label">Penetration Test</div>
+                    <div class="kpi-value">Done</div>
+                    <div class="kpi-detail">Completed April 2026</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Security Controls</div>
+                    <div class="kpi-value">4/4</div>
+                    <div class="kpi-detail">Deployed & operational</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">ASV Status</div>
+                    <div class="kpi-value">Pending</div>
+                    <div class="kpi-detail">External scanning scheduled</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Scan Frequency</div>
+                    <div class="kpi-value">Quarterly</div>
+                    <div class="kpi-detail">Internal VA program active</div>
+                </div>
+            </div>
+
+            <!-- Assessment Status Cards -->
+            <div class="data-section">
+                <h3>Vulnerability Assessment Status</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
+                    <div style="background: #1a2236; border: 1px solid #2a3550; border-radius: 8px; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                            <h4 style="color: #e0e6f2; font-size: 14px; font-weight: 600;">Penetration Testing</h4>
+                            <span class="badge badge-success">Completed</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">Provider: Cyber Force</div>
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">Completion Date: April 2026</div>
+                            <div style="font-size: 12px; color: #8892b0;">Scope: Full infrastructure assessment</div>
+                        </div>
+                        <div style="padding-top: 1rem; border-top: 1px solid #2a3550;">
+                            <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.5rem;">✓ Network penetration completed</div>
+                            <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.5rem;">✓ Application testing completed</div>
+                            <div style="font-size: 13px; color: #c9d1e0;">✓ Findings documented & remediated</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #1a2236; border: 1px solid #2a3550; border-radius: 8px; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                            <h4 style="color: #e0e6f2; font-size: 14px; font-weight: 600;">Internal VA Scans</h4>
+                            <span class="badge badge-success">Active</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">Provider: Cyber Force (ER 141)</div>
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">Frequency: Quarterly</div>
+                            <div style="font-size: 12px; color: #8892b0;">Last Scan: Q1 2026</div>
+                        </div>
+                        <div style="padding-top: 1rem; border-top: 1px solid #2a3550;">
+                            <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.5rem;">✓ Quarterly scan schedule</div>
+                            <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.5rem;">✓ Automated scanning enabled</div>
+                            <div style="font-size: 13px; color: #c9d1e0;">✓ Reports & remediation tracking</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #1a2236; border: 1px solid #2a3550; border-radius: 8px; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                            <h4 style="color: #e0e6f2; font-size: 14px; font-weight: 600;">External ASV</h4>
+                            <span class="badge badge-warning">Pending</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">Status: Scheduled</div>
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">Target: Q2 2026</div>
+                            <div style="font-size: 12px; color: #8892b0;">PCI Requirement: 11.2.2</div>
+                        </div>
+                        <div style="padding-top: 1rem; border-top: 1px solid #2a3550;">
+                            <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.5rem;">• ASV selection in progress</div>
+                            <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.5rem;">• External IP scanning scoped</div>
+                            <div style="font-size: 13px; color: #c9d1e0;">• Expected completion Q2 2026</div>
+                        </div>
+                    </div>
+
+                    <div style="background: #1a2236; border: 1px solid #2a3550; border-radius: 8px; padding: 1.5rem;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
+                            <h4 style="color: #e0e6f2; font-size: 14px; font-weight: 600;">Infrastructure Controls</h4>
+                            <span class="badge badge-success">Deployed</span>
+                        </div>
+                        <div style="margin-bottom: 1rem;">
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">SIEM: Elastic Stack</div>
+                            <div style="font-size: 12px; color: #8892b0; margin-bottom: 0.5rem;">EDR: Elastic Defend</div>
+                            <div style="font-size: 12px; color: #8892b0;">AV: Kaspersky</div>
+                        </div>
+                        <div style="padding-top: 1rem; border-top: 1px solid #2a3550;">
+                            <div style="font-size: 13px; color: #22c55e; margin-bottom: 0.5rem;">✓ SIEM deployed</div>
+                            <div style="font-size: 13px; color: #22c55e; margin-bottom: 0.5rem;">✓ EDR deployed</div>
+                            <div style="font-size: 13px; color: #22c55e;">✓ Log management active</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Infrastructure -->
+            <div class="data-section">
+                <h3>Security Infrastructure Details</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Product/Solution</th>
+                            <th>Status</th>
+                            <th>Purpose</th>
+                            <th>PCI Requirement</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>SIEM</td>
+                            <td>Elastic Stack</td>
+                            <td><span class="badge badge-success">Deployed</span></td>
+                            <td>Log aggregation & analysis</td>
+                            <td>10, 11</td>
+                        </tr>
+                        <tr>
+                            <td>EDR</td>
+                            <td>Elastic Defend</td>
+                            <td><span class="badge badge-success">Deployed</span></td>
+                            <td>Endpoint detection & response</td>
+                            <td>5, 11</td>
+                        </tr>
+                        <tr>
+                            <td>Antivirus</td>
+                            <td>Kaspersky</td>
+                            <td><span class="badge badge-success">Deployed</span></td>
+                            <td>Malware protection</td>
+                            <td>5, 6</td>
+                        </tr>
+                        <tr>
+                            <td>Log Management</td>
+                            <td>Elastic Logs</td>
+                            <td><span class="badge badge-success">Deployed</span></td>
+                            <td>Centralized log storage</td>
+                            <td>10, 11</td>
+                        </tr>
+                        <tr>
+                            <td>Vulnerability Scanner</td>
+                            <td>Qualys</td>
+                            <td><span class="badge badge-success">Active</span></td>
+                            <td>Infrastructure scanning</td>
+                            <td>11.2</td>
+                        </tr>
+                        <tr>
+                            <td>Penetration Testing</td>
+                            <td>Cyber Force</td>
+                            <td><span class="badge badge-success">Complete</span></td>
+                            <td>Application & network testing</td>
+                            <td>11.3</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Assessment Timeline -->
+            <div class="data-section">
+                <h3>Vulnerability Assessment Timeline</h3>
+                <div class="timeline">
+                    <div class="timeline-item completed">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Penetration Test Completed</h4>
+                            <p>Cyber Force penetration testing finished</p>
+                            <div style="font-size: 12px; color: #00d9ff;">April 2026 - Findings remediated</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item completed">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Security Infrastructure Deployed</h4>
+                            <p>SIEM, EDR, Antivirus, and log management systems deployed</p>
+                            <div style="font-size: 12px; color: #00d9ff;">March - April 2026 - All systems operational</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item completed">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Internal VA Scanning Program Active</h4>
+                            <p>Quarterly vulnerability scanning by Cyber Force (ER 141) established</p>
+                            <div style="font-size: 12px; color: #00d9ff;">Q1 2026 - Next scan Q2 2026</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item pending">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>External ASV Scanning</h4>
+                            <p>Schedule and conduct external vulnerability assessment by approved ASV</p>
+                            <div style="font-size: 12px; color: #eab308;">Scheduled Q2 2026 - PCI Requirement 11.2.2</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item pending">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <h4>Annual Assessment Review</h4>
+                            <p>Review and document all assessment findings for audit readiness</p>
+                            <div style="font-size: 12px; color: #eab308;">Target Q2 2026</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 4: PCI DSS Scope -->
+        <div id="pci-scope" class="tab-content">
+            <!-- KPI Summary -->
+            <div class="kpi-section">
+                <div class="kpi-card">
+                    <div class="kpi-label">CDE Networks</div>
+                    <div class="kpi-value">1</div>
+                    <div class="kpi-detail">Production environment</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Connected Networks</div>
+                    <div class="kpi-value">3</div>
+                    <div class="kpi-detail">In PCI scope</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">CHD Assets</div>
+                    <div class="kpi-value">3</div>
+                    <div class="kpi-detail">All encrypted AES-256</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Protected Domains</div>
+                    <div class="kpi-value">14</div>
+                    <div class="kpi-detail">WAF-protected services</div>
+                </div>
+            </div>
+
+            <!-- Scope Definition -->
+            <div class="data-section">
+                <h3>PCI DSS Scope Definition</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div style="background: #0f1520; border: 1px solid #2a3550; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #00d9ff; margin-bottom: 1rem; font-size: 14px; font-weight: 600;">In Scope (CDE)</h4>
+                        <div class="list-item">
+                            <div class="list-icon">✓</div>
+                            <div class="list-content">
+                                <div class="list-title">Production VPC</div>
+                                <div class="list-description">vpc-tru-eg-production (10.0.0.0/16)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #0f1520; border: 1px solid #2a3550; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #eab308; margin-bottom: 1rem; font-size: 14px; font-weight: 600;">Connected (In Scope)</h4>
+                        <div class="list-item">
+                            <div class="list-icon">→</div>
+                            <div class="list-content">
+                                <div class="list-title">Staging VPC</div>
+                                <div class="list-description">10.1.0.0/16</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">→</div>
+                            <div class="list-content">
+                                <div class="list-title">Security VPC</div>
+                                <div class="list-description">172.16.0.0/16</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">→</div>
+                            <div class="list-content">
+                                <div class="list-title">VPN Networks</div>
+                                <div class="list-description">10.5.0.0/16, 10.7.0.0/16</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="background: #0f1520; border: 1px solid #2a3550; border-radius: 8px; padding: 1.5rem;">
+                        <h4 style="color: #6a7a90; margin-bottom: 1rem; font-size: 14px; font-weight: 600;">Out of Scope</h4>
+                        <div class="list-item">
+                            <div class="list-icon">✗</div>
+                            <div class="list-content">
+                                <div class="list-title">Bleed Test VPC</div>
+                                <div class="list-description">10.2.0.0/16 - Development only</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CHD Asset Matrix -->
+            <div class="data-section">
+                <h3>Cardholder Data (CHD) Asset Matrix</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Asset</th>
+                            <th>Type</th>
+                            <th>Location</th>
+                            <th>Encryption</th>
+                            <th>Access Control</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>transactions table</td>
+                            <td>Database</td>
+                            <td>Production RDS (10.0.x.x)</td>
+                            <td>AES-256</td>
+                            <td>IAM + Network isolation</td>
+                            <td><span class="badge badge-success">Protected</span></td>
+                        </tr>
+                        <tr>
+                            <td>card_tokens table</td>
+                            <td>Database</td>
+                            <td>Production RDS (10.0.x.x)</td>
+                            <td>AES-256</td>
+                            <td>IAM + Network isolation</td>
+                            <td><span class="badge badge-success">Protected</span></td>
+                        </tr>
+                        <tr>
+                            <td>Read Replica</td>
+                            <td>Database Replica</td>
+                            <td>Production VPC (10.0.x.x)</td>
+                            <td>AES-256</td>
+                            <td>Same as primary DB</td>
+                            <td><span class="badge badge-success">Protected</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Network Segments -->
+            <div class="data-section">
+                <h3>Network Segments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Network</th>
+                            <th>CIDR Block</th>
+                            <th>Purpose</th>
+                            <th>Scope Status</th>
+                            <th>Key Resources</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Production VPC</td>
+                            <td>10.0.0.0/16</td>
+                            <td>CDE Services</td>
+                            <td><span class="badge badge-success">In Scope</span></td>
+                            <td>Docker Swarm, RDS, Load Balancers</td>
+                        </tr>
+                        <tr>
+                            <td>Staging VPC</td>
+                            <td>10.1.0.0/16</td>
+                            <td>Pre-production</td>
+                            <td><span class="badge badge-info">Connected</span></td>
+                            <td>Docker Swarm, test databases</td>
+                        </tr>
+                        <tr>
+                            <td>Bleed Test VPC</td>
+                            <td>10.2.0.0/16</td>
+                            <td>Development</td>
+                            <td><span class="badge badge-warning">Out-of-Scope</span></td>
+                            <td>Development servers only</td>
+                        </tr>
+                        <tr>
+                            <td>Security VPC</td>
+                            <td>172.16.0.0/16</td>
+                            <td>Security Tools</td>
+                            <td><span class="badge badge-info">Connected</span></td>
+                            <td>Qualys, Kali, Monitoring</td>
+                        </tr>
+                        <tr>
+                            <td>Modupay VPN</td>
+                            <td>10.5.0.0/16</td>
+                            <td>DR Connectivity</td>
+                            <td><span class="badge badge-info">Connected</span></td>
+                            <td>VPN tunnel, backup systems</td>
+                        </tr>
+                        <tr>
+                            <td>Shahry VPN</td>
+                            <td>10.7.0.0/16</td>
+                            <td>App Connectivity</td>
+                            <td><span class="badge badge-info">Connected</span></td>
+                            <td>VPN tunnel, service provider link</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- WAF Protected Domains -->
+            <div class="data-section">
+                <h3>WAF Protected Domains (14 Total)</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                    <div style="background: #0f1520; border: 1px solid #2a3550; border-radius: 6px; padding: 1rem;">
+                        <div style="color: #00d9ff; font-weight: 600; margin-bottom: 0.5rem;">Primary Services</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ dash.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ merchant.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0;">✓ api.trufinance.app</div>
+                    </div>
+                    <div style="background: #0f1520; border: 1px solid #2a3550; border-radius: 6px; padding: 1rem;">
+                        <div style="color: #00d9ff; font-weight: 600; margin-bottom: 0.5rem;">Admin & Tools</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ admin.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ reports.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ monitoring.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0;">✓ audit.trufinance.app</div>
+                    </div>
+                    <div style="background: #0f1520; border: 1px solid #2a3550; border-radius: 6px; padding: 1rem;">
+                        <div style="color: #00d9ff; font-weight: 600; margin-bottom: 0.5rem;">Partner & Mobile</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ mobile-api.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ partner-portal.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ gateway.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0;">✓ webhook.trufinance.app</div>
+                    </div>
+                    <div style="background: #0f1520; border: 1px solid #2a3550; border-radius: 6px; padding: 1rem;">
+                        <div style="color: #00d9ff; font-weight: 600; margin-bottom: 0.5rem;">Legacy & Support</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ support.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0; margin-bottom: 0.3rem;">✓ health-check.trufinance.app</div>
+                        <div style="font-size: 13px; color: #c9d1e0;">✓ 2 legacy domains</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Service Providers -->
+            <div class="data-section">
+                <h3>Service Providers & Connections</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Service Provider</th>
+                            <th>Service Type</th>
+                            <th>Connection</th>
+                            <th>PCI Compliance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Huawei Cloud</td>
+                            <td>Infrastructure (IaaS)</td>
+                            <td>AF-Cairo Data Center</td>
+                            <td><span class="badge badge-success">Certified</span></td>
+                            <td>Primary hosting</td>
+                        </tr>
+                        <tr>
+                            <td>Twingate</td>
+                            <td>VPN & Access Control</td>
+                            <td>Remote access gateway</td>
+                            <td><span class="badge badge-success">Compliant</span></td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>Cyber Force</td>
+                            <td>Security Assessment (ER 141)</td>
+                            <td>Penetration testing, VA scans</td>
+                            <td><span class="badge badge-success">Approved</span></td>
+                            <td>Contracted</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Gateway Provider</td>
+                            <td>Payment Processing</td>
+                            <td>Tokenization & processing</td>
+                            <td><span class="badge badge-success">PCI-DSS Level 1</span></td>
+                            <td>Active</td>
+                        </tr>
+                        <tr>
+                            <td>Modupay</td>
+                            <td>Payment Service</td>
+                            <td>VPN tunnel (10.5.0.0/16)</td>
+                            <td><span class="badge badge-info">In-scope</span></td>
+                            <td>Disaster recovery</td>
+                        </tr>
+                        <tr>
+                            <td>Shahry</td>
+                            <td>Payment Service</td>
+                            <td>VPN tunnel (10.7.0.0/16)</td>
+                            <td><span class="badge badge-info">In-scope</span></td>
+                            <td>Production integration</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Physical Locations -->
+            <div class="data-section">
+                <h3>Physical Locations</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Role</th>
+                            <th>Services Hosted</th>
+                            <th>Security Controls</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Huawei Cloud AF-Cairo DC</td>
+                            <td>Primary Data Center</td>
+                            <td>All production systems, databases, application servers</td>
+                            <td><span class="badge badge-success">Certified facility, Multi-factor access, Video surveillance, Physical logging</span></td>
+                        </tr>
+                        <tr>
+                            <td>TRU Finance Head Office Cairo</td>
+                            <td>Administrative Location</td>
+                            <td>Management consoles, workstations, backup facilities</td>
+                            <td><span class="badge badge-info">Access control, Secure areas, VPN required for remote access</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Scope Justification -->
+            <div class="data-section">
+                <h3>Scope Justification & Rationale</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                    <div>
+                        <h4 style="color: #00d9ff; margin-bottom: 1rem; font-size: 14px;">Why Production is CDE</h4>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Stores cardholder data (transactions, tokens)</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Processes payment transactions</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Contains sensitive cardholder information</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Requires full PCI DSS compliance</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: #eab308; margin-bottom: 1rem; font-size: 14px;">Why Others Are Connected</h4>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Staging has network access to production data</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Security tools monitor and test CDE</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">VPN tunnels transmit transaction data</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Access controls must span all connected systems</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 style="color: #6a7a90; margin-bottom: 1rem; font-size: 14px;">Why Bleed is Out-of-Scope</h4>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">No cardholder data stored</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Not connected to CDE networks</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Development and testing only</div>
+                            </div>
+                        </div>
+                        <div class="list-item">
+                            <div class="list-icon">•</div>
+                            <div class="list-content">
+                                <div class="list-description">Isolated network segment</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tabName) {
+            // Hide all tabs
+            const tabs = document.querySelectorAll('.tab-content');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // Remove active state from all buttons
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+
+            // Mark button as active
+            event.target.classList.add('active');
+        }
+
+        function filterTable(tableId, searchInputId) {
+            const input = document.getElementById(searchInputId);
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById(tableId);
+            const rows = table.getElementsByTagName('tr');
+
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(filter) ? '' : 'none';
+            }
+        }
+
+        // Set initial active tab button
+        window.addEventListener('load', function() {
+            document.querySelector('.tab-btn').classList.add('active');
+        });
+    </script>
+</body>
+</html>
