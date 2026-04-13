@@ -40,6 +40,12 @@ window.DashboardView = {
             await this.fetchData();
             this.renderContent();
             this.startAutoRefresh();
+            // Trigger animations after DOM paint
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    document.querySelectorAll('.animate-in').forEach(el => el.classList.add('do-animate'));
+                });
+            });
         } catch (error) {
             console.error('Dashboard error:', error);
             document.getElementById('dashboardContent').innerHTML = '<div style="padding:2rem;color:#f97316;">Error loading dashboard. Please refresh.</div>';
@@ -422,10 +428,11 @@ window.DashboardView = {
 
 /* Animations */
 @keyframes fadeInUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
-.animate-in { animation:fadeInUp .5s ease both; }
-.delay-1 { animation-delay:.1s; }
-.delay-2 { animation-delay:.2s; }
-.delay-3 { animation-delay:.3s; }
+.animate-in { opacity:1; transform:translateY(0); }
+.animate-in.do-animate { animation:fadeInUp .5s ease both; }
+.delay-1.do-animate { animation-delay:.1s; }
+.delay-2.do-animate { animation-delay:.2s; }
+.delay-3.do-animate { animation-delay:.3s; }
 
 /* Responsive */
 @media(max-width:1200px) { .db-grid-main{grid-template-columns:1fr} .db-kpi-grid{grid-template-columns:repeat(3,1fr)} }
