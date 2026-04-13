@@ -26,6 +26,8 @@ window.App = {
                 // Valid token, route to current URL or dashboard
                 const hash = window.location.hash.slice(1) || 'dashboard';
                 this.navigate(hash);
+                // Always call handleRoute directly in case hash didn't change (reload)
+                this.handleRoute();
             } catch (error) {
                 // Invalid token
                 window.API.clearToken();
